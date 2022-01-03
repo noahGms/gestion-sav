@@ -1,0 +1,25 @@
+@extends("layouts.base")
+
+@section("content")
+    <p class="fs-4">
+        <a class="text-dark text-decoration-none" href="{{route('brands.index')}}">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <span>Modifier la marque n°{{$brand->id}}</span>
+    </p>
+    <form action="{{route('brands.update', $brand)}}" method="post">
+        @method('PUT')
+        @csrf
+        <div class="mb-3">
+            <label for="name" class="form-label">Nom</label>
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
+                   value="{{ old('name') ?? $brand->name }}">
+            @error('name')
+            <div class="invalid-feedback">
+                {{ $errors->first('name') }}
+            </div>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+@endsection
