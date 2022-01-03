@@ -45,7 +45,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a href="" class="dropdown-item" type="button">Se déconnecter</a></li>
+                        <li><a href="{{route('logout')}}" class="dropdown-item" type="button">Se déconnecter</a></li>
                     </ul>
                 </li>
             </ul>

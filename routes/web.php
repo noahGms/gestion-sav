@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+Route::get('/se-connecter', [\App\Http\Controllers\AuthController::class, 'loginView'])->name('login');
+Route::post('/se-connecter', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.handle');
+Route::get('/se-deconnecter', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+    Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
+});
+
