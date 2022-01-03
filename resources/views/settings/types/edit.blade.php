@@ -1,12 +1,15 @@
-@extends("layouts.base")
+@extends("layouts.settings")
 
-@section("content")
+@section("title")
     <p class="fs-4">
         <a class="text-dark text-decoration-none" href="{{route('types.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <span>Modifier le type n°{{$type->id}}</span>
     </p>
+@endsection
+
+@section("settings-content")
     <form action="{{route('types.update', $type)}}" method="post">
         @method('PUT')
         @csrf

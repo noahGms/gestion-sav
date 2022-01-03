@@ -1,12 +1,15 @@
-@extends("layouts.base")
+@extends("layouts.settings")
 
-@section("content")
+@section("title")
     <p class="fs-4">
         <a class="text-dark text-decoration-none" href="{{route('returns.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <span>Modifier le moyen de retour n°{{$return->id}}</span>
     </p>
+@endsection
+
+@section("settings-content")
     <form action="{{route('returns.update', $return)}}" method="post">
         @method('PUT')
         @csrf

@@ -1,12 +1,15 @@
-@extends("layouts.base")
+@extends("layouts.settings")
 
-@section("content")
+@section("title")
     <p class="fs-4">
         <a class="text-dark text-decoration-none" href="{{route('depots.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <span>Modifier le moyen de dépot n°{{$depot->id}}</span>
     </p>
+@endsection
+
+@section("settings-content")
     <form action="{{route('depots.update', $depot)}}" method="post">
         @method('PUT')
         @csrf

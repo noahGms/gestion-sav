@@ -1,12 +1,15 @@
-@extends("layouts.base")
+@extends("layouts.settings")
 
-@section("content")
+@section("title")
     <p class="fs-4">
         <a class="text-dark text-decoration-none" href="{{route('users.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <span>Modifier l'utilisateur n°{{$user->id}}</span>
     </p>
+@endsection
+
+@section("settings-content")
     <form action="{{route('users.update', $user)}}" method="post">
         @method('PUT')
         @csrf

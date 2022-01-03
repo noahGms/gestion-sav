@@ -1,12 +1,15 @@
-@extends("layouts.base")
+@extends("layouts.settings")
 
-@section("content")
+@section("title")
     <p class="fs-4">
         <a class="text-dark text-decoration-none" href="{{route('brands.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <span>Modifier la marque n°{{$brand->id}}</span>
     </p>
+@endsection
+
+@section("settings-content")
     <form action="{{route('brands.update', $brand)}}" method="post">
         @method('PUT')
         @csrf
