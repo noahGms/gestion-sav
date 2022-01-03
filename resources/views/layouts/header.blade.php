@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4">
     <div class="container-fluid">
         <a href="/" class="navbar-brand">Gestion-SAV</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse  justify-content-lg-end" id="navbarSupportedContent">
@@ -17,11 +18,13 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link {{str_contains(request()->fullUrl(), '/settings') ? 'active' : ''}} dropdown-toggle"
+                       href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-cog"></i> Paramètres
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Etats</a></li>
+                        <li><a class="dropdown-item {{request()->routeIs('states.index') ? 'active' : ''}}"
+                               href="{{route('states.index')}}">Etats</a></li>
                         <li><a class="dropdown-item" href="#">Marques</a></li>
                         <li><a class="dropdown-item" href="#">Catégories</a></li>
                         <li><a class="dropdown-item" href="#">Types</a></li>
@@ -31,12 +34,17 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a style="text-decoration: none; cursor: pointer;" class="nav-link dropdown-toggle" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a style="text-decoration: none; cursor: pointer;" class="nav-link dropdown-toggle"
+                       id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user"></i> Mon compte
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
-                        <li><button class="dropdown-item" type="button">Modifier mon compte</button></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <button class="dropdown-item" type="button">Modifier mon compte</button>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a href="" class="dropdown-item" type="button">Se déconnecter</a></li>
                     </ul>
                 </li>

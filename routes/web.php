@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+
+Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
