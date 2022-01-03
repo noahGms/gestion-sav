@@ -33,7 +33,8 @@
                                href="{{route('categories.index')}}">Catégories</a></li>
                         <li><a class="dropdown-item {{request()->routeIs('types.index') ? 'active' : ''}}"
                                href="{{route('types.index')}}">Types</a></li>
-                        <li><a class="dropdown-item" href="#">Retours</a></li>
+                        <li><a class="dropdown-item {{request()->routeIs('returns.index') ? 'active' : ''}}"
+                               href="{{route('returns.index')}}">Retours</a></li>
                         <li><a class="dropdown-item" href="#">Interventions</a></li>
                         <li><a class="dropdown-item" href="#">Dépots</a></li>
                     </ul>
