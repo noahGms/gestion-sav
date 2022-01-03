@@ -26,5 +26,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/settings/types', \App\Http\Controllers\Settings\TypeController::class)->except(['show', 'create']);
     Route::resource('/settings/returns', \App\Http\Controllers\Settings\ReturnController::class)->except(['show', 'create']);
     Route::resource('/settings/interventions', \App\Http\Controllers\Settings\InterventionController::class)->except(['show', 'create']);
+    Route::resource('/settings/depots', \App\Http\Controllers\Settings\DepotController::class)->except(['show', 'create']);
 });
 

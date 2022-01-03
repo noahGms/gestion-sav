@@ -37,7 +37,8 @@
                                href="{{route('returns.index')}}">Retours</a></li>
                         <li><a class="dropdown-item {{request()->routeIs('interventions.index') ? 'active' : ''}}"
                                href="{{route('interventions.index')}}">Interventions</a></li>
-                        <li><a class="dropdown-item" href="#">Dépots</a></li>
+                        <li><a class="dropdown-item {{request()->routeIs('depots.index') ? 'active' : ''}}"
+                               href="{{route('depots.index')}}">Depots</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
