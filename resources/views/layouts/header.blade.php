@@ -29,7 +29,8 @@
                                href="{{route('states.index')}}">Etats</a></li>
                         <li><a class="dropdown-item {{request()->routeIs('brands.index') ? 'active' : ''}}"
                                href="{{route('brands.index')}}">Marques</a></li>
-                        <li><a class="dropdown-item" href="#">Catégories</a></li>
+                        <li><a class="dropdown-item {{request()->routeIs('categories.index') ? 'active' : ''}}"
+                               href="{{route('categories.index')}}">Catégories</a></li>
                         <li><a class="dropdown-item" href="#">Types</a></li>
                         <li><a class="dropdown-item" href="#">Retours</a></li>
                         <li><a class="dropdown-item" href="#">Interventions</a></li>
