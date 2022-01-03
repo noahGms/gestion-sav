@@ -23,6 +23,8 @@
                         <i class="fas fa-cog"></i> Paramètres
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item {{request()->routeIs('users.index') ? 'active' : ''}}"
+                               href="{{route('users.index')}}">Utilisateurs</a></li>
                         <li><a class="dropdown-item {{request()->routeIs('states.index') ? 'active' : ''}}"
                                href="{{route('states.index')}}">Etats</a></li>
                         <li><a class="dropdown-item" href="#">Marques</a></li>

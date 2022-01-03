@@ -20,5 +20,6 @@ Route::get('/se-deconnecter', [\App\Http\Controllers\AuthController::class, 'log
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
     Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
+    Route::resource('/settings/users', \App\Http\Controllers\Settings\UserController::class)->except(['show', 'create']);
 });
 
