@@ -1,7 +1,7 @@
 @extends("layouts.settings")
 
 @section("title")
-    <p class="fs-4">
+    <p class="fs-4 mb-0">
         <a class="text-dark text-decoration-none" href="{{route('categories.index')}}">
             <i class="fas fa-arrow-left"></i>
         </a>
