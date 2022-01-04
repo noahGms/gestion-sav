@@ -76,6 +76,54 @@
                 </div>
                 @enderror
             </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="street_number" class="form-label">Numéro de la rue</label>
+                    <input class="form-control @error('street_number') is-invalid @enderror" name="street_number"
+                           id="street_number"
+                           type="text" value="{{old('street_number')}}"/>
+                    @error('street_number')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('street_number') }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="col">
+                    <label for="street_name" class="form-label">Nom de la rue</label>
+                    <input class="form-control @error('street_name') is-invalid @enderror" name="street_name"
+                           id="street_name"
+                           type="text" value="{{old('street_name')}}"/>
+                    @error('street_name')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('street_name') }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="zip_code" class="form-label">Code postal</label>
+                    <input class="form-control @error('zip_code') is-invalid @enderror" name="zip_code"
+                           id="zip_code"
+                           type="text" value="{{old('zip_code')}}"/>
+                    @error('zip_code')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('zip_code') }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="col">
+                    <label for="city" class="form-label">Ville</label>
+                    <input class="form-control @error('city') is-invalid @enderror" name="city"
+                           id="city"
+                           type="text" value="{{old('city')}}"/>
+                    @error('city')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('city') }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>

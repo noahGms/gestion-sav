@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Requests\AddressRequest;
 use App\Http\Requests\CustomerRequest;
+use App\Models\Address;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,13 @@ class CustomerService
      */
     public function store(Request $request): Customer
     {
+        $addressPayload = $request->validate((new AddressRequest())->rules());
         $customerPayload = $request->validate((new CustomerRequest())->rules());
 
-        $customer = Customer::create($customerPayload);
+        $address = Address::create($addressPayload);
+        $customer = Customer::create(array_merge($customerPayload, [
+            'address_id' => $address->id
+        ]));
 
         return $customer;
     }
@@ -28,7 +34,12 @@ class CustomerService
      */
     public function update(Request $request, Customer $customer): Customer
     {
+        $addressPayload = $request->validate((new AddressRequest())->rules());
         $customerPayload = $request->validate((new CustomerRequest())->rules());
+
+        if (!empty($addressPayload)) {
+            $customer->address()->update($addressPayload);
+        }
 
         if (!empty($customerPayload)) {
             $customer->update($customerPayload);
@@ -43,6 +54,7 @@ class CustomerService
      */
     public function delete(Customer $customer)
     {
+        $customer->address()->delete();
         $customer->delete();
     }
 }

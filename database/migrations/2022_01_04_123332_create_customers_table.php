@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('mobile1')->nullable();
             $table->string('mobile2')->nullable();
             $table->string('email')->nullable();
+            $table->foreignId('address_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

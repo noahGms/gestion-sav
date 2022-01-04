@@ -22,6 +22,7 @@
                     <th class="text-center" scope="col">Téléphone fixe</th>
                     <th class="text-center" scope="col">Téléphone portable 1</th>
                     <th class="text-center" scope="col">Téléphone portable 2</th>
+                    <th class="text-center" scope="col">Adresse</th>
                     <th class="text-center" scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -33,6 +34,7 @@
                         <td class="text-center">{{$customer->phone}}</td>
                         <td class="text-center">{{$customer->mobile1}}</td>
                         <td class="text-center">{{$customer->mobile2}}</td>
+                        <td class="text-center">{{$customer->address->full_address}}</td>
                         <td class="text-center">
                             <a class="text-decoration-none" href="{{route('customers.show', $customer)}}">
                                 <i class="fas fa-eye"></i>
@@ -71,7 +73,7 @@
                 @endforeach
                 @if(!$customers->count())
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="alert alert-primary mt-3" role="alert">
                                 Aucune client trouvé
                             </div>
