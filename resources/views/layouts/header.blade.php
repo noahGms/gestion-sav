@@ -44,7 +44,7 @@
                 <li class="nav-item dropdown">
                     <a style="text-decoration: none; cursor: pointer;" class="nav-link dropdown-toggle"
                        id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user"></i> Mon compte
+                        <i class="fas fa-user"></i> {{auth()->user()->fullname ? auth()->user()->fullname : 'Mon compte'}}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                         <li>
