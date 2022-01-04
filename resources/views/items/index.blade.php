@@ -29,7 +29,7 @@
                         <td class="text-center">{{optional($item->type)->name}}</td>
                         <td class="text-center">{{optional($item->brand)->name}} - {{$item->model}}</td>
                         <td class="text-center">{{$item->mobile1}}</td>
-                        <td class="text-center">{{optional($item->customer)->address->full_address}}</td>
+                        <td class="text-center">{{optional(optional($item->customer)->address)->full_address}}</td>
                         <td class="text-center">
                             <a class="text-decoration-none" href="{{route('items.show', $item)}}">
                                 <i class="fas fa-eye"></i>

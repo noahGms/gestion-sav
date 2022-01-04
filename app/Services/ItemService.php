@@ -31,11 +31,13 @@ class ItemService
      */
     public function store(Request $request): Item
     {
-        $customer = $this->customerService->store($request);
+        if (!$request->get("customer_id")) {
+            $customer = $this->customerService->store($request);
+        }
 
         $itemPayload = $request->validate((new ItemRequest())->rules());
         $item = Item::create(array_merge($itemPayload, [
-            'customer_id' => $customer->id,
+            'customer_id' => $customer->id ?? $request->get('customer_id'),
             'created_by' => Auth::id()
         ]));
 

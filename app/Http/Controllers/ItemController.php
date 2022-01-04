@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Customer;
 use App\Models\Depot;
 use App\Models\Intervention;
 use App\Models\Item;
@@ -50,7 +51,8 @@ class ItemController extends Controller
         $returns = ReturnMdl::all();
         $types = Type::all();
         $brands = Brand::all();
-        return view('items.create', compact('states', 'interventions', 'depots', 'returns', 'types', 'brands'));
+        $customers = Customer::all();
+        return view('items.create', compact('states', 'interventions', 'depots', 'returns', 'types', 'brands', 'customers'));
     }
 
     /**

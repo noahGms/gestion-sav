@@ -37,121 +37,145 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
-                    <div class="row mt-4 mb-3">
-                        <div class="col">
-                            <label for="lastname" class="form-label">Nom</label>
-                            <input class="form-control @error('lastname') is-invalid @enderror" name="lastname"
-                                   id="lastname"
-                                   type="text" value="{{old('lastname')}}"/>
-                            @error('lastname')
+                    <div id="customerButton" class="d-flex mt-4 mb-3">
+                        <button type="button" onclick="selectCustomer()" class="btn btn-light me-3">Ajouter un client existant</button>
+                        <button type="button" onclick="createCustomer()" class="btn btn-light">Créer un nouveau client</button>
+                    </div>
+                    <div id="selectCustomer" style="display: none;">
+                        <div class="row mt-4 mb-3">
+                            <div class="mb-3">
+                                <label for="customer_id" class="form-label">Client</label>
+                                <select class="form-select" id="customer_id" name="customer_id" aria-label="Selectionner un client">
+                                    <option value="" selected>Selectionner un client</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{$customer->id}}">{{$customer->fullname}} - {{optional($customer->address)->full_address}}</option>
+                                    @endforeach
+                                </select>
+                                @error('customer_id')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('customer_id') }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div id="newCustomerForm" style="display: none;">
+                        <div class="row mt-4 mb-3">
+                            <div class="col">
+                                <label for="lastname" class="form-label">Nom</label>
+                                <input class="form-control @error('lastname') is-invalid @enderror" name="lastname"
+                                       id="lastname"
+                                       type="text" value="{{old('lastname')}}"/>
+                                @error('lastname')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('lastname') }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="col">
+                                <label for="firstname" class="form-label">Prénom</label>
+                                <input class="form-control @error('firstname') is-invalid @enderror" name="firstname"
+                                       id="firstname"
+                                       type="text" value="{{old('firstname')}}"/>
+                                @error('firstname')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('firstname') }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adresse email</label>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                   id="email"
+                                   value="{{ old('email') }}">
+                            @error('email')
                             <div class="invalid-feedback">
-                                {{ $errors->first('lastname') }}
+                                {{ $errors->first('email') }}
                             </div>
                             @enderror
                         </div>
-                        <div class="col">
-                            <label for="firstname" class="form-label">Prénom</label>
-                            <input class="form-control @error('firstname') is-invalid @enderror" name="firstname"
-                                   id="firstname"
-                                   type="text" value="{{old('firstname')}}"/>
-                            @error('firstname')
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Téléphone fixe</label>
+                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                   id="phone"
+                                   value="{{ old('phone') }}">
+                            @error('phone')
                             <div class="invalid-feedback">
-                                {{ $errors->first('firstname') }}
+                                {{ $errors->first('phone') }}
                             </div>
                             @enderror
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Adresse email</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                               id="email"
-                               value="{{ old('email') }}">
-                        @error('email')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Téléphone fixe</label>
-                        <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                               id="phone"
-                               value="{{ old('phone') }}">
-                        @error('phone')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('phone') }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="mobile1" class="form-label">Téléphone portable 1</label>
-                        <input type="text" name="mobile1" class="form-control @error('mobile1') is-invalid @enderror"
-                               id="mobile1"
-                               value="{{ old('mobile1') }}">
-                        @error('mobile1')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('mobile1') }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="mobile2" class="form-label">Téléphone portable 2</label>
-                        <input type="text" name="mobile2" class="form-control @error('mobile2') is-invalid @enderror"
-                               id="mobile2"
-                               value="{{ old('mobile2') }}">
-                        @error('mobile2')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('mobile2') }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="street_number" class="form-label">Numéro de la rue</label>
-                            <input class="form-control @error('street_number') is-invalid @enderror"
-                                   name="street_number"
-                                   id="street_number"
-                                   type="text" value="{{old('street_number')}}"/>
-                            @error('street_number')
+                        <div class="mb-3">
+                            <label for="mobile1" class="form-label">Téléphone portable 1</label>
+                            <input type="text" name="mobile1" class="form-control @error('mobile1') is-invalid @enderror"
+                                   id="mobile1"
+                                   value="{{ old('mobile1') }}">
+                            @error('mobile1')
                             <div class="invalid-feedback">
-                                {{ $errors->first('street_number') }}
+                                {{ $errors->first('mobile1') }}
                             </div>
                             @enderror
                         </div>
-                        <div class="col">
-                            <label for="street_name" class="form-label">Nom de la rue</label>
-                            <input class="form-control @error('street_name') is-invalid @enderror" name="street_name"
-                                   id="street_name"
-                                   type="text" value="{{old('street_name')}}"/>
-                            @error('street_name')
+                        <div class="mb-3">
+                            <label for="mobile2" class="form-label">Téléphone portable 2</label>
+                            <input type="text" name="mobile2" class="form-control @error('mobile2') is-invalid @enderror"
+                                   id="mobile2"
+                                   value="{{ old('mobile2') }}">
+                            @error('mobile2')
                             <div class="invalid-feedback">
-                                {{ $errors->first('street_name') }}
+                                {{ $errors->first('mobile2') }}
                             </div>
                             @enderror
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="zip_code" class="form-label">Code postal</label>
-                            <input class="form-control @error('zip_code') is-invalid @enderror" name="zip_code"
-                                   id="zip_code"
-                                   type="text" value="{{old('zip_code')}}"/>
-                            @error('zip_code')
-                            <div class="invalid-feedback">
-                                {{ $errors->first('zip_code') }}
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="street_number" class="form-label">Numéro de la rue</label>
+                                <input class="form-control @error('street_number') is-invalid @enderror"
+                                       name="street_number"
+                                       id="street_number"
+                                       type="text" value="{{old('street_number')}}"/>
+                                @error('street_number')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('street_number') }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
+                            <div class="col">
+                                <label for="street_name" class="form-label">Nom de la rue</label>
+                                <input class="form-control @error('street_name') is-invalid @enderror" name="street_name"
+                                       id="street_name"
+                                       type="text" value="{{old('street_name')}}"/>
+                                @error('street_name')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('street_name') }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col">
-                            <label for="city" class="form-label">Ville</label>
-                            <input class="form-control @error('city') is-invalid @enderror" name="city"
-                                   id="city"
-                                   type="text" value="{{old('city')}}"/>
-                            @error('city')
-                            <div class="invalid-feedback">
-                                {{ $errors->first('city') }}
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="zip_code" class="form-label">Code postal</label>
+                                <input class="form-control @error('zip_code') is-invalid @enderror" name="zip_code"
+                                       id="zip_code"
+                                       type="text" value="{{old('zip_code')}}"/>
+                                @error('zip_code')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('zip_code') }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
+                            <div class="col">
+                                <label for="city" class="form-label">Ville</label>
+                                <input class="form-control @error('city') is-invalid @enderror" name="city"
+                                       id="city"
+                                       type="text" value="{{old('city')}}"/>
+                                @error('city')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('city') }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -341,7 +365,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
+
+    <script>
+        function hideCustomerButton() {
+            const div = document.getElementById("customerButton")
+            div.classList = ""
+            div.style.display = "none"
+        }
+
+        function selectCustomer() {
+            const div = document.getElementById("selectCustomer")
+            div.style.display = "block"
+            hideCustomerButton()
+        }
+
+        function createCustomer() {
+            const div = document.getElementById("newCustomerForm")
+            div.style.display = "block"
+            hideCustomerButton()
+        }
+    </script>
 @endsection
