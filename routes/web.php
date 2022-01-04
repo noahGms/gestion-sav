@@ -32,5 +32,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/settings/depots', \App\Http\Controllers\Settings\DepotController::class)->except(['show', 'create']);
 
     Route::resource('/customers', \App\Http\Controllers\CustomerController::class);
+    Route::resource('/items', \App\Http\Controllers\ItemController::class);
 });
 
