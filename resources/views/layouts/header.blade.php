@@ -48,7 +48,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
                         <li>
-                            <button class="dropdown-item" type="button">Modifier mon compte</button>
+                            <a class="dropdown-item {{request()->routeIs('profile.index') ? 'active' : ''}}"
+                               href="{{route('profile.index')}}">Mon compte</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
