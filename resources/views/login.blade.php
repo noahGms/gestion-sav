@@ -1,8 +1,8 @@
 @extends("layouts.base")
 
 @section("content")
-    <div class="d-flex flex-column justify-content-center align-items-center h-screen">
-        <h2>Se connecter</h2>
+    <div class="d-flex flex-column justify-content-center align-items-center vh-100">
+        <h2 class="mb-4">Se connecter</h2>
         <form action="{{route('login.handle')}}" method="post">
             @csrf
             @if($errors)
@@ -23,7 +23,6 @@
             <div class="form-check mb-3">
                 <input id="remember_me" name="remember_me" type="checkbox" value="1" class="form-checkbox-input">
                 <label for="remember_me" class="form-check-label me-3">Se souvenir de moi</label>
-                <a href="">Mot de passe oublié ?</a>
             </div>
             <div class="d-grid gap-2 mb-3">
                 <button type="submit" class="btn btn-primary">Se connecter</button>

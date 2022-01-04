@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/se-connecter', [\App\Http\Controllers\AuthController::class, 'loginView'])->name('login');
-Route::post('/se-connecter', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.handle');
-Route::get('/se-deconnecter', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'loginView'])->name('login');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.handle');
+Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
