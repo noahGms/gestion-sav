@@ -14,7 +14,7 @@ class ProfileController extends Controller
      */
     public function index(): View
     {
-        return view('profile');
+        return view('profile.index');
     }
 
     /**
