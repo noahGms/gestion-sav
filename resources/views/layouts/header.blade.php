@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">
+                    <a class="nav-link  {{request()->routeIs('customers.index') ? 'active' : ''}}" aria-current="page" href="{{route('customers.index')}}">
                         <i class="fas fa-users"></i> Clients
                     </a>
                 </li>
