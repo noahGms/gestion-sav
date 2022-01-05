@@ -74,7 +74,7 @@ class Item extends Model
      */
     public function returnMdl(): BelongsTo
     {
-        return $this->belongsTo(ReturnMdl::class);
+        return $this->belongsTo(ReturnMdl::class, 'return_id');
     }
 
     /**

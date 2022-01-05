@@ -86,7 +86,13 @@ class ItemController extends Controller
      */
     public function edit(Item $item): View
     {
-        return view('items.edit', compact('item'));
+        $states = State::all();
+        $interventions = Intervention::all();
+        $depots = Depot::all();
+        $returns = ReturnMdl::all();
+        $types = Type::all();
+        $brands = Brand::all();
+        return view('items.edit', compact('item', 'states', 'interventions', 'depots', 'returns', 'types', 'brands'));
     }
 
     /**

@@ -197,7 +197,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="comment_state" class="form-label">Commentaire sur l'état</label>
-                            <textarea class="form-control" id="comment_state" name="comment_state" rows="3"></textarea>
+                            <textarea class="form-control" id="comment_state" name="comment_state" rows="3">{{old('comment_state')}}</textarea>
                             @error('comment_state')
                             <div class="invalid-feedback">
                                 {{ $errors->first('comment_state') }}
@@ -206,7 +206,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="intervention_date" class="form-label">Date de l'intervention</label>
-                            <input type="date" class="form-control" id="intervention_date" placeholder="Date de l'intervention" name="intervention_date">
+                            <input type="date" class="form-control" id="intervention_date" placeholder="Date de l'intervention" name="intervention_date" value="{{old('intervention_date')}}">
                             @error('intervention_date')
                             <div class="invalid-feedback">
                                 {{ $errors->first('intervention_date') }}
@@ -243,7 +243,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="return_date" class="form-label">Date de retour</label>
-                            <input type="date" class="form-control" id="return_date" placeholder="Date de retour" name="return_date">
+                            <input type="date" class="form-control" id="return_date" placeholder="Date de retour" name="return_date" value="{{old('return_date')}}">
                             @error('return_date')
                             <div class="invalid-feedback">
                                 {{ $errors->first('return_date') }}
@@ -298,7 +298,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="model" class="form-label">Modèle</label>
-                            <input type="text" class="form-control" id="model" placeholder="Modèle" name="model">
+                            <input type="text" class="form-control" id="model" placeholder="Modèle" name="model" value="{{old("model")}}">
                             @error('model')
                             <div class="invalid-feedback">
                                 {{ $errors->first('model') }}
@@ -307,7 +307,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="serial_number" class="form-label">Numéro de série</label>
-                            <input type="text" class="form-control" id="serial_number" placeholder="Numéro de série" name="serial_number">
+                            <input type="text" class="form-control" id="serial_number" placeholder="Numéro de série" name="serial_number" value="{{old("serial_number")}}">
                             @error('serial_number')
                             <div class="invalid-feedback">
                                 {{ $errors->first('serial_number') }}
@@ -315,11 +315,11 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="default" class="form-label">Défaut signalé</label>
-                            <textarea class="form-control" id="default" name="default" rows="3"></textarea>
-                            @error('default')
+                            <label for="defaults" class="form-label">Défaut signalé</label>
+                            <textarea class="form-control" id="defaults" name="defaults" rows="3">{{old('defaults')}}</textarea>
+                            @error('defaults')
                             <div class="invalid-feedback">
-                                {{ $errors->first('default') }}
+                                {{ $errors->first('defaults') }}
                             </div>
                             @enderror
                         </div>
@@ -329,7 +329,7 @@
                     <div class="row mt-4 mb-3">
                         <div class="mb-3">
                             <label for="observations" class="form-label">Observations</label>
-                            <textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
+                            <textarea class="form-control" id="observations" name="observations" rows="3">{{old('communications')}}</textarea>
                             @error('observations')
                             <div class="invalid-feedback">
                                 {{ $errors->first('observations') }}
@@ -338,7 +338,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="reparations" class="form-label">Réparations</label>
-                            <textarea class="form-control" id="reparations" name="reparations" rows="3"></textarea>
+                            <textarea class="form-control" id="reparations" name="reparations" rows="3">{{old('reparations')}}</textarea>
                             @error('reparations')
                             <div class="invalid-feedback">
                                 {{ $errors->first('reparations') }}
@@ -347,7 +347,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="comments" class="form-label">Commentaires</label>
-                            <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                            <textarea class="form-control" id="comments" name="comments" rows="3">{{old('comments')}}</textarea>
                             @error('comments')
                             <div class="invalid-feedback">
                                 {{ $errors->first('comments') }}
@@ -356,7 +356,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="communications" class="form-label">Communications</label>
-                            <textarea class="form-control" id="communications" name="communications" rows="3"></textarea>
+                            <textarea class="form-control" id="communications" name="communications" rows="3">{{old('communications')}}</textarea>
                             @error('communications')
                             <div class="invalid-feedback">
                                 {{ $errors->first('communications') }}
