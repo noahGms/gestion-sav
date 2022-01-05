@@ -18,7 +18,7 @@
                     <th class="text-center" scope="col">Type</th>
                     <th class="text-center" scope="col">Machine</th>
                     <th class="text-center" scope="col">Client</th>
-                    <th class="text-center" scope="col">Etat</th>
+                    <th class="text-center" colspan="2" scope="col">Etat</th>
                     <th class="text-center" scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -28,8 +28,9 @@
                         <td>{{$item->intervention_date}}</td>
                         <td class="text-center">{{optional($item->type)->name}}</td>
                         <td class="text-center">{{optional($item->brand)->name}} - {{$item->model}}</td>
-                        <td class="text-center">{{$item->mobile1}}</td>
                         <td class="text-center">{{optional(optional($item->customer)->address)->full_address}}</td>
+                        <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{$item->comment_state}}</td>
+                        <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{optional($item->state)->name}}</td>
                         <td class="text-center">
                             <a class="text-decoration-none" href="{{route('items.show', $item)}}">
                                 <i class="fas fa-eye"></i>
@@ -68,7 +69,7 @@
                 @endforeach
                 @if(!$items->count())
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             <div class="alert alert-primary mt-3" role="alert">
                                 Aucune item trouvé
                             </div>
