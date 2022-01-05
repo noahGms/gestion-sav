@@ -176,7 +176,7 @@
                         <div class="mb-3">
                             <label for="intervention_date" class="form-label">Date de l'intervention</label>
                             <input type="date" class="form-control" id="intervention_date"
-                                   placeholder="Date de l'intervention" name="intervention_date" value="{{old('intervention_date') ?? $item->intervention_date->format('Y-m-d')}}">
+                                   placeholder="Date de l'intervention" name="intervention_date" value="{{old('intervention_date') ?? optional($item->intervention_date)->format('Y-m-d')}}">
                             @error('intervention_date')
                             <div class="invalid-feedback">
                                 {{ $errors->first('intervention_date') }}
@@ -220,7 +220,7 @@
                         <div class="mb-3">
                             <label for="return_date" class="form-label">Date de retour</label>
                             <input type="date" class="form-control" id="return_date" placeholder="Date de retour"
-                                   name="return_date" value="{{old('return_date') ?? $item->return_date->format('Y-m-d')}}">
+                                   name="return_date" value="{{old('return_date') ?? optional($item->return_date)->format('Y-m-d')}}">
                             @error('return_date')
                             <div class="invalid-feedback">
                                 {{ $errors->first('return_date') }}
