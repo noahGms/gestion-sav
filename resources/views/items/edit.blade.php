@@ -39,6 +39,10 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                     <div class="row mt-4 mb-3">
+                        <div class="alert alert-warning" role="alert">
+                            Attention ! Les modifications du client seront modifier globalement
+                        </div>
+
                         <div class="col">
                             <label for="lastname" class="form-label">Nom</label>
                             <input class="form-control @error('lastname') is-invalid @enderror" name="lastname"
