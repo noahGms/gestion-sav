@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
             <label for="color" class="form-label">Couleur</label>
-            <input class="form-control @error('color') is-invalid @enderror" name="color" id="color" type="text"
+            <input class="form-control form-control-color @error('color') is-invalid @enderror" name="color" id="color" type="color"
                    value="{{ old('color') ?? $state->color }}"/>
             @error('color')
             <div class="invalid-feedback">

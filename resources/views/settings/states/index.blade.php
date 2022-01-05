@@ -105,8 +105,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="color" class="form-label">Couleur</label>
-                            <input class="form-control @error('color') is-invalid @enderror" name="color" id="color"
-                                   type="text" value="{{old('color')}}"/>
+                            <input class="form-control form-control-color @error('color') is-invalid @enderror" name="color" id="color"
+                                   type="color" value="{{old('color')}}"/>
                             @error('color')
                             <div class="invalid-feedback">
                                 {{ $errors->first('color') }}
