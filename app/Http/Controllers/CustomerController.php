@@ -28,9 +28,15 @@ class CustomerController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $customers = Customer::paginate(12);
+        $query = Customer::query();
+
+        if ($search = $request->query('search')) {
+            $query = Customer::search($search)->constrain($query);
+        }
+
+        $customers = $query->paginate(12);
         $customersCount = Customer::count();
         return view('customers.index', compact('customers', 'customersCount'));
     }
