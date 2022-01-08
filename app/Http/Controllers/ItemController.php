@@ -36,7 +36,8 @@ class ItemController extends Controller
     public function index(): View
     {
         $items = Item::paginate(12);
-        return view('items.index', compact('items'));
+        $itemsCount = Item::count();
+        return view('items.index', compact('items', 'itemsCount'));
     }
 
     /**

@@ -31,7 +31,8 @@ class CustomerController extends Controller
     public function index(): View
     {
         $customers = Customer::paginate(12);
-        return view('customers.index', compact('customers'));
+        $customersCount = Customer::count();
+        return view('customers.index', compact('customers', 'customersCount'));
     }
 
     /**
