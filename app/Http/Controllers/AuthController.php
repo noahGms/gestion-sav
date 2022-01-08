@@ -30,7 +30,7 @@ class AuthController extends Controller
             return redirect()->route('home.index')->with('success', 'Bonjour ' . Auth::user()->fullname);
         }
 
-        return back()->withErrors(['error' => 'Les informations de connexion sont inccorectes']);
+        return back()->with('error', 'Les informations de connexion sont inccorectes');
     }
 
     /**

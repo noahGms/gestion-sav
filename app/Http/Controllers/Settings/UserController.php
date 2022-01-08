@@ -66,7 +66,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         if ($user->is_god) {
-            return back()->withErrors(['error' => 'L\'utilisateur ne peut pas être supprimé']);
+            return back()->with('error', 'L\'utilisateur ne peut pas être supprimé');
         }
 
         $user->delete();
