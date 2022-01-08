@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\ItemRequest;
 use App\Http\Requests\ItemUserRequest;
+use App\Models\File;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,17 @@ class ItemService
             $item->users()->attach(array_filter($usersPayload['users'], function($value) {
                 return  $value != null;
             }));
+        }
+
+        $files = $request->allFiles();
+        foreach ($files['files'] as $file) {
+            $file->store('/files', 'public');
+            File::create([
+                'path' => "/files/{$file->hashName()}",
+                'name' => $file->getClientOriginalName(),
+                'type' => $file->getClientMimeType(),
+                'item_id' => $item->id
+            ]);
         }
 
         return $item;

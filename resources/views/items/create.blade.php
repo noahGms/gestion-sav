@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <form class="mt-4" action="{{route('items.store')}}" method="post">
+        <form class="mt-4" action="{{route('items.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -37,6 +37,11 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users"
                             type="button" role="tab" aria-controls="users" aria-selected="false">Techniciens
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents"
+                            type="button" role="tab" aria-controls="documents" aria-selected="false">Documents
                     </button>
                 </li>
             </ul>
@@ -371,25 +376,29 @@
                     </div>
                 </div>
                 <div class="tab-pane fade mb-5" id="users" role="tabpanel" aria-labelledby="users-tab">
-                        <div class="mb-3 w-100 mt-4">
-                            <label for="users-0" class="form-label">Techniciens</label>
-                            <select class="form-select" id="users-0" id="users-${techId}" name="users[]" aria-label="Selectionner un technicien">
-                                <option value="" selected>Selectionner un technicien</option>
-                                @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->fullname}}</option>
-                                @endforeach
-                            </select>
-                            @error('users')
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('users') }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div id="users-wrapper" class="rowmb-3">
-
-                        </div>
-                        <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="users-button">Ajouter un tech</button>
+                    <div class="mb-3 w-100 mt-4">
+                        <label for="users-0" class="form-label">Techniciens</label>
+                        <select class="form-select" id="users-0" id="users-${techId}" name="users[]" aria-label="Selectionner un technicien">
+                            <option value="" selected>Selectionner un technicien</option>
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                            @endforeach
+                        </select>
+                        @error('users')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('users') }}
+                            </div>
+                        @enderror
                     </div>
+                    <div id="users-wrapper" class="row mb-3"></div>
+                    <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="users-button">Ajouter un tech</button>
+                </div>
+                <div class="tab-pane fade mb-5" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                    <div class="mb-3 w-100 mt-4">
+                        <label for="files" class="form-label">Ajouter un document</label>
+                        <input onchange="filesPreview(event)" class="form-control" type="file" id="files" name="files[]" multiple>
+                    </div>
+                    <div id="files-preview"></div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -435,7 +444,6 @@
         }
 
         function deleteTech(id) {
-            const wrapper = document.getElementById('users-wrapper')
             const div = document.getElementById(`users-div-${id}`)
             const button = document.getElementById('users-button')
 
@@ -445,6 +453,30 @@
             if (techId < maxSize) {
                 button.toggleAttribute('disabled', false)
             }
+        }
+
+        function filesPreview(event) {
+            const wrapper = document.getElementById('files-preview')
+            let id = 0
+
+            if (wrapper.children.length > 0) {
+                wrapper.innerHTML = ''
+            }
+
+            Array.from(event.target.files).forEach(function (file) {
+                if (file.type === 'image/png') {
+                    const reader = new FileReader()
+                    reader.onload = function(){
+                        id++
+                        wrapper.insertAdjacentHTML("beforeend", `
+                            <img height="100px" width="100px" id="output-${id}"/>
+                        `)
+                        const output = document.getElementById(`output-${id}`)
+                        output.src = reader.result
+                    };
+                    reader.readAsDataURL(file)
+                }
+            })
         }
 
         function hideCustomerButton() {
