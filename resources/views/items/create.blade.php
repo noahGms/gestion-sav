@@ -442,6 +442,9 @@
                     <div class="w-100">
                         <select class="form-select" id="users-${techInputId}" name="users[]" aria-label="Selectionner un technicien">
                             <option value="" selected>Selectionner un technicien</option>
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="ms-4">
