@@ -30,7 +30,7 @@ class DepotController extends Controller
     public function store(DepotRequest $request): RedirectResponse
     {
         Depot::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Le moyen de dépot a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class DepotController extends Controller
     public function update(DepotRequest $request, Depot $depot): RedirectResponse
     {
         $depot->update($request->validated());
-        return redirect()->route('depots.index');
+        return redirect()->route('depots.index')->with('success', 'Le moyen de dépot a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class DepotController extends Controller
     public function destroy(Depot $depot): RedirectResponse
     {
         $depot->delete();
-        return redirect()->route('depots.index');
+        return redirect()->route('depots.index')->with('success', 'Le moyen de dépot a bien été supprimé');
     }
 }

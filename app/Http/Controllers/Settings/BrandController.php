@@ -30,7 +30,7 @@ class BrandController extends Controller
     public function store(BrandRequest $request): RedirectResponse
     {
         Brand::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'La marque a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class BrandController extends Controller
     public function update(BrandRequest $request, Brand $brand): RedirectResponse
     {
         $brand->update($request->validated());
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->with('success', 'La marque a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class BrandController extends Controller
     public function destroy(Brand $brand): RedirectResponse
     {
         $brand->delete();
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->with('success', 'La marque a bien été supprimé');
     }
 }

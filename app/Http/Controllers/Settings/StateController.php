@@ -30,7 +30,7 @@ class StateController extends Controller
     public function store(StateRequest $request): RedirectResponse
     {
         State::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'L\'état a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class StateController extends Controller
     public function update(StateRequest $request, State $state): RedirectResponse
     {
         $state->update($request->validated());
-        return redirect()->route('states.index');
+        return redirect()->route('states.index')->with('success', 'L\'état a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class StateController extends Controller
     public function destroy(State $state): RedirectResponse
     {
         $state->delete();
-        return redirect()->route('states.index');
+        return redirect()->route('states.index')->with('success', 'L\'état a bien été supprimé');
     }
 }

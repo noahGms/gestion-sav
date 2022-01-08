@@ -30,7 +30,7 @@ class InterventionController extends Controller
     public function store(InterventionRequest $request): RedirectResponse
     {
         Intervention::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Le moyen d\'intervention a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class InterventionController extends Controller
     public function update(InterventionRequest $request, Intervention $intervention): RedirectResponse
     {
         $intervention->update($request->validated());
-        return redirect()->route('interventions.index');
+        return redirect()->route('interventions.index')->with('success', 'Le moyen d\'intervention a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention): RedirectResponse
     {
         $intervention->delete();
-        return redirect()->route('interventions.index');
+        return redirect()->route('interventions.index')->with('success', 'Le moyen d\'intervention a bien été supprimé');
     }
 }

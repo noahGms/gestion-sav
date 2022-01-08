@@ -32,7 +32,7 @@ class TypeController extends Controller
     public function store(TypeRequest $request): RedirectResponse
     {
         Type::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Le type a bien été créé');
     }
 
     /**
@@ -57,7 +57,7 @@ class TypeController extends Controller
     public function update(TypeRequest $request, Type $type): RedirectResponse
     {
         $type->update($request->validated());
-        return redirect()->route('types.index');
+        return redirect()->route('types.index')->with('success', 'Le type a bien été modifié');
     }
 
     /**
@@ -69,6 +69,6 @@ class TypeController extends Controller
     public function destroy(Type $type): RedirectResponse
     {
         $type->delete();
-        return redirect()->route('types.index');
+        return redirect()->route('types.index')->with('success', 'Le type a bien été supprimé');
     }
 }

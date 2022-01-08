@@ -67,7 +67,7 @@ class ItemController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $this->itemService->store($request);
-        return redirect()->route('items.index');
+        return redirect()->route('items.index')->with('success', 'L\'item a bien été créé');
     }
 
     /**
@@ -108,7 +108,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item): RedirectResponse
     {
         $this->itemService->update($request, $item);
-        return redirect()->route('items.index');
+        return redirect()->route('items.index')->with('success', 'L\item a bien été modifié');
     }
 
     /**
@@ -120,6 +120,6 @@ class ItemController extends Controller
     public function destroy(Item $item): RedirectResponse
     {
         $this->itemService->delete($item);
-        return redirect()->route('items.index');
+        return redirect()->route('items.index')->with('success', 'L\item a bien été supprimé');
     }
 }

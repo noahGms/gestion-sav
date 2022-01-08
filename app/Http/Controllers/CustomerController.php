@@ -60,7 +60,7 @@ class CustomerController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $this->customerService->store($request);
-        return redirect()->route("customers.index");
+        return redirect()->route("customers.index")->with('success', 'Le client a bien été créé');
     }
 
     /**
@@ -95,7 +95,7 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer): RedirectResponse
     {
         $this->customerService->update($request, $customer);
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Le client a bien été modifié');
     }
 
     /**
@@ -107,6 +107,6 @@ class CustomerController extends Controller
     public function destroy(Customer $customer): RedirectResponse
     {
         $this->customerService->delete($customer);
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Le client a bien été supprimé');
     }
 }

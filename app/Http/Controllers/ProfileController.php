@@ -24,6 +24,6 @@ class ProfileController extends Controller
     public function update(ProfileRequest $request): RedirectResponse
     {
         Auth::user()->update($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Le profile a bien été modifié');
     }
 }

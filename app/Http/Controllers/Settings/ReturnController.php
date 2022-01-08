@@ -30,7 +30,7 @@ class ReturnController extends Controller
     public function store(ReturnRequest $request): RedirectResponse
     {
         ReturnMdl::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Le moyen de retour a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class ReturnController extends Controller
     public function update(ReturnRequest $request, ReturnMdl $return): RedirectResponse
     {
         $return->update($request->validated());
-        return redirect()->route('returns.index');
+        return redirect()->route('returns.index')->with('success', 'Le moyen de retour a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class ReturnController extends Controller
     public function destroy(ReturnMdl $return): RedirectResponse
     {
         $return->delete();
-        return redirect()->route('returns.index');
+        return redirect()->route('returns.index')->with('success', 'Le moyen de retour a bien été supprimé');
     }
 }

@@ -30,7 +30,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): RedirectResponse
     {
         Category::create($request->validated());
-        return redirect()->back();
+        return redirect()->back()->with('success', 'La catégorie a bien été créé');
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
         $category->update($request->validated());
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'La catégorie a bien été modifié');
     }
 
     /**
@@ -66,6 +66,6 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'La catégorie a bien été supprimé');
     }
 }

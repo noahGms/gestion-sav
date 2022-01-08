@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->validated(), $request->get('remember_me'))) {
             $request->session()->regenerate();
 
-            return redirect()->route('home.index');
+            return redirect()->route('home.index')->with('success', 'Bonjour ' . Auth::user()->fullname);
         }
 
         return back()->withErrors(['error' => 'Les informations de connexion sont inccorectes']);
