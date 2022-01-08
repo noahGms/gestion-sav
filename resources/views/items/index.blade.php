@@ -4,7 +4,7 @@
     <div>
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="fs-4 mb-0">Liste des items</p>
+                <p class="fs-4 mb-0 d-flex align-items-center">Liste des items <span class="badge bg-secondary fs-6 ms-2">{{$items->count()}}</span></p>
             </div>
             <a href="{{route('items.create')}}" class="btn btn-primary btn-md rounded-pill">
                 <i class="fas fa-plus"></i> Ajouter un item
