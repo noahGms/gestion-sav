@@ -65,6 +65,10 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
+        if ($user->is_god) {
+            return back()->withErrors(['error' => 'L\'utilisateur ne peut pas être supprimé']);
+        }
+
         $user->delete();
         return redirect()->route('users.index')->with('success', 'L\'utilisateur a bien été supprimé');
     }
