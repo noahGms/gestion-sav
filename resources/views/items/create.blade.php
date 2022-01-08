@@ -35,8 +35,8 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="technicians-tab" data-bs-toggle="tab" data-bs-target="#technicians"
-                            type="button" role="tab" aria-controls="technicians" aria-selected="false">Techniciens
+                    <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users"
+                            type="button" role="tab" aria-controls="users" aria-selected="false">Techniciens
                     </button>
                 </li>
             </ul>
@@ -370,25 +370,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade mb-5" id="technicians" role="tabpanel" aria-labelledby="technicians-tab">
+                <div class="tab-pane fade mb-5" id="users" role="tabpanel" aria-labelledby="users-tab">
                         <div class="mb-3 w-100 mt-4">
-                            <label for="technicians-0" class="form-label">Tech</label>
-                            <select class="form-select" id="technicians-0" id="technicians-${techId}" name="technicians[]" aria-label="Selectionner un technicien">
+                            <label for="users-0" class="form-label">Techniciens</label>
+                            <select class="form-select" id="users-0" id="users-${techId}" name="users[]" aria-label="Selectionner un technicien">
                                 <option value="" selected>Selectionner un technicien</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->fullname}}</option>
                                 @endforeach
                             </select>
-                            @error('technicians')
+                            @error('users')
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('technicians') }}
+                                    {{ $errors->first('users') }}
                                 </div>
                             @enderror
                         </div>
-                        <div id="technicians-wrapper" class="rowmb-3">
-                            
+                        <div id="users-wrapper" class="rowmb-3">
+
                         </div>
-                        <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="technicians-button">Ajouter un tech</button>
+                        <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="users-button">Ajouter un tech</button>
                     </div>
                 </div>
             </div>
@@ -402,8 +402,8 @@
         let maxSize = {{$users->count()}}
 
         function addTech() {
-            const wrapper = document.getElementById('technicians-wrapper')
-            const button = document.getElementById('technicians-button')
+            const wrapper = document.getElementById('users-wrapper')
+            const button = document.getElementById('users-button')
 
             techId++
             techInputId++
@@ -411,17 +411,17 @@
                 button.toggleAttribute('disabled', true)
             }
             wrapper.insertAdjacentHTML("beforeend", `
-                <div id="technicians-div-${techInputId}" class="d-flex align-items-center mb-3">
+                <div id="users-div-${techInputId}" class="d-flex align-items-center mb-3">
                     <div class="w-100">
-                        <select class="form-select" id="technicians-${techInputId}" name="technicians[]" aria-label="Selectionner un technicien">
+                        <select class="form-select" id="users-${techInputId}" name="users[]" aria-label="Selectionner un technicien">
                             <option value="" selected>Selectionner un technicien</option>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->fullname}}</option>
                             @endforeach
                         </select>
-                        @error('technicians')
+                        @error('users')
                             <div class="invalid-feedback">
-                                {{ $errors->first('technicians') }}
+                                {{ $errors->first('users') }}
                             </div>
                         @enderror
                     </div>
@@ -435,9 +435,9 @@
         }
 
         function deleteTech(id) {
-            const wrapper = document.getElementById('technicians-wrapper')
-            const div = document.getElementById(`technicians-div-${id}`)
-            const button = document.getElementById('technicians-button')
+            const wrapper = document.getElementById('users-wrapper')
+            const div = document.getElementById(`users-div-${id}`)
+            const button = document.getElementById('users-button')
 
             div.remove()
 

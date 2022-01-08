@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\ItemRequest;
+use App\Http\Requests\ItemUserRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,13 @@ class ItemService
             'customer_id' => $customer->id ?? $request->get('customer_id'),
             'created_by' => Auth::id()
         ]));
+
+        $usersPayload = $request->validate((new ItemUserRequest())->rules());
+        if (!empty($usersPayload['users'])) {
+            $item->users()->attach(array_filter($usersPayload['users'], function($value) {
+                return  $value != null;
+            }));
+        }
 
         return $item;
     }
