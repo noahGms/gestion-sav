@@ -494,7 +494,7 @@
                     <div class="col">
                         <input class="form-control" name="parts[${partsInputId}][price]"
                                id="price"
-                               type="text" placeholder="Prix"/>
+                               type="number" placeholder="Prix"/>
                     </div>
                     <div class="col">
                         <input class="form-control" name="parts[${partsInputId}][link]"

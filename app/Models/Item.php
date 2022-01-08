@@ -118,4 +118,12 @@ class Item extends Model
     {
         return $this->hasMany(File::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function Parts(): HasMany
+    {
+        return $this->hasMany(Part::class);
+    }
 }
