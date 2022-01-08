@@ -22,9 +22,17 @@ class PartService
         if (empty($partPayload)) return;
 
         foreach ($partPayload["parts"] as $part) {
+            $properties = array_filter($part, function ($value) {
+                return $value != null;
+            });
+
+            if (empty($properties)) continue;
+
             Part::create(array_merge($part, [
                 'item_id' => $item->id
             ]));
         }
+
+        dd($partPayload);
     }
 }
