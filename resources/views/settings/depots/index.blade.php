@@ -34,10 +34,10 @@
                     <a class="text-decoration-none" href="{{route('depots.edit', $depot)}}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteDepotModal">
+                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteDepotModal{{$depot->id}}">
                                 <i class="fas fa-trash text-danger"></i>
                             </span>
-                    <div class="modal fade" id="deleteDepotModal" tabindex="-1"
+                    <div class="modal fade" id="deleteDepotModal{{$depot->id}}" tabindex="-1"
                          aria-labelledby="deleteDepotModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

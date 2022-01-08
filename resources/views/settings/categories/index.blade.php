@@ -34,10 +34,10 @@
                     <a class="text-decoration-none" href="{{route('categories.edit', $category)}}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
+                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal{{$category->id}}">
                                 <i class="fas fa-trash text-danger"></i>
                             </span>
-                    <div class="modal fade" id="deleteCategoryModal" tabindex="-1"
+                    <div class="modal fade" id="deleteCategoryModal{{$category->id}}" tabindex="-1"
                          aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

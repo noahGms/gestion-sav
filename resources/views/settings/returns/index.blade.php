@@ -34,10 +34,10 @@
                     <a class="text-decoration-none" href="{{route('returns.edit', $return)}}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteReturnModal">
+                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteReturnModal{{$return->id}}">
                                 <i class="fas fa-trash text-danger"></i>
                             </span>
-                    <div class="modal fade" id="deleteReturnModal" tabindex="-1"
+                    <div class="modal fade" id="deleteReturnModal{{$return->id}}" tabindex="-1"
                          aria-labelledby="deleteReturnModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

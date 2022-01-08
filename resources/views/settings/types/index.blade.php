@@ -36,10 +36,10 @@
                     <a class="text-decoration-none" href="{{route('types.edit', $type)}}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteTypeModal">
+                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteTypeModal{{$type->id}}">
                                 <i class="fas fa-trash text-danger"></i>
                             </span>
-                    <div class="modal fade" id="deleteTypeModal" tabindex="-1"
+                    <div class="modal fade" id="deleteTypeModal{{$type->id}}" tabindex="-1"
                          aria-labelledby="deleteTypeModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

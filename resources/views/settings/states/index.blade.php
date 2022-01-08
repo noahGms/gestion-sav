@@ -39,10 +39,10 @@
                     <a class="text-decoration-none" href="{{route('states.edit', $state)}}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteStateModal">
+                    <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteStateModal{{$state->id}}">
                                 <i class="fas fa-trash text-danger"></i>
                             </span>
-                    <div class="modal fade" id="deleteStateModal" tabindex="-1"
+                    <div class="modal fade" id="deleteStateModal{{$state->id}}" tabindex="-1"
                          aria-labelledby="deleteStateModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
