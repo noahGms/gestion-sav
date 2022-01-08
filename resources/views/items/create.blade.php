@@ -383,7 +383,7 @@
                 <div class="tab-pane fade mb-5" id="users" role="tabpanel" aria-labelledby="users-tab">
                     <div class="mb-3 w-100 mt-4">
                         <label for="users-0" class="form-label">Techniciens</label>
-                        <select class="form-select" id="users-0" id="users-${techId}" name="users[]" aria-label="Selectionner un technicien">
+                        <select class="form-select" id="users-0" name="users[]" aria-label="Selectionner un technicien">
                             <option value="" selected>Selectionner un technicien</option>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->fullname}}</option>
@@ -424,7 +424,7 @@
     </div>
 
     <script>
-        let techId = 0
+        let techCount = 0
         let techInputId = 0
         let maxSize = {{$users->count()}};
         let partsCount = 0
@@ -434,9 +434,9 @@
             const wrapper = document.getElementById('users-wrapper')
             const button = document.getElementById('users-button')
 
-            techId++
+            techCount++
             techInputId++
-            if (techId === (maxSize - 1)) {
+            if (techCount === (maxSize - 1)) {
                 button.toggleAttribute('disabled', true)
             }
             wrapper.insertAdjacentHTML("beforeend", `
@@ -454,7 +454,7 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="ms-4 mt-4">
+                    <div class="ms-4">
                         <span style="cursor: pointer;" onclick="deleteTech(${techInputId})">
                             <i class="fas fa-times text-danger"></i>
                         </span>
@@ -469,8 +469,8 @@
 
             div.remove()
 
-            techId--
-            if (techId < maxSize) {
+            techCount--
+            if (techCount < maxSize) {
                 button.toggleAttribute('disabled', false)
             }
         }
