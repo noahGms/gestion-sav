@@ -44,6 +44,11 @@
                             type="button" role="tab" aria-controls="documents" aria-selected="false">Documents
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="parts-tab" data-bs-toggle="tab" data-bs-target="#parts"
+                            type="button" role="tab" aria-controls="parts" aria-selected="false">Pièces
+                    </button>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
@@ -395,10 +400,23 @@
                 </div>
                 <div class="tab-pane fade mb-5" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                     <div class="mb-3 w-100 mt-4">
-                        <label for="files" class="form-label">Ajouter un document</label>
+                        <label for="files" class="form-label">Documents</label>
                         <input onchange="filesPreview(event)" class="form-control" type="file" id="files" name="files[]" multiple>
                     </div>
                     <div id="files-preview"></div>
+                </div>
+                <div class="tab-pane fade mb-5" id="parts" role="tabpanel" aria-labelledby="parts-tab">
+                    <div class="mb-3 w-100 mt-4">
+                        <label for="files" class="form-label">Pièces</label>
+
+                        <div id="parts-alert" class="row mb-3">
+                            <div class="alert alert-primary" role="alert">
+                                Aucune pièce a été ajouté
+                            </div>
+                        </div>
+                        <div id="parts-wrapper"></div>
+                        <button class="btn btn-dark btn-sm" onclick="addPart()" type="button" id="parts-button">Ajouter une pièce</button>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -408,7 +426,9 @@
     <script>
         let techId = 0
         let techInputId = 0
-        let maxSize = {{$users->count()}}
+        let maxSize = {{$users->count()}};
+        let partsCount = 0
+        let partsInputId = 0
 
         function addTech() {
             const wrapper = document.getElementById('users-wrapper')
@@ -452,6 +472,53 @@
             techId--
             if (techId < maxSize) {
                 button.toggleAttribute('disabled', false)
+            }
+        }
+
+        function addPart() {
+            const wrapper = document.getElementById('parts-wrapper')
+            const alert = document.getElementById('parts-alert')
+
+            partsCount++
+            if (partsCount > 0) {
+                alert.style.display = 'none'
+            }
+            partsInputId++
+            wrapper.insertAdjacentHTML("beforeend", `
+                <div id="parts-${partsInputId}" class="row mb-3">
+                    <div class="col">
+                        <input class="form-control" name="parts[${partsInputId}][name]"
+                               id="name"
+                               type="text" placeholder="Nom"/>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="parts[${partsInputId}][price]"
+                               id="price"
+                               type="text" placeholder="Prix"/>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="parts[${partsInputId}][link]"
+                               id="link"
+                               type="text" placeholder="Lien"/>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <span style="cursor: pointer;" onclick="deletePart(${partsInputId})">
+                            <i class="fas fa-times text-danger"></i>
+                        </span>
+                    </div>
+                </div>
+            `)
+        }
+
+        function deletePart(id) {
+            const div = document.getElementById(`parts-${id}`)
+            const alert = document.getElementById('parts-alert')
+
+            div.remove()
+
+            partsCount--
+            if (partsCount === 0) {
+                alert.style.display = 'block'
             }
         }
 
