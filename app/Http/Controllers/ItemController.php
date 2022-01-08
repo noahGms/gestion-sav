@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\ReturnMdl;
 use App\Models\State;
 use App\Models\Type;
+use App\Models\User;
 use App\Services\ItemService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -52,7 +53,8 @@ class ItemController extends Controller
         $types = Type::all();
         $brands = Brand::all();
         $customers = Customer::all();
-        return view('items.create', compact('states', 'interventions', 'depots', 'returns', 'types', 'brands', 'customers'));
+        $users = User::where('is_god', '=', false)->get();
+        return view('items.create', compact('states', 'interventions', 'depots', 'returns', 'types', 'brands', 'customers', 'users'));
     }
 
     /**

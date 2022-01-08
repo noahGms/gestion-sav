@@ -34,6 +34,11 @@
                             type="button" role="tab" aria-controls="informations" aria-selected="false">Informations
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other"
+                            type="button" role="tab" aria-controls="other" aria-selected="false">Autre
+                    </button>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
@@ -365,12 +370,82 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade mb-5" id="other" role="tabpanel" aria-labelledby="other-tab">
+                        <div id="technicians-wrapper" class="row mt-4 mb-3">
+                            <div id="technicians-alert" class="px-2">
+                                <div class="alert alert-primary" role="alert">
+                                    Aucun technicians est ajouté
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="technicians-button">Ajouter un tech</button>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
 
     <script>
+        let techId = 0
+        let maxSize = {{$users->count()}}
+
+        function addTech() {
+            const wrapper = document.getElementById('technicians-wrapper')
+            const button = document.getElementById('technicians-button')
+            const alert = document.getElementById('technicians-alert')
+
+            if (techId === 0) {
+                alert.style.display = 'none'
+            }
+
+            techId++
+            if (techId === maxSize) {
+                button.toggleAttribute('disabled', true)
+            }
+            wrapper.insertAdjacentHTML("beforeend", `
+                <div id="technicians-div-${techId}" class="d-flex align-items-center mb-3">
+                    <div class="w-100">
+                        <label for="technicians-${techId}" class="form-label">Tech ${techId}</label>
+                        <select class="form-select" id="brand_id" id="technicians-${techId}" name="technicians[]" aria-label="Selectionner un technicien">
+                            <option value="" selected>Selectionner un technicien</option>
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->fullname}}</option>
+                            @endforeach
+                        </select>
+                        @error('technicians')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('technicians') }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="ms-4 mt-4">
+                        <span style="cursor: pointer;" onclick="deleteTech(${techId})">
+                            <i class="fas fa-times text-danger"></i>
+                        </span>
+                    </div>
+                </div>
+            `)
+        }
+
+        function deleteTech(id) {
+            const wrapper = document.getElementById('technicians-wrapper')
+            const div = document.getElementById(`technicians-div-${id}`)
+            const button = document.getElementById('technicians-button')
+
+            div.remove()
+
+            techId--
+            const alert = document.getElementById('technicians-alert')
+
+            if (techId === 0) {
+                alert.style.display = 'block'
+            }
+            if (techId < maxSize) {
+                button.toggleAttribute('disabled', false)
+            }
+        }
+
         function hideCustomerButton() {
             const div = document.getElementById("customerButton")
             div.classList = ""
