@@ -9,6 +9,9 @@
                 </a>
                 <span>I'item n°{{$item->id}}</span>
             </p>
+            <a href="{{route('items.edit', $item)}}" class="btn btn-primary btn-md rounded-pill">
+                <i class="fas fa-plus"></i> Modifier
+            </a>
         </div>
     </div>
 @endsection
