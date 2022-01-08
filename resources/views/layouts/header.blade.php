@@ -17,6 +17,7 @@
                         <i class="fas fa-users"></i> Clients
                     </a>
                 </li>
+                @if(auth()->user()->is_god)
                 <li class="nav-item dropdown">
                     <a class="nav-link {{str_contains(request()->fullUrl(), '/settings') ? 'active' : ''}} dropdown-toggle"
                        href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,6 +42,7 @@
                                href="{{route('depots.index')}}">Depots</a></li>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-item dropdown">
                     <a style="text-decoration: none; cursor: pointer;" class="nav-link dropdown-toggle"
                        id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
