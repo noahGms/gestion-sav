@@ -35,8 +35,8 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other"
-                            type="button" role="tab" aria-controls="other" aria-selected="false">Autre
+                    <button class="nav-link" id="technicians-tab" data-bs-toggle="tab" data-bs-target="#technicians"
+                            type="button" role="tab" aria-controls="technicians" aria-selected="false">Techniciens
                     </button>
                 </li>
             </ul>
@@ -370,7 +370,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade mb-5" id="other" role="tabpanel" aria-labelledby="other-tab">
+                <div class="tab-pane fade mb-5" id="technicians" role="tabpanel" aria-labelledby="technicians-tab">
                         <div id="technicians-wrapper" class="row mt-4 mb-3">
                             <div id="technicians-alert" class="px-2">
                                 <div class="alert alert-primary" role="alert">
