@@ -383,20 +383,14 @@
                 <div class="tab-pane fade mb-5" id="users" role="tabpanel" aria-labelledby="users-tab">
                     <div class="mb-3 w-100 mt-4">
                         <label for="users-0" class="form-label">Techniciens</label>
-                        <select class="form-select" id="users-0" name="users[]" aria-label="Selectionner un technicien">
-                            <option value="" selected>Selectionner un technicien</option>
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->fullname}}</option>
-                            @endforeach
-                        </select>
-                        @error('users')
-                            <div class="invalid-feedback">
-                                {{ $errors->first('users') }}
+                        <div id="users-alert" class="row mb-3">
+                            <div class="alert alert-primary" role="alert">
+                                Aucune pièce a été ajouté
                             </div>
-                        @enderror
+                        </div>
+                        <div id="users-wrapper"></div>
+                        <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="users-button">Ajouter un tech</button>
                     </div>
-                    <div id="users-wrapper" class="row mb-3"></div>
-                    <button class="btn btn-dark btn-sm" onclick="addTech()" type="button" id="users-button">Ajouter un tech</button>
                 </div>
                 <div class="tab-pane fade mb-5" id="parts" role="tabpanel" aria-labelledby="parts-tab">
                     <div class="mb-3 w-100 mt-4">
@@ -433,26 +427,22 @@
         function addTech() {
             const wrapper = document.getElementById('users-wrapper')
             const button = document.getElementById('users-button')
+            const alert = document.getElementById('users-alert')
 
             techCount++
             techInputId++
-            if (techCount === (maxSize - 1)) {
+            if (techCount === maxSize) {
                 button.toggleAttribute('disabled', true)
+            }
+            if (techCount > 0) {
+                alert.style.display = 'none'
             }
             wrapper.insertAdjacentHTML("beforeend", `
                 <div id="users-div-${techInputId}" class="d-flex align-items-center mb-3">
                     <div class="w-100">
                         <select class="form-select" id="users-${techInputId}" name="users[]" aria-label="Selectionner un technicien">
                             <option value="" selected>Selectionner un technicien</option>
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->fullname}}</option>
-                            @endforeach
                         </select>
-                        @error('users')
-                            <div class="invalid-feedback">
-                                {{ $errors->first('users') }}
-                            </div>
-                        @enderror
                     </div>
                     <div class="ms-4">
                         <span style="cursor: pointer;" onclick="deleteTech(${techInputId})">
@@ -466,12 +456,16 @@
         function deleteTech(id) {
             const div = document.getElementById(`users-div-${id}`)
             const button = document.getElementById('users-button')
+            const alert = document.getElementById('users-alert')
 
             div.remove()
 
             techCount--
             if (techCount < maxSize) {
                 button.toggleAttribute('disabled', false)
+            }
+            if (techCount === 0) {
+                alert.style.display = 'block'
             }
         }
 
