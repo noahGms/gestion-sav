@@ -25,6 +25,7 @@
     <div class="container">
         @yield("content")
     </div>
+    @include("layouts.notification")
     @auth()
         @include("layouts.footer")
     @endauth
