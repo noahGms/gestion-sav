@@ -17,7 +17,7 @@ class ReturnController extends Controller
      */
     public function index(): View
     {
-        $returns = ReturnMdl::paginate(12);
+        $returns = ReturnMdl::orderBy('name')->paginate(12);
         return view('settings.returns.index', compact('returns'));
     }
 

@@ -17,7 +17,7 @@ class DepotController extends Controller
      */
     public function index(): View
     {
-        $depots = Depot::paginate(12);
+        $depots = Depot::orderBy('name')->paginate(12);
         return view('settings.depots.index', compact('depots'));
     }
 

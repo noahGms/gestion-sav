@@ -17,7 +17,7 @@ class InterventionController extends Controller
      */
     public function index(): View
     {
-        $interventions = Intervention::paginate(12);
+        $interventions = Intervention::orderBy('name')->paginate(12);
         return view('settings.interventions.index', compact('interventions'));
     }
 

@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = Category::paginate(12);
+        $categories = Category::orderBy('name')->paginate(12);
         return view('settings.categories.index', compact('categories'));
     }
 

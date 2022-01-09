@@ -18,7 +18,7 @@ class TypeController extends Controller
      */
     public function index(): View
     {
-        $types = Type::paginate(12);
+        $types = Type::orderBy('name')->paginate(12);
         $categories = Category::all();
         return view('settings.types.index', compact('types', 'categories'));
     }

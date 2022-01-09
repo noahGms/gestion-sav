@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        $users = User::paginate(12);
+        $users = User::orderBy('created_at', 'desc')->paginate(12);
         return view('settings.users.index', compact('users'));
     }
 
