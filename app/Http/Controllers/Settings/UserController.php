@@ -72,4 +72,14 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'L\'utilisateur a bien été supprimé');
     }
+
+    /**
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function toggleAdmin(User $user): RedirectResponse
+    {
+        $user->update(['is_admin' => !$user->is_admin]);
+        return redirect()->route('users.index')->with('success', 'L\'utilisateur a bien été modifié');
+    }
 }

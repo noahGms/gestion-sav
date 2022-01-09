@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'is_god'], function () {
         Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
         Route::resource('/settings/users', \App\Http\Controllers\Settings\UserController::class)->except(['show', 'create']);
+        Route::get('/settings/users/{user}/toggle-admin', [\App\Http\Controllers\Settings\UserController::class, 'toggleAdmin'])->name('users.toggle-admin');
         Route::resource('/settings/brands', \App\Http\Controllers\Settings\BrandController::class)->except(['show', 'create']);
         Route::resource('/settings/categories', \App\Http\Controllers\Settings\CategoryController::class)->except(['show', 'create']);
         Route::resource('/settings/types', \App\Http\Controllers\Settings\TypeController::class)->except(['show', 'create']);

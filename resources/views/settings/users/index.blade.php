@@ -25,6 +25,7 @@
             <th scope="col">Nom d'utilisateur</th>
             <th class="text-center" scope="col">Nom</th>
             <th class="text-center" scope="col">Prénom</th>
+            <th class="text-center" scope="col">Admin</th>
             <th class="text-center" scope="col">Actions</th>
         </tr>
         </thead>
@@ -35,7 +36,17 @@
                 <td class="text-center">{{$user->lastname}}</td>
                 <td class="text-center">{{$user->firstname}}</td>
                 <td class="text-center">
+                    <i class="fas fa-circle {{$user->is_admin ? 'text-success' : 'text-danger'}}"></i>
+                </td>
+                <td class="text-center">
                     @if(!$user->is_god)
+                        <a class="text-decoration-none" href="{{route('users.toggle-admin', $user)}}">
+                            @if($user->is_admin)
+                                <i class="fas fa-toggle-on"></i>
+                            @else
+                                <i class="fas fa-toggle-off"></i>
+                            @endif
+                        </a>
                         <a class="text-decoration-none" href="{{route('users.edit', $user)}}">
                             <i class="fas fa-edit"></i>
                         </a>
