@@ -23,6 +23,7 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -42,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'is_god' => 'boolean',
+        'is_admin' => 'boolean'
     ];
 
     /**
@@ -56,6 +58,7 @@ class User extends Authenticatable
         if ($this->godExists()) throw new \Error('God already exists');
 
         $user->is_god = true;
+        $user->is_admin = true;
         $user->save();
 
         return $user;

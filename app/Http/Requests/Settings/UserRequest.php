@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
                 'firstname' => 'nullable|string',
                 'lastname' => 'nullable|string',
                 'password' => 'required|string|confirmed',
+                'is_admin' => 'nullable|boolean',
             ];
         } else {
             return [

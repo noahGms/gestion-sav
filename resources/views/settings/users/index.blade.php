@@ -147,6 +147,17 @@
                             <input class="form-control" name="password_confirmation" id="password_confirmation"
                                    type="password"/>
                         </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input @error('is_admin') is-invalid @enderror" type="checkbox" role="switch" id="is_admin" name="is_admin" value="{{old('is_admin') ?? 1}}">
+                                <label class="form-check-label" for="is_admin">Admin</label>
+                                @error('is_admin')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_admin') }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
