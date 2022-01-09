@@ -45,6 +45,40 @@ class User extends Authenticatable
     ];
 
     /**
+     * @param array $details
+     * @return $this
+     */
+    public function createGodUser(array $details): self
+    {
+        $user = new self($details);
+
+        if ($this->usernameExists($details['username'])) throw new \Error('Username already exists');
+        if ($this->godExists()) throw new \Error('God already exists');
+
+        $user->is_god = true;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @param $username
+     * @return int
+     */
+    public function usernameExists($username): int
+    {
+        return self::where('username', '=', $username)->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function godExists(): int
+    {
+        return self::where('is_god', true)->count();
+    }
+
+    /**
      * @param $password
      * @return void
      */
