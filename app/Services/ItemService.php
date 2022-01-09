@@ -21,17 +21,23 @@ class ItemService
      */
     private $partService;
 
+    /**
+     * @var FileService
+     */
+    private $fileService;
 
     /**
      * ItemService constructor.
      *
      * @param CustomerService $customerService
      * @param PartService $partService
+     * @param FileService $fileService
      */
-    public function __construct(CustomerService $customerService, PartService $partService)
+    public function __construct(CustomerService $customerService, PartService $partService, FileService $fileService)
     {
         $this->customerService = $customerService;
         $this->partService = $partService;
+        $this->fileService = $fileService;
     }
 
     /**
@@ -57,18 +63,7 @@ class ItemService
             }));
         }
 
-        if (!empty($request->allFiles())) {
-            $files = $request->allFiles();
-            foreach ($files['files'] as $file) {
-                $file->store('/files', 'public');
-                File::create([
-                    'path' => "/files/{$file->hashName()}",
-                    'name' => $file->getClientOriginalName(),
-                    'type' => $file->getClientMimeType(),
-                    'item_id' => $item->id
-                ]);
-            }
-        }
+        $this->fileService->store($request, $item);
 
         $this->partService->store($request, $item);
 
