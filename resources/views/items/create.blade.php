@@ -528,7 +528,7 @@
             }
 
             Array.from(event.target.files).forEach(function (file) {
-                if (file.type === 'image/png') {
+                if (file.type.includes('image/')) {
                     const reader = new FileReader()
                     reader.onload = function(){
                         id++
