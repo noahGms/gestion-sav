@@ -78,7 +78,8 @@ class ItemController extends Controller
      */
     public function show(Item $item): View
     {
-        return view('items.show', compact('item'));
+        $users = User::where('is_god', '=', false)->get();
+        return view('items.show', compact('item', 'users'));
     }
 
     /**
