@@ -214,8 +214,8 @@
                                             <thead class="table-light">
                                             <tr>
                                                 <th scope="col">Nom</th>
-                                                <th scope="col">Prix</th>
-                                                <th scope="col">Lien</th>
+                                                <th class="text-center" scope="col">Prix</th>
+                                                <th class="text-center" scope="col">Lien</th>
                                                 <th class="text-center" scope="col">Actions</th>
                                             </tr>
                                             </thead>
@@ -223,8 +223,8 @@
                                             @foreach($item->parts as $part)
                                                 <tr>
                                                     <td>{{$part->name}}</td>
-                                                    <td>{{$part->price}}</td>
-                                                    <td>{{$part->link}}</td>
+                                                    <td class="text-center">{{$part->price}}</td>
+                                                    <td class="text-center">{{$part->link}}</td>
                                                     <td class="text-center">
                                                         <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteItemPartModal{{$part->id}}">
                                                             <i class="fas fa-trash text-danger"></i>
