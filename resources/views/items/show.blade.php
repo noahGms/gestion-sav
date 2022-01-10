@@ -421,6 +421,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex">
+                        <a href="" target="_blank" id="fileView" class="btn btn-sm btn-outline-primary me-2">Voir en grand</a>
                         <button id="fileDownload" class="btn btn-sm btn-outline-primary me-2">Télécharger</button>
                         <button type="button" id="fileDelete" class="btn btn-sm btn-outline-danger">Supprimer</button>
                     </div>
@@ -491,6 +492,9 @@
 
             const name = document.getElementById('fileDetailsName')
             name.innerHTML = file.name
+
+            const link = document.getElementById('fileView')
+            link.href = filePath
 
             document.getElementById('fileDownload').addEventListener('click', function () {
                 const link = document.createElement("a");
