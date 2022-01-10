@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/customers', \App\Http\Controllers\CustomerController::class);
     Route::post('/items/{item}/users', [\App\Http\Controllers\ItemUserController::class, 'store'])->name('items.users.store');
     Route::delete('/items/{item}/users/{user}', [\App\Http\Controllers\ItemUserController::class, 'destroy'])->name('items.users.destroy');
+    Route::post('/items/{item}/parts', [\App\Http\Controllers\PartController::class, 'store'])->name('items.parts.store');
+    Route::delete('/items/{item}/parts/{part}', [\App\Http\Controllers\PartController::class, 'destroy'])->name('items.parts.destroy');
     Route::resource('/items', \App\Http\Controllers\ItemController::class);
 });
 
