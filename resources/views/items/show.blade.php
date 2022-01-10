@@ -271,7 +271,8 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="card-title mb-0" style="font-weight: bold;">Documents</h5>
-                            <button type="button" class="btn btn-outline-primary">Ajouter un document</button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addItemFilesModal">Ajouter un document</button>
                         </div>
                         <div class="row">
                             <div>
@@ -281,7 +282,7 @@
                                     </div>
                                 @endif
                                 @foreach($item->files as $file)
-                                    <img height="100" width="100" src="{{Storage::url($file->path)}}" alt="">
+                                    <img onclick="showFileDetails({{$file}})" class="item-file" height="100" width="100" src="{{Storage::url($file->path)}}" alt="">
                                 @endforeach
                             </div>
                         </div>
@@ -380,4 +381,132 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addItemFilesModal" tabindex="-1" aria-labelledby="addItemFilesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{route('items.files.store', $item)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemFilesLabel">Ajouter un ou plusieurs documents</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="files" class="form-label">Documents</label>
+                            <input onchange="filesPreview(event)" class="form-control @error('files') is-invalid @enderror" type="file" id="files" name="files[]" multiple>
+                            @error('files')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('files') }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div id="files-preview"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showFileDetailModal" tabindex="-1" aria-labelledby="showFileDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showFileDetailModalLabel">Détail du document</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <button id="fileDownload" class="btn btn-sm btn-outline-primary me-2">Télécharger</button>
+                        <button type="button" id="fileDelete" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                    </div>
+                    <img class="mt-3" width="100%" height="300" id="fileDetailsImg" src="" alt="">
+                    <div class="mt-3">
+                        <p>Nom: <span id="fileDetailsName"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteItemFileConfirmDeleteModal" tabindex="-1"
+         aria-labelledby="deleteItemFileConfirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="fileDeleteForm" method="post">
+                    @method("DELETE")
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteItemFileConfirmDeleteModalLabel">Etes vous sur de
+                            vouloir supprimer ce fichier ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filesPreview(event) {
+            const wrapper = document.getElementById('files-preview')
+            let id = 0
+
+            if (wrapper.children.length > 0) {
+                wrapper.innerHTML = ''
+            }
+
+            Array.from(event.target.files).forEach(function (file) {
+                if (file.type.includes('image/')) {
+                    const reader = new FileReader()
+                    reader.onload = function(){
+                        id++
+                        wrapper.insertAdjacentHTML("beforeend", `
+                            <img height="100px" width="100px" id="output-${id}" />
+                        `)
+                        const output = document.getElementById(`output-${id}`)
+                        output.src = reader.result
+                    };
+                    reader.readAsDataURL(file)
+                }
+            })
+        }
+
+        function showFileDetails(file) {
+            new bootstrap.Modal(document.getElementById('showFileDetailModal')).show()
+
+            const img = document.getElementById('fileDetailsImg')
+            const filePath = '/storage' + file.path
+            img.src = filePath
+
+            const name = document.getElementById('fileDetailsName')
+            name.innerHTML = file.name
+
+            document.getElementById('fileDownload').addEventListener('click', function () {
+                const link = document.createElement("a");
+                link.setAttribute('download', file.name);
+                link.href = filePath;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
+
+            document.getElementById('fileDelete').addEventListener('click', function () {
+                const form = document.getElementById('fileDeleteForm')
+                form.action = "/items/{{$item->id}}/files/" + file.id
+
+                new bootstrap.Modal(document.getElementById('deleteItemFileConfirmDeleteModal')).show()
+            })
+        }
+    </script>
 @endsection
