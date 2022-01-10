@@ -199,13 +199,64 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="card-title mb-0" style="font-weight: bold;">Pièces</h5>
-                            <button type="button" class="btn btn-outline-primary">Ajouter une pièce</button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addItemPartModal">Ajouter une pièce</button>
                         </div>
                         <div class="row">
                             <div>
                                 @if(!$item->parts->count())
                                     <div class="alert alert-primary mb-0" role="alert">
                                         Aucune pièce
+                                    </div>
+                                @else
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">Nom</th>
+                                                <th scope="col">Prix</th>
+                                                <th scope="col">Lien</th>
+                                                <th class="text-center" scope="col">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($item->parts as $part)
+                                                <tr>
+                                                    <td>{{$part->name}}</td>
+                                                    <td>{{$part->price}}</td>
+                                                    <td>{{$part->link}}</td>
+                                                    <td class="text-center">
+                                                        <span style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deleteItemPartModal{{$part->id}}">
+                                                            <i class="fas fa-trash text-danger"></i>
+                                                        </span>
+                                                        <div class="modal fade" id="deleteItemPartModal{{$part->id}}" tabindex="-1"
+                                                             aria-labelledby="deleteItemPartModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <form action="{{route('items.parts.destroy', [$item, $part])}}" method="post">
+                                                                        @method("DELETE")
+                                                                        @csrf
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="deleteItemPartModalLabel">Etes vous sur de
+                                                                                vouloir supprimer cette pièce ?</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                                Annuler
+                                                                            </button>
+                                                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 @endif
                             </div>
@@ -261,6 +312,62 @@
                             @error('user_id')
                             <div class="invalid-feedback">
                                 {{ $errors->first('user_id') }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addItemPartModal" tabindex="-1" aria-labelledby="addItemPartLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{route('items.parts.store', $item)}}" method="post">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemPartLabel">Ajouter une pièce</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nom</label>
+                            <input class="form-control @error('name') is-invalid @enderror" name="name"
+                                   id="name"
+                                   value="{{old('name')}}"
+                                   type="text" placeholder="Nom" />
+                            @error('name')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Prix</label>
+                            <input class="form-control @error('price') is-invalid @enderror" name="price"
+                                   id="price"
+                                   value="{{old('price')}}"
+                                   type="number" placeholder="Prix" />
+                            @error('price')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('price') }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="link" class="form-label">Lien</label>
+                            <input class="form-control @error('link') is-invalid @enderror" name="link"
+                                   id="link"
+                                   value="{{old('link')}}"
+                                   type="text" placeholder="Lien" />
+                            @error('link')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('link') }}
                             </div>
                             @enderror
                         </div>
