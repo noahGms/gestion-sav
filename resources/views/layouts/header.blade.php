@@ -17,7 +17,7 @@
                         <i class="fas fa-users"></i> Clients
                     </a>
                 </li>
-                @if(auth()->user()->is_god)
+                @if(auth()->user()->is_admin)
                 <li class="nav-item dropdown">
                     <a class="nav-link {{str_contains(request()->fullUrl(), '/settings') ? 'active' : ''}} dropdown-toggle"
                        href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

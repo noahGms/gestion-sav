@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
-    Route::group(['middleware' => 'is_god'], function () {
+    Route::group(['middleware' => 'is_admin'], function () {
         Route::resource('/settings/states', \App\Http\Controllers\Settings\StateController::class)->except(['show', 'create']);
         Route::resource('/settings/users', \App\Http\Controllers\Settings\UserController::class)->except(['show', 'create']);
         Route::get('/settings/users/{user}/toggle-admin', [\App\Http\Controllers\Settings\UserController::class, 'toggleAdmin'])->name('users.toggle-admin');
