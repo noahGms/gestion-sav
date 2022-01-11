@@ -37,10 +37,13 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @return View
+     * @return View|RedirectResponse
      */
-    public function edit(User $user): View
+    public function edit(User $user)
     {
+        if ($user->is_god) {
+            return redirect()->route('users.index')->with('error', 'L\'utilisateur ne peut pas être modifié');
+        }
         return view('settings.users.edit', compact('user'));
     }
 
@@ -53,6 +56,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
+        if ($user->is_god) {
+            return redirect()->route('users.index')->with('error', 'L\'utilisateur ne peut pas être modifié');
+        }
         $user->update($request->validated());
         return redirect()->route('users.index')->with('success', 'L\'utilisateur a bien été modifié');
     }
@@ -66,7 +72,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         if ($user->is_god) {
-            return back()->with('error', 'L\'utilisateur ne peut pas être supprimé');
+            return redirect()->route('users.index')->with('error', 'L\'utilisateur ne peut pas être supprimé');
         }
 
         $user->delete();
@@ -79,6 +85,9 @@ class UserController extends Controller
      */
     public function toggleAdmin(User $user): RedirectResponse
     {
+        if ($user->is_god) {
+            return redirect()->route('users.index')->with('error', 'L\'utilisateur ne peut pas être modifié');
+        }
         $user->update(['is_admin' => !$user->is_admin]);
         return redirect()->route('users.index')->with('success', 'L\'utilisateur a bien été modifié');
     }
