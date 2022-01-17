@@ -13,6 +13,11 @@
                 <i class="fas fa-plus"></i> Modifier
             </a>
         </div>
+        @if($item->archived_at)
+            <div class="alert alert-warning mt-3" role="alert">
+                L'item est archivé
+            </div>
+        @endif
         <div class="row mt-3">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="card w-100 h-100">

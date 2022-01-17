@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::resource('/customers', \App\Http\Controllers\CustomerController::class);
+    Route::post('/items/{item}/archive', [\App\Http\Controllers\ItemController::class, 'archive'])->name('items.archive');
+    Route::post('/items/{item}/unarchive', [\App\Http\Controllers\ItemController::class, 'unarchive'])->name('items.unarchive');
     Route::post('/items/{item}/users', [\App\Http\Controllers\ItemUserController::class, 'store'])->name('items.users.store');
     Route::delete('/items/{item}/users/{user}', [\App\Http\Controllers\ItemUserController::class, 'destroy'])->name('items.users.destroy');
     Route::post('/items/{item}/parts', [\App\Http\Controllers\PartController::class, 'store'])->name('items.parts.store');

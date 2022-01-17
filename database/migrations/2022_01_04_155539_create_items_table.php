@@ -33,6 +33,7 @@ class CreateItemsTable extends Migration
             $table->text('comments')->nullable();
             $table->text('communications')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->dateTime('archived_at')->nullable();
             $table->timestamps();
         });
     }

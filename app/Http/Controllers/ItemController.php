@@ -12,6 +12,7 @@ use App\Models\State;
 use App\Models\Type;
 use App\Models\User;
 use App\Services\ItemService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -122,5 +123,31 @@ class ItemController extends Controller
     {
         $this->itemService->delete($item);
         return redirect()->route('items.index')->with('success', 'L\item a bien été supprimé');
+    }
+
+    /**
+     * Archive the specified resource from storage.
+     *
+     * @param Item $item
+     * @return RedirectResponse
+     */
+    public function archive(Item $item): RedirectResponse
+    {
+        $item->archived_at = Carbon::now();
+        $item->save();
+        return redirect()->route('items.index')->with('success', 'L\item a bien été archivé');
+    }
+
+    /**
+     * Unarchive the specified resource from storage.
+     *
+     * @param Item $item
+     * @return RedirectResponse
+     */
+    public function unarchive(Item $item): RedirectResponse
+    {
+        $item->archived_at = null;
+        $item->save();
+        return redirect()->route('items.index')->with('success', 'L\item a bien été unarchivé');
     }
 }

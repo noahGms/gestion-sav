@@ -32,6 +32,21 @@
                         <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{$item->comment_state}}</td>
                         <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{optional($item->state)->name}}</td>
                         <td class="text-center">
+                            @if(!$item->archived_at)
+                                <form id="archiveForm" onclick="archiveForm.submit()" style="cursor: pointer;" class="d-inline" action="{{route('items.archive', $item)}}" method="post">
+                                    @csrf
+                                    <span class="text-primary" data-toggle="tooltip" data-placement="top" title="Archiver">
+                                        <i class="fas fa-folder"></i>
+                                    </span>
+                                </form>
+                            @else
+                                <form id="unarchiveForm" onclick="unarchiveForm.submit()" style="cursor: pointer;" class="d-inline" action="{{route('items.unarchive', $item)}}" method="post">
+                                    @csrf
+                                    <span class="text-primary" data-toggle="tooltip" data-placement="top" title="Unarchiver">
+                                        <i class="fas fa-folder-open"></i>
+                                    </span>
+                                </form>
+                            @endif
                             <a class="text-decoration-none" href="{{route('items.show', $item)}}">
                                 <i class="fas fa-eye"></i>
                             </a>

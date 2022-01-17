@@ -36,7 +36,8 @@ class Item extends Model
      */
     protected $dates = [
         'intervention_date',
-        'return_date'
+        'return_date',
+        'archived_at'
     ];
 
     /**
