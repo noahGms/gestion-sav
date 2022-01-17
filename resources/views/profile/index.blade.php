@@ -2,7 +2,7 @@
 
 @section("content")
     <div class="d-flex flex-column align-items-center justify-content-center">
-        <div class="card w-50 p-4 rounded">
+        <div class="card w-100 p-4 rounded">
             <p class="fs-4 text-center">Modifier mon compte</p>
             <form action="{{route('profile.update')}}" method="post">
                 @method("PUT")
@@ -30,7 +30,7 @@
                 <button type="submit" class="btn btn-primary">Modifier</button>
             </form>
         </div>
-        <div class="mt-3 w-50">
+        <div class="mt-3 w-100">
             <button id="passwordFormBtn" onclick="showPasswordForm()" class="w-100 btn btn-primary">Modifier mon mot de passe</button>
             <div id="passwordForm" class="mt-3" style="display: none;">
                 <div class="card w-100 p-4 rounded">
