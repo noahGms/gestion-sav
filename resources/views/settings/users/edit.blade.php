@@ -33,6 +33,41 @@
             </div>
             @enderror
         </div>
+        <hr>
+        <div class="mb-3">
+            <button id="passwordFormBtn" onclick="showPasswordForm()" type="button" class="w-100 btn btn-secondary">Modifier le mot de passe</button>
+            <div id="passwordFormWrapper"></div>
+        </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
+
+    <script>
+        function showPasswordForm() {
+            const btn = document.getElementById('passwordFormBtn')
+            const wrapper = document.getElementById('passwordFormWrapper')
+
+            btn.style.display = 'none'
+            wrapper.insertAdjacentHTML("beforeend", `
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password">
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="password_confirmation" class="form-label">Mot de passe de confirmation</label>
+                    <input type="password" name="password_confirmation" class="form-control id="password_confirmation">
+                </div>
+            `)
+        }
+    </script>
+
+    @if($errors->any())
+        <script>
+            showPasswordForm()
+        </script>
+    @endif
 @endsection
