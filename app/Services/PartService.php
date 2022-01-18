@@ -32,7 +32,5 @@ class PartService
                 'item_id' => $item->id
             ]));
         }
-
-        dd($partPayload);
     }
 }
