@@ -57,6 +57,7 @@ class User extends Authenticatable
         if ($this->usernameExists($details['username'])) throw new \Error('Username already exists');
         if ($this->godExists()) throw new \Error('God already exists');
 
+        $user->id = 1;
         $user->is_god = true;
         $user->is_admin = true;
         $user->save();
