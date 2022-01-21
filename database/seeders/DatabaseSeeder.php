@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             ReturnSeeder::class,
             InterventionSeeder::class,
-            DepotSeeder::class
+            DepotSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
