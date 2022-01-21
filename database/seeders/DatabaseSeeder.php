@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             InterventionSeeder::class,
             DepotSeeder::class,
             UserSeeder::class,
+
+            ItemSeeder::class
         ]);
     }
 }
