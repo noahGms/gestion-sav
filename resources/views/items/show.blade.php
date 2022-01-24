@@ -25,7 +25,12 @@
                         <h5 class="card-title mb-3" style="font-weight: bold;">Création</h5>
                         <div class="row">
                             <div class="mb-3">
-                                <p class="text-decoration-underline">Client :</p>
+                                <p>
+                                    <span class="text-decoration-underline">Client :</span>
+                                    <a class="text-decoration-none" href="{{route('customers.show', $item->customer)}}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </p>
                                 <span>{{optional($item->customer)->fullname}} - {{optional(optional($item->customer)->address)->full_address}}</span>
                             </div>
                             <div class="mb-3">
