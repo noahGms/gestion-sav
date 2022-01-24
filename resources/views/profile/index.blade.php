@@ -31,7 +31,7 @@
             </form>
         </div>
         <div class="mt-3 w-100">
-            <button id="passwordFormBtn" onclick="showPasswordForm()" class="w-100 btn btn-secondary">Modifier mon mot de passe</button>
+            <button id="passwordFormBtn" onclick="showPasswordForm()" class="w-100 btn btn-outline-primary">Modifier mon mot de passe</button>
             <div id="passwordForm" class="mt-3" style="display: none;">
                 <div class="card w-100 p-4 rounded">
                     <div class="d-flex justify-content-between align-items-center mb-3">
