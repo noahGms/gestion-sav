@@ -4,7 +4,7 @@
     <div>
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <p class="fs-4 mb-0 d-flex align-items-center">Liste des clients <span class="badge bg-secondary fs-6 ms-2">{{$customersCount}}</span></p>
+                <p class="fs-4 mb-0 d-flex align-items-center">Liste des clients <span class="badge bg-secondary ms-2">{{$customersCount}}</span></p>
                 <form class="ms-md-3" action="{{route('customers.index')}}" method="get">
                     <input id="search" name="search" type="text" class="form-control" placeholder="Rechercher un client ...">
                 </form>
