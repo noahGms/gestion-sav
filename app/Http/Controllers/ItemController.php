@@ -32,13 +32,48 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $items = Item::orderBy('created_at', 'desc')->paginate(12);
+        $query = Item::query();
         $itemsCount = Item::count();
-        return view('items.index', compact('items', 'itemsCount'));
+
+        $states = State::all();
+        $brands = Brand::all();
+        $types = Type::all();
+
+        if ($request->filled('state_id')) {
+            $query->where('state_id', $request->get('state_id'));
+        }
+
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->get('brand_id'));
+        }
+
+        if ($request->filled('type_id')) {
+            $query->where('type_id', $request->get('type_id'));
+        }
+
+        if ($request->filled('with_archived')) {
+            if ($request->get('with_archived') === 'yes') {
+                $query->where('archived_at', '!=', null);
+            } else if ($request->get('with_archived') === 'no') {
+                $query->where('archived_at', null);
+            }
+        } else {
+            $query->where('archived_at', null);
+        }
+
+        if (!$request->filled('created_at')) {
+             $request['created_at'] = 'desc';
+        }
+
+        $query->orderBy('created_at', $request->get('created_at'));
+
+        $items = $query->paginate(12);
+        return view('items.index', compact('items', 'itemsCount', 'states', 'brands', 'types'));
     }
 
     /**
