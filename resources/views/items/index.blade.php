@@ -4,18 +4,20 @@
 <div>
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex justify-content-between align-items-center">
-            <p class="fs-4 mb-0 d-flex align-items-center">Liste des items 
+            <p class="fs-4 mb-0 d-flex align-items-center">Liste des items
                 <span class="badge bg-secondary ms-2">{{$itemsCount}}</span>
-                <button class="btn btn-sm btn-light ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <i class="fas fa-filter"></i>
-    </button>
+                <button id="filterBtn" class="btn btn-sm btn-light ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-filter"></i>
+                    <i class="fa fa-chevron-up"></i>
+                    <i class="fa fa-chevron-down"></i>
+                </button>
             </p>
         </div>
         <a href="{{route('items.create')}}" class="btn btn-primary btn-md rounded-pill">
             <i class="fas fa-plus"></i> Ajouter un item
         </a>
     </div>
-    
+
     <div class="collapse mt-3" id="collapseExample">
         <div class="card card-body">
             <form id="filterForm" class="row" action="{{route('items.index')}}" method="get">

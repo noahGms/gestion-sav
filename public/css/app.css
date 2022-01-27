@@ -10,3 +10,11 @@
 .item-file:hover {
     opacity: 0.7;
 }
+
+#filterBtn[aria-expanded=true] .fa-chevron-down {
+    display: none;
+}
+#filterBtn[aria-expanded=false] .fa-chevron-up {
+    display: none;
+}
+
