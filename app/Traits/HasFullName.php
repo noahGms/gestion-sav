@@ -18,6 +18,9 @@ trait HasFullName
                 return null;
             }
         }
-        return "{$this->firstname} {$this->lastname}";
+        $lastname = strtoupper($this->lastname);
+        $firstname = ucfirst($this->firstname);
+        
+        return "{$lastname} {$firstname}";
     }
 }
