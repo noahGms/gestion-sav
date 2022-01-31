@@ -66,11 +66,11 @@ class ItemController extends Controller
             $query->where('archived_at', null);
         }
 
-        if (!$request->filled('created_at')) {
-             $request['created_at'] = 'desc';
+        if (!$request->filled('intervention_date')) {
+             $request['intervention_date'] = 'desc';
         }
 
-        $query->orderBy('created_at', $request->get('created_at'));
+        $query->orderBy('intervention_date', $request->get('intervention_date'));
 
         $items = $query->paginate(12);
         return view('items.index', compact('items', 'itemsCount', 'states', 'brands', 'types'));

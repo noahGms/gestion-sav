@@ -57,10 +57,10 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label for="created_at" class="form-label">Date de création</label>
-                    <select onchange="filterForm.submit()" id="created_at" name="created_at" class="form-select" aria-label="Date de création">
-                        <option value="asc" {{request()->query('created_at') == 'asc' ? 'selected' : ''}}>Ascendant</option>
-                        <option value="desc" {{request()->query('created_at') == 'desc' ? 'selected' : ''}}>Descendant</option>
+                    <label for="intervention_date" class="form-label">Date d'intervention</label>
+                    <select onchange="filterForm.submit()" id="intervention_date" name="intervention_date" class="form-select" aria-label="Date d'intervention">
+                        <option value="asc" {{request()->query('intervention_date') == 'asc' ? 'selected' : ''}}>Ascendant</option>
+                        <option value="desc" {{request()->query('intervention_date') == 'desc' ? 'selected' : ''}}>Descendant</option>
                     </select>
                 </div>
                 <div class="row mt-3">
