@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-12">
                                 <p class="text-decoration-underline">Commentaires :</p>
-                                <pre>{{$item->observations}}</pre>
+                                <pre>{{$item->comments}}</pre>
                             </div>
                             <div class="col-12">
                                 <p class="text-decoration-underline">Communications :</p>
