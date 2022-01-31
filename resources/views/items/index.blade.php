@@ -90,7 +90,7 @@
                     <td>{{$item->intervention_date}}</td>
                     <td class="text-center">{{optional($item->type)->name}}</td>
                     <td class="text-center">{{optional($item->brand)->name}} - {{$item->model}}</td>
-                    <td class="text-center">{{optional($item->customer)->fullname}} - {{ optional(optional($item->customer)->address)->full_address}}</td>
+                    <td class="text-center">{{optional($item->customer)->fullname}}</td>
                     <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{$item->comment_state}}</td>
                     <td class="text-center  text-{{LightOrDarkColor::getTextColor(optional($item->state)->color)}}" style="background: {{optional($item->state)->color}};">{{optional($item->state)->name}}</td>
                     <td class="text-center">
