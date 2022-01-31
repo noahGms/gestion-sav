@@ -49,7 +49,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <p class="text-decoration-underline">Date d'intervention :</p>
-                                <pre>{{$item->intervention_date}}</pre>
+                                <pre>{{optional($item->intervention_date)->format('d/m/Y')}}</pre>
                             </div>
                             <div class="col">
                                 <p class="text-decoration-underline">Moyen d'intervention :</p>
@@ -67,7 +67,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <p class="text-decoration-underline">Date de retour :</p>
-                                <p>{{$item->return_date}}</p>
+                                <p>{{optional($item->return_date)->format('d/m/Y')}}</p>
                             </div>
                             <div class="col">
                                 <p class="text-decoration-underline">Moyen de retour :</p>

@@ -87,7 +87,7 @@
             <tbody>
                 @foreach($items as $item)
                 <tr>
-                    <td>{{$item->intervention_date}}</td>
+                    <td>{{optional($item->intervention_date)->format('d/m/Y')}}</td>
                     <td class="text-center">{{optional($item->type)->name}}</td>
                     <td class="text-center">{{optional($item->brand)->name}} - {{$item->model}}</td>
                     <td class="text-center">{{optional($item->customer)->fullname}}</td>
