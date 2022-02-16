@@ -5,7 +5,7 @@
 @endsection
 
 @section("button")
-    <button type="button" class="btn btn-primary btn-md rounded-pill" data-bs-toggle="modal"
+    <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal"
             data-bs-target="#addInterventionModal"><i class="fas fa-plus"></i> Ajouter un moyen d'intervention
     </button>
 @endsection

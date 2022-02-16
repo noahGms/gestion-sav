@@ -9,7 +9,7 @@
                     <input id="search" name="search" type="text" class="form-control" placeholder="Rechercher un client ...">
                 </form>
             </div>
-            <a href="{{route('customers.create')}}" class="btn btn-primary btn-md rounded-pill">
+            <a href="{{route('customers.create')}}" class="btn btn-primary btn-md">
                 <i class="fas fa-plus"></i> Ajouter un client
             </a>
         </div>

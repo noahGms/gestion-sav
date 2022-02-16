@@ -13,7 +13,7 @@
                 </button>
             </p>
         </div>
-        <a href="{{route('items.create')}}" class="btn btn-primary btn-md rounded-pill">
+        <a href="{{route('items.create')}}" class="btn btn-primary btn-md">
             <i class="fas fa-plus"></i> Ajouter un item
         </a>
     </div>
