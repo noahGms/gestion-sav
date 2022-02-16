@@ -27,16 +27,6 @@ html {
     height: -webkit-fill-available;
 }
 
-main {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 100vh;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
 .b-example-divider {
     flex-shrink: 0;
     width: 1.5rem;
@@ -108,24 +98,26 @@ main {
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
 
-main {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 100vh !important;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: auto;
-}
+@media screen and (min-width: 992px) {
+    main {
+        display: flex;
+        flex-wrap: nowrap;
+        height: 100vh !important;
+        height: -webkit-fill-available;
+        max-height: 100vh;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
 
-.content {
-    flex-grow: 1;
-    overflow-y: scroll;
-}
+    .content {
+        flex-grow: 1;
+        overflow-y: scroll;
+    }
 
-.sidebar {
-    flex-grow: 5;
-    overflow: auto;
+    .sidebar {
+        flex-grow: 5;
+        overflow: auto;
+    }
 }
 
 .btn-toggle:hover, .btn-toggle:focus,

@@ -24,7 +24,7 @@
 <body>
 <main>
     @auth()
-        <div class="d-none d-sm-none d-md-flex d-lg-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar"
+        <div class="d-none d-sm-none d-md-none d-lg-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar"
              style="width: 280px; height: 100vh;">
             <a href="/"
                class="d-flex justify-content-center align-items-center md-0 w-100 text-white text-decoration-none">
@@ -113,60 +113,7 @@
         </div>
 
 
-        <div class="d-flex d-sm-flex d-md-none d-lg-none flex-column flex-shrink-0 bg-dark text-white"
-             style="width: 4.5rem;">
-            <a href="/"
-               class="d-flex justify-content-center align-items-center p-3 link-dark text-decoration-none text-white"
-               title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
-                G-SAV
-            </a>
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li class="nav-item">
-                    <a href="{{route('items.index')}}"
-                       class="nav-link text-white {{request()->routeIs('items.index') ? 'active' : ''}} py-3"
-                       aria-current="page" title="Items" data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fas fa-toolbox"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('customers.index') }}"
-                       class="nav-link text-white {{request()->routeIs('customers.index') ? 'active' : ''}} py-3"
-                       title="Clients" data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fas fa-users"></i>
-                    </a>
-                </li>
-                @if(auth()->user()->is_admin)
-                    <hr>
-                    <li>
-                        <a href="{{route('settings.index')}}"
-                           class="nav-link text-white {{request()->routeIs('settings.index') ? 'active' : ''}} py-3"
-                           aria-current="page" title="Paramètres" data-bs-toggle="tooltip" data-bs-placement="right">
-                            <i class="fas fa-cogs"></i>
-                        </a>
-                    </li>
-                @endif
-            </ul>
-            <div class="dropdown border-top">
-                <a href="#"
-                   class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
-                   id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img
-                        src="https://eu.ui-avatars.com/api/?name={{auth()->user()->fullname ? auth()->user()->firstname . '+' . auth()->user()->lastname : 'Mon+compte'}}"
-                        alt="mdo" width="24" height="24" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                    <li>
-                        <a class="dropdown-item {{request()->routeIs('profile.index') ? 'active' : ''}}"
-                           href="{{route('profile.index')}}">Mon compte</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a href="{{route('logout')}}" class="dropdown-item" type="button">Se déconnecter</a></li>
-                </ul>
-            </div>
-        </div>
-
+        @include("layouts.header")
     @endauth
 
     <div class="container content mt-3">
