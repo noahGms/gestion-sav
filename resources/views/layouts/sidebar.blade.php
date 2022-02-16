@@ -1,5 +1,5 @@
 <div class="d-none d-sm-none d-md-none d-lg-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar"
-     style="width: 280px; height: 100vh;">
+     style="max-width: 280px; width: 280px; height: 100vh;">
     <a href="/"
        class="d-flex justify-content-center align-items-center md-0 w-100 text-white text-decoration-none text-logo">
         <span class="fs-4">Gestion-SAV</span>
