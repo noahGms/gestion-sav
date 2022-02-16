@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between px-md-1">
                         <div class="align-self-center">
-                            <i class="fas fa-toolbox text-primary fa-3x"></i>
+                            <i class="fas fa-toolbox text-dark fa-3x"></i>
                         </div>
                         <div class="text-end">
                             <h3>{{ $items_in_progress }}</h3>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between px-md-1">
                         <div class="align-self-center">
-                            <i class="fas fa-toolbox text-primary fa-3x"></i>
+                            <i class="fas fa-toolbox text-dark fa-3x"></i>
                         </div>
                         <div class="text-end">
                             <h3>{{ $items_archived }}</h3>
@@ -37,7 +37,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between px-md-1">
                         <div class="align-self-center">
-                            <i class="fas fa-toolbox text-primary fa-3x"></i>
+                            <i class="fas fa-toolbox text-dark fa-3x"></i>
                         </div>
                         <div class="text-end">
                             <h3>{{ $total_item }}</h3>
@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between px-md-1">
                         <div class="align-self-center">
-                            <i class="fa fa-users text-primary fa-3x"></i>
+                            <i class="fa fa-users text-dark fa-3x"></i>
                         </div>
                         <div class="text-end">
                             <h3>{{ $total_customer }}</h3>
