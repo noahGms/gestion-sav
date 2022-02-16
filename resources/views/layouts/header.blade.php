@@ -8,6 +8,11 @@
         <div class="collapse navbar-collapse  justify-content-lg-end" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+                    <a class="nav-link {{request()->routeIs('home.index') ? 'active' : ''}}" aria-current="page" href="{{route('home.index')}}">
+                        <i class="fas fa-home"></i> Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{request()->routeIs('items.index') ? 'active' : ''}}" aria-current="page" href="{{route('items.index')}}">
                         <i class="fas fa-toolbox"></i> Items
                     </a>
