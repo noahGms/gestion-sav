@@ -19,15 +19,141 @@
     </style>
 </head>
 <body>
+<main>
     @auth()
-        @include("layouts.header")
-    @endauth
-    <div class="container">
-        @yield("content")
+    <div class="d-none d-sm-none d-md-flex d-lg-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar" style="width: 280px; height: 100vh;">
+        <a href="/" class="d-flex justify-content-center align-items-center md-0 w-100 text-white text-decoration-none">
+            <span class="fs-4">Gestion-SAV</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white {{request()->routeIs('items.index') ? 'active' : ''}}" aria-current="page" href="{{route('items.index')}}">
+                    <i class="fas fa-toolbox me-1"></i> Items
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white {{request()->routeIs('customers.index') ? 'active' : ''}}" aria-current="page" href="{{route('customers.index')}}">
+                    <i class="fas fa-users me-1"></i> Clients
+                </a>
+            </li>
+            @if(auth()->user()->is_admin)
+                <li class="mb-1">
+                    <button class="nav-link btn d-flex justify-content-start align-items-center rounded collapsed w-100 text-white" data-bs-toggle="collapse" data-bs-target="#settings-collapse" aria-expanded="false">
+                        <i class="fa fa-chevron-down me-1"></i> Paramètres
+                    </button>
+                    <div class="collapse" id="settings-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('users.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('users.index')}}">Utilisateurs</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('states.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('states.index')}}">Etats</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('brands.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('brands.index')}}">Marques</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('categories.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('categories.index')}}">Catégories</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('types.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('types.index')}}">Types</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('returns.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('returns.index')}}">Retours</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('interventions.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('interventions.index')}}">Interventions</a>
+                            </li>
+                            <li>
+                                <a class="text-white rounded w-100 {{request()->routeIs('depots.index') ? 'active' : ''}} collapse-link"
+                                   href="{{route('depots.index')}}">Depots</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://eu.ui-avatars.com/api/?name={{auth()->user()->fullname ? auth()->user()->firstname . '+' . auth()->user()->lastname : 'Mon+compte'}}" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>{{auth()->user()->fullname ? auth()->user()->fullname : 'Mon compte'}}</strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li>
+                    <a class="dropdown-item {{request()->routeIs('profile.index') ? 'active' : ''}}"
+                       href="{{route('profile.index')}}">Mon compte</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a href="{{route('logout')}}" class="dropdown-item" type="button">Se déconnecter</a></li>
+            </ul>
+        </div>
     </div>
-    @include("layouts.notification")
-    @auth()
-        @include("layouts.footer")
+
+
+        <div class="d-flex d-sm-flex d-md-none d-lg-none flex-column flex-shrink-0 bg-dark text-white" style="width: 4.5rem;">
+            <a href="/" class="d-flex justify-content-center align-items-center p-3 link-dark text-decoration-none text-white" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
+                G-SAV
+            </a>
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="{{route('items.index')}}" class="nav-link text-white {{request()->routeIs('items.index') ? 'active' : ''}} py-3" aria-current="page" title="Items" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fas fa-toolbox"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('customers.index') }}" class="nav-link text-white {{request()->routeIs('customers.index') ? 'active' : ''}} py-3" title="Clients" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fas fa-users"></i>
+                    </a>
+                </li>
+                @if(auth()->user()->is_admin)
+                    <hr>
+                    <li>
+                        <a href="{{route('settings.index')}}" class="nav-link text-white {{request()->routeIs('settings.index') ? 'active' : ''}} py-3" aria-current="page" title="Paramètres" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <i class="fas fa-cogs"></i>
+                        </a>
+                    </li>
+                @endif
+            </ul>
+            <div class="dropdown border-top">
+                <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://eu.ui-avatars.com/api/?name={{auth()->user()->fullname ? auth()->user()->firstname . '+' . auth()->user()->lastname : 'Mon+compte'}}" alt="mdo" width="24" height="24" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                    <li>
+                        <a class="dropdown-item {{request()->routeIs('profile.index') ? 'active' : ''}}"
+                           href="{{route('profile.index')}}">Mon compte</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a href="{{route('logout')}}" class="dropdown-item" type="button">Se déconnecter</a></li>
+                </ul>
+            </div>
+        </div>
+
     @endauth
+
+    <div class="container content mt-3">
+        @yield("content")
+
+        @include("layouts.notification")
+        @auth()
+            @include("layouts.footer")
+        @endauth
+    </div>
+</main>
+
+<script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

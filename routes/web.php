@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/settings/returns', \App\Http\Controllers\Settings\ReturnController::class)->except(['show', 'create']);
         Route::resource('/settings/interventions', \App\Http\Controllers\Settings\InterventionController::class)->except(['show', 'create']);
         Route::resource('/settings/depots', \App\Http\Controllers\Settings\DepotController::class)->except(['show', 'create']);
+
+        Route::get('/settings', function () {
+            return view('settings.index');
+        })->name('settings.index');
     });
 
     Route::resource('/customers', \App\Http\Controllers\CustomerController::class);
