@@ -4,7 +4,7 @@
     <div>
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <p class="fs-4 mb-0 d-flex align-items-center">Liste des clients <span class="badge bg-secondary ms-2">{{$customersCount}}</span></p>
+                <p class="fs-4 mb-0 d-flex align-items-center">Liste des clients <span class="badge bg-light text-dark fw-bold ms-2">{{$customersCount}}</span></p>
                 <form class="ms-md-3" action="{{route('customers.index')}}" method="get">
                     <input id="search" name="search" type="text" class="form-control" placeholder="Rechercher un client ...">
                 </form>
@@ -14,14 +14,14 @@
             </a>
         </div>
         <div class="table-responsive">
-            <table class="table mt-4">
+            <table class="table mt-4 table-striped border">
                 <thead>
-                <tr class="table-dark">
+                <tr>
                     <th scope="col">Nom complet</th>
-                    <th class="text-center" scope="col">Adresse email</th>
+                    <th class="text-center" scope="col">Email</th>
                     <th class="text-center" scope="col">Téléphone fixe</th>
-                    <th class="text-center" scope="col">Téléphone portable 1</th>
-                    <th class="text-center" scope="col">Téléphone portable 2</th>
+                    <th class="text-center" scope="col">Portable 1</th>
+                    <th class="text-center" scope="col">Portable 2</th>
                     <th class="text-center" scope="col">Adresse</th>
                     <th class="text-center" scope="col">Actions</th>
                 </tr>

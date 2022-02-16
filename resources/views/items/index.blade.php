@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex justify-content-between align-items-center">
             <p class="fs-4 mb-0 d-flex align-items-center">Liste des items
-                <span class="badge bg-secondary ms-2">{{$itemsCount}}</span>
+                <span class="badge text-dark fw-bold bg-light ms-2">{{$itemsCount}}</span>
                 <button id="filterBtn" class="btn btn-sm btn-light ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     <i class="fas fa-filter"></i>
                     <i class="fa fa-chevron-up"></i>
@@ -73,9 +73,9 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table mt-4">
+        <table class="table mt-4 border table-striped">
             <thead>
-                <tr class="table-dark">
+                <tr>
                     <th scope="col">Date</th>
                     <th class="text-center" scope="col">Type</th>
                     <th class="text-center" scope="col">Machine</th>
