@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         $this->call([
             StateSeeder::class,
             BrandSeeder::class,
@@ -25,5 +27,6 @@ class DatabaseSeeder extends Seeder
 
             ItemSeeder::class
         ]);
+        Schema::enableForeignKeyConstraints();
     }
 }
