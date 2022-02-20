@@ -28,7 +28,7 @@
         @include("layouts.header")
     @endauth
 
-    <div class="container content mt-3">
+    <div class="container-fluid px-5 content mt-3">
         @yield("content")
 
         @include("layouts.notification")
