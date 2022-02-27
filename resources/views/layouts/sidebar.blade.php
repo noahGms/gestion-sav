@@ -33,35 +33,35 @@
                 </button>
                 <div class="collapse" id="settings-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('users.index') ? 'active' : ''}} collapse-link"
                                href="{{route('users.index')}}">Utilisateurs</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('states.index') ? 'active' : ''}} collapse-link"
                                href="{{route('states.index')}}">Etats</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('brands.index') ? 'active' : ''}} collapse-link"
                                href="{{route('brands.index')}}">Marques</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('categories.index') ? 'active' : ''}} collapse-link"
                                href="{{route('categories.index')}}">Catégories</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('types.index') ? 'active' : ''}} collapse-link"
                                href="{{route('types.index')}}">Types</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('returns.index') ? 'active' : ''}} collapse-link"
                                href="{{route('returns.index')}}">Retours</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('interventions.index') ? 'active' : ''}} collapse-link"
                                href="{{route('interventions.index')}}">Interventions</a>
                         </li>
-                        <li>
+                        <li style="padding-right: 20px">
                             <a class="text-white rounded w-100 {{request()->routeIs('depots.index') ? 'active' : ''}} collapse-link"
                                href="{{route('depots.index')}}">Depots</a>
                         </li>
