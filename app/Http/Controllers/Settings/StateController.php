@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\StateRequest;
 use App\Models\State;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 
 class StateController extends Controller
@@ -18,7 +19,8 @@ class StateController extends Controller
     public function index(): View
     {
         $states = State::orderBy('name')->paginate(12);
-        return view('settings.states.index', compact('states'));
+        $colors = $this->getAllStateColors();
+        return view('settings.states.index', compact('states', 'colors'));
     }
 
     /**
@@ -41,7 +43,8 @@ class StateController extends Controller
      */
     public function edit(State $state): View
     {
-        return view('settings.states.edit', compact('state'));
+        $colors = $this->getAllStateColors();
+        return view('settings.states.edit', compact('state', 'colors'));
     }
 
     /**
@@ -67,5 +70,15 @@ class StateController extends Controller
     {
         $state->delete();
         return redirect()->route('states.index')->with('success', 'L\'état a bien été supprimé');
+    }
+
+    /**
+     * Get all state colors
+     *
+     * @return State[]|Collection
+     */
+    private function getAllStateColors()
+    {
+        return State::all()->unique('color');
     }
 }

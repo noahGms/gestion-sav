@@ -113,6 +113,13 @@
                             </div>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            @foreach($colors as $color)
+                                <span onclick="setColorFromAlreadyUsed('{{$color->color}}')" class="badge text-{{LightOrDarkColor::getTextColor($color->color)}}" style="background-color: {{$color->color}}; cursor: pointer;">
+                                    {{ $color->color }}
+                                </span>
+                            @endforeach
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -123,3 +130,10 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function setColorFromAlreadyUsed(color) {
+        const input = document.getElementById('color')
+        input.value = color
+    }
+</script>
