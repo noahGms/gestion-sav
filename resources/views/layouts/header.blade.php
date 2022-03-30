@@ -1,4 +1,4 @@
-<nav class="d-block d-sm-block d-md-block d-lg-none navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4">
+<nav class="d-block d-sm-block d-md-block d-lg-none navbar navbar-expand-lg navbar-dark bg-primary bg-gradient shadow-sm mb-4">
     <div class="container-fluid">
         <a href="/" class="navbar-brand text-logo">Gestion-SAV</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

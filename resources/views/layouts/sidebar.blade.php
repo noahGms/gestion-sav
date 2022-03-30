@@ -1,4 +1,4 @@
-<div class="d-none d-sm-none d-md-none d-lg-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar"
+<div class="d-none d-sm-none d-md-none d-lg-flex flex-column flex-shrink-0 p-3 bg-primary bg-gradient text-white sidebar"
      style="max-width: 280px; width: 280px; height: 100vh;">
     <a href="/"
        class="d-flex justify-content-center align-items-center md-0 w-100 text-white text-decoration-none text-logo">
