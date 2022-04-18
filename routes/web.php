@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/{any}', [\App\Http\Controllers\SpaController::class, 'index'])->where('any', '.*')->name('landing');;
+
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'loginView'])->name('login');
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.handle');
 Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+    //Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [\App\Http\Controllers\ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
