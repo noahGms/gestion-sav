@@ -1,6 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh; min-width: 100vh">
     <a-layout-sider
+      breakpoint="lg"
       style="background: #fff"
       v-model:collapsed="collapsed"
       :trigger="null"
