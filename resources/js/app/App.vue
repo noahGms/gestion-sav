@@ -12,11 +12,13 @@
           {{ collapsed ? "G-SAV" : "Gestion-SAV" }}
         </div>
         <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
-          <a-menu-item class="mt-0" key="1">
+          <a-menu-item class="mt-0" key="home">
             <template #icon>
               <home-outlined />
             </template>
-            <span>Acceuil</span>
+            <router-link :to="{ name: 'home' }">
+              <span>Acceuil</span>
+            </router-link>
           </a-menu-item>
           <a-menu-item class="mt-0" key="2">
             <template #icon>
@@ -124,9 +126,9 @@ import {
   DownOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -141,16 +143,22 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const isLoggedIn = computed(() => store.getters["auth/isLoggedIn"]);
 
     const collapsed = ref(false);
-    const selectedKeys = ref(["1"]);
+    const selectedKeys = ref([]);
 
     const logout = () => {
       store.dispatch("auth/logout").finally(() => {
         router.push("/se-connecter");
       });
     };
+
+    onMounted(async () => {
+      await router.isReady();
+      selectedKeys.value = [route.name];
+    });
 
     return {
       collapsed,
