@@ -50,8 +50,13 @@
       </a-layout-sider>
       <a-layout>
         <a-layout-header
-          class="d-flex justify-content-between align-items-center"
-          style="background: #fff; padding-left: 24px"
+          class="
+            d-flex
+            justify-content-between
+            align-items-center
+            ps-3
+            bg-white
+          "
         >
           <menu-unfold-outlined
             :style="{ fontSize: '16px' }"
@@ -67,7 +72,10 @@
           />
           <a-dropdown :trigger="['click']" placement="bottomRight">
             <a class="ant-dropdown-link" @click.prevent>
-              <a-avatar src="https://eu.ui-avatars.com/api/?name=jean" />
+              <a-avatar
+                class="me-1"
+                src="https://eu.ui-avatars.com/api/?name=jean"
+              />
               <DownOutlined />
             </a>
             <template #overlay>
@@ -81,14 +89,12 @@
             </template>
           </a-dropdown>
         </a-layout-header>
-        <a-layout-content style="margin: 16px 16px">
-          <div
-            :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
-          >
+        <a-layout-content class="m-3">
+          <div class="p-4 bg-white" :style="{ minHeight: '360px' }">
             <router-view />
           </div>
         </a-layout-content>
-        <a-layout-footer style="text-align: center">
+        <a-layout-footer class="text-center">
           <p>
             <strong>&copy Gestion S.A.V</strong> par
             <a href="https://github.com/noahGms" target="_blank">Noah</a> pour
