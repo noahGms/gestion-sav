@@ -25,7 +25,7 @@ class StateRequest extends FormRequest
     {
         if (request()->method === 'POST') {
             $data = [
-                'name' => 'required|string|unique:states,name',
+                'name' => 'required|string',
             ];
         } else {
             $data = [
