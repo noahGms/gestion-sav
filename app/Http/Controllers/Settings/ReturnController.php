@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ReturnRequest;
-use App\Http\Resources\ReturnRessource;
+use App\Http\Resources\ReturnResource;
 use App\Models\ReturnMdl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -19,7 +19,7 @@ class ReturnController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $returns = ReturnMdl::all();
-        return ReturnRessource::collection($returns);
+        return ReturnResource::collection($returns);
     }
 
     /**
