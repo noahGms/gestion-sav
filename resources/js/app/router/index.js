@@ -34,6 +34,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Brands"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/categories",
+            name: "categoriesSettings",
+            component: () => import("../pages/settings/Categories"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

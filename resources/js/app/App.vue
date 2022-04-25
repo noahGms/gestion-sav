@@ -54,7 +54,11 @@
                 Marques
               </router-link>
             </a-menu-item>
-            <a-menu-item key="7">Catégories</a-menu-item>
+            <a-menu-item key="categoriesSettings">
+              <router-link :to="{name: 'categoriesSettings'}">
+                Catégories
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="8">Types</a-menu-item>
             <a-menu-item key="9">Retours</a-menu-item>
             <a-menu-item key="10">Interventions</a-menu-item>
