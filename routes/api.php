@@ -22,3 +22,8 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
     });
 });
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('users/{user}/toggle-admin', [\App\Http\Controllers\Settings\UserController::class, 'toggleAdmin']);
+    Route::apiResource('users', \App\Http\Controllers\Settings\UserController::class);
+});
