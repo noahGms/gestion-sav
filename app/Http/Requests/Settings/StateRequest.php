@@ -29,7 +29,7 @@ class StateRequest extends FormRequest
             ];
         } else {
             $data = [
-                'name' => 'nullable|string|unique:states,name'
+                'name' => 'nullable|string'
             ];
         }
 
