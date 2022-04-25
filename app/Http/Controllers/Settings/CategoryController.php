@@ -4,44 +4,34 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(): View
+    public function index(): AnonymousResourceCollection
     {
-        $categories = Category::orderBy('name')->paginate(12);
-        return view('settings.categories.index', compact('categories'));
+        $categories = Category::all();
+        return CategoryResource::collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param CategoryRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(CategoryRequest $request): RedirectResponse
+    public function store(CategoryRequest $request): JsonResponse
     {
         Category::create($request->validated());
-        return redirect()->back()->with('success', 'La catégorie a bien été créé');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Category $category
-     * @return View
-     */
-    public function edit(Category $category): View
-    {
-        return view('settings.categories.edit', compact('category'));
+        return response()->json(['message' => 'La catégorie a bien été créé']);
     }
 
     /**
@@ -49,23 +39,23 @@ class CategoryController extends Controller
      *
      * @param CategoryRequest $request
      * @param Category $category
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(CategoryRequest $request, Category $category): RedirectResponse
+    public function update(CategoryRequest $request, Category $category): JsonResponse
     {
         $category->update($request->validated());
-        return redirect()->route('categories.index')->with('success', 'La catégorie a bien été modifié');
+        return response()->json(['message' => 'La catégorie a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Category $category
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(Category $category): JsonResponse
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'La catégorie a bien été supprimé');
+        return response()->json(['message' => 'La catégorie a bien été supprimé']);
     }
 }
