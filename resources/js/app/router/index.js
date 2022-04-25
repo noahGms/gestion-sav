@@ -28,6 +28,12 @@ const router = createRouter({
             component: () => import("../pages/settings/States"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/marques",
+            name: "brandsSettings",
+            component: () => import("../pages/settings/Brands"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

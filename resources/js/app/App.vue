@@ -49,7 +49,11 @@
                 Etats
               </router-link>
             </a-menu-item>
-            <a-menu-item key="6">Marques</a-menu-item>
+            <a-menu-item key="brandsSettings">
+              <router-link :to="{name: 'brandsSettings'}">
+                Marques
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="7">Catégories</a-menu-item>
             <a-menu-item key="8">Types</a-menu-item>
             <a-menu-item key="9">Retours</a-menu-item>
