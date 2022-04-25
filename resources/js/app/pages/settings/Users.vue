@@ -59,7 +59,6 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const router = useRouter();
     const users = computed(() => store.getters["users/getAllUsers"]);
     const authenticatedUser = computed(
       () => store.getters["auth/getAuthenticatedUser"]
@@ -89,10 +88,6 @@ export default defineComponent({
         key: "action",
       },
     ];
-
-    const goBack = () => {
-      router.go(-1);
-    };
 
     const confirmDelete = (user) => {
       store.dispatch("users/deleteUser", user).then(() => {
@@ -137,7 +132,6 @@ export default defineComponent({
       userFormModalVisible,
       userFormModalIsUpdate,
       userFormModalUser,
-      goBack,
       confirmDelete,
       openUserFormModal,
       closeUserFormModal,
