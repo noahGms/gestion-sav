@@ -4,44 +4,34 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\DepotRequest;
+use App\Http\Resources\DepotResource;
 use App\Models\Depot;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DepotController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(): View
+    public function index(): AnonymousResourceCollection
     {
-        $depots = Depot::orderBy('name')->paginate(12);
-        return view('settings.depots.index', compact('depots'));
+        $depots = Depot::all();
+        return DepotResource::collection($depots);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param DepotRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(DepotRequest $request): RedirectResponse
+    public function store(DepotRequest $request): JsonResponse
     {
         Depot::create($request->validated());
-        return redirect()->back()->with('success', 'Le moyen de dépot a bien été créé');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Depot $depot
-     * @return View
-     */
-    public function edit(Depot $depot): View
-    {
-        return view('settings.depots.edit', compact('depot'));
+        return response()->json(['message' => 'Le moyen de dépot a bien été créé']);
     }
 
     /**
@@ -49,23 +39,23 @@ class DepotController extends Controller
      *
      * @param DepotRequest $request
      * @param Depot $depot
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(DepotRequest $request, Depot $depot): RedirectResponse
+    public function update(DepotRequest $request, Depot $depot): JsonResponse
     {
         $depot->update($request->validated());
-        return redirect()->route('depots.index')->with('success', 'Le moyen de dépot a bien été modifié');
+        return response()->json(['message' => 'Le moyen de dépot a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Depot $depot
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Depot $depot): RedirectResponse
+    public function destroy(Depot $depot): JsonResponse
     {
         $depot->delete();
-        return redirect()->route('depots.index')->with('success', 'Le moyen de dépot a bien été supprimé');
+        return response()->json(['message' => 'Le moyen de dépot a bien été supprimé']);
     }
 }
