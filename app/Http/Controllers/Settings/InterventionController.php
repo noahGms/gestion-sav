@@ -4,44 +4,34 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\InterventionRequest;
+use App\Http\Resources\InterventionResource;
 use App\Models\Intervention;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class InterventionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(): View
+    public function index(): AnonymousResourceCollection
     {
-        $interventions = Intervention::orderBy('name')->paginate(12);
-        return view('settings.interventions.index', compact('interventions'));
+        $interventions = Intervention::all();
+        return InterventionResource::collection($interventions);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param InterventionRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(InterventionRequest $request): RedirectResponse
+    public function store(InterventionRequest $request): JsonResponse
     {
         Intervention::create($request->validated());
-        return redirect()->back()->with('success', 'Le moyen d\'intervention a bien été créé');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Intervention $intervention
-     * @return View
-     */
-    public function edit(Intervention $intervention): View
-    {
-        return view('settings.interventions.edit', compact('intervention'));
+        return response()->json(['message' => 'Le moyen d\'intervention a bien été créé']);
     }
 
     /**
@@ -49,23 +39,23 @@ class InterventionController extends Controller
      *
      * @param InterventionRequest $request
      * @param Intervention $intervention
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(InterventionRequest $request, Intervention $intervention): RedirectResponse
+    public function update(InterventionRequest $request, Intervention $intervention): JsonResponse
     {
         $intervention->update($request->validated());
-        return redirect()->route('interventions.index')->with('success', 'Le moyen d\'intervention a bien été modifié');
+        return response()->json(['message' => 'Le moyen d\'intervention a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Intervention $intervention
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Intervention $intervention): RedirectResponse
+    public function destroy(Intervention $intervention): JsonResponse
     {
         $intervention->delete();
-        return redirect()->route('interventions.index')->with('success', 'Le moyen d\'intervention a bien été supprimé');
+        return response()->json(['message' => 'Le moyen d\'intervention a bien été supprimé']);
     }
 }
