@@ -19,7 +19,7 @@ const router = createRouter({
         {
             path: "/parametres/utilisateurs",
             name: "usersSettings",
-            component: () => import("../pages/settings/users/Users"),
+            component: () => import("../pages/settings/Users"),
             meta: { requiresAuth: true },
         },
     ],

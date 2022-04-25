@@ -51,7 +51,7 @@
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import UserFormModal from "../../../components/users/UserFormModal";
+import UserFormModal from "../../components/users/UserFormModal";
 
 export default defineComponent({
   components: {
