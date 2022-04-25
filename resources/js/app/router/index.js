@@ -40,6 +40,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Categories"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/types",
+            name: "typesSettings",
+            component: () => import("../pages/settings/Types"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

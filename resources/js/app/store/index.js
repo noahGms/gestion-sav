@@ -4,6 +4,7 @@ import { users } from "./modules/users";
 import { states } from "./modules/states";
 import { brands } from "./modules/brands";
 import { categories } from "./modules/categories";
+import { types } from "./modules/types";
 
 const store = createStore({
     modules: {
@@ -11,7 +12,8 @@ const store = createStore({
         users,
         states,
         brands,
-        categories
+        categories,
+        types
     },
 });
 

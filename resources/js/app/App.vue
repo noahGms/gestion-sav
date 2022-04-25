@@ -59,7 +59,11 @@
                 Catégories
               </router-link>
             </a-menu-item>
-            <a-menu-item key="8">Types</a-menu-item>
+            <a-menu-item key="typesSettings">
+              <router-link :to="{name: 'typesSettings'}">
+                Types
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="9">Retours</a-menu-item>
             <a-menu-item key="10">Interventions</a-menu-item>
             <a-menu-item key="11">Dépots</a-menu-item>
