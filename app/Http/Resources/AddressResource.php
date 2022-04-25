@@ -21,6 +21,7 @@ class AddressResource extends JsonResource
             'street_name' => $this->street_name,
             'zip_code' => $this->zip_code,
             'city' => $this->city,
+            'full_address' => $this->full_address,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
         ];
