@@ -5,6 +5,7 @@ import { states } from "./modules/states";
 import { brands } from "./modules/brands";
 import { categories } from "./modules/categories";
 import { types } from "./modules/types";
+import { returns } from "./modules/returns";
 
 const store = createStore({
     modules: {
@@ -13,7 +14,8 @@ const store = createStore({
         states,
         brands,
         categories,
-        types
+        types,
+        returns
     },
 });
 

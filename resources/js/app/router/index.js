@@ -46,6 +46,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Types"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/retours",
+            name: "returnsSettings",
+            component: () => import("../pages/settings/Returns"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

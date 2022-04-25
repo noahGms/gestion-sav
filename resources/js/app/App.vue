@@ -64,7 +64,11 @@
                 Types
               </router-link>
             </a-menu-item>
-            <a-menu-item key="9">Retours</a-menu-item>
+            <a-menu-item key="returnsSettings">
+              <router-link :to="{name: 'returnsSettings'}">
+                Retours
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="10">Interventions</a-menu-item>
             <a-menu-item key="11">Dépots</a-menu-item>
           </a-sub-menu>
