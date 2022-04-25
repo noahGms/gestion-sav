@@ -4,44 +4,34 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ReturnRequest;
+use App\Http\Resources\ReturnRessource;
 use App\Models\ReturnMdl;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ReturnController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(): View
+    public function index(): AnonymousResourceCollection
     {
-        $returns = ReturnMdl::orderBy('name')->paginate(12);
-        return view('settings.returns.index', compact('returns'));
+        $returns = ReturnMdl::all();
+        return ReturnRessource::collection($returns);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param ReturnRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(ReturnRequest $request): RedirectResponse
+    public function store(ReturnRequest $request): JsonResponse
     {
         ReturnMdl::create($request->validated());
-        return redirect()->back()->with('success', 'Le moyen de retour a bien été créé');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param ReturnMdl $return
-     * @return View
-     */
-    public function edit(ReturnMdl $return): View
-    {
-        return view('settings.returns.edit', compact('return'));
+        return response()->json(['message' => 'Le moyen de retour a bien été créé']);
     }
 
     /**
@@ -49,23 +39,23 @@ class ReturnController extends Controller
      *
      * @param ReturnRequest $request
      * @param ReturnMdl $return
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(ReturnRequest $request, ReturnMdl $return): RedirectResponse
+    public function update(ReturnRequest $request, ReturnMdl $return): JsonResponse
     {
         $return->update($request->validated());
-        return redirect()->route('returns.index')->with('success', 'Le moyen de retour a bien été modifié');
+        return response()->json(['message' => 'Le moyen de retour a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param ReturnMdl $return
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(ReturnMdl $return): RedirectResponse
+    public function destroy(ReturnMdl $return): JsonResponse
     {
         $return->delete();
-        return redirect()->route('returns.index')->with('success', 'Le moyen de retour a bien été supprimé');
+        return response()->json(['message' => 'Le moyen de retour a bien été supprimé']);
     }
 }
