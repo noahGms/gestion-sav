@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Services\CustomerService;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CustomerController extends Controller
 {
@@ -26,9 +27,10 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @param Request $request
+     * @return AnonymousResourceCollection
      */
-    public function index(Request $request): View
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Customer::query();
 
@@ -37,52 +39,31 @@ class CustomerController extends Controller
         }
 
         $customers = $query->paginate(12);
-        $customersCount = Customer::count();
-        return view('customers.index', compact('customers', 'customersCount'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create(): View
-    {
-        return view('customers.create');
+        return CustomerResource::collection($customers);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
         $this->customerService->store($request);
-        return redirect()->route("customers.index")->with('success', 'Le client a bien été créé');
+        return response()->json(['message' => 'Le client a bien été créé']);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Customer $customer
-     * @return View
+     * @return CustomerResource
      */
-    public function show(Customer $customer): View
+    public function show(Customer $customer): CustomerResource
     {
-        return view('customers.show', compact('customer'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Customer $customer
-     * @return View
-     */
-    public function edit(Customer $customer): View
-    {
-        return view('customers.edit', compact('customer'));
+        return CustomerResource::make($customer);
     }
 
     /**
@@ -90,23 +71,23 @@ class CustomerController extends Controller
      *
      * @param Request $request
      * @param Customer $customer
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(Request $request, Customer $customer): RedirectResponse
+    public function update(Request $request, Customer $customer): JsonResponse
     {
         $this->customerService->update($request, $customer);
-        return redirect()->route('customers.index')->with('success', 'Le client a bien été modifié');
+        return response()->json(['message' => 'Le client a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Customer $customer
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Customer $customer): RedirectResponse
+    public function destroy(Customer $customer): JsonResponse
     {
         $this->customerService->delete($customer);
-        return redirect()->route('customers.index')->with('success', 'Le client a bien été supprimé');
+        return response()->json(['message' => 'Le client a bien été supprimé']);
     }
 }
