@@ -7,6 +7,7 @@ import { categories } from "./modules/categories";
 import { types } from "./modules/types";
 import { returns } from "./modules/returns";
 import { interventions } from "./modules/interventions";
+import { depots } from "./modules/depots";
 
 const store = createStore({
     modules: {
@@ -18,6 +19,7 @@ const store = createStore({
         types,
         returns,
         interventions,
+        depots,
     },
 });
 

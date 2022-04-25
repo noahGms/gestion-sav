@@ -58,6 +58,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Interventions"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/depots",
+            name: "depotsSettings",
+            component: () => import("../pages/settings/Depots"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

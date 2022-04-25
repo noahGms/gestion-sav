@@ -74,7 +74,11 @@
                 Interventions
               </router-link>
             </a-menu-item>
-            <a-menu-item key="11">Dépots</a-menu-item>
+            <a-menu-item key="depotsSettings">
+              <router-link :to="{name: 'depotsSettings'}">
+                Dépôts
+              </router-link>
+            </a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
