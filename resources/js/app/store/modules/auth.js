@@ -63,7 +63,7 @@ export const auth = {
         },
     },
     getters: {
-        getUser: (state) => state.user,
+        getAuthenticatedUser: (state) => state.user,
         isLoggedIn: (state) => state.loggedIn,
     },
 };

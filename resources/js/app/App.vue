@@ -39,7 +39,11 @@
             <template #title>
               <span>Paramètres</span>
             </template>
-            <a-menu-item key="4">Utilisateurs</a-menu-item>
+            <a-menu-item key="usersSettings">
+              <router-link :to="{ name: 'usersSettings' }">
+                Utilisateurs
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="5">Etats</a-menu-item>
             <a-menu-item key="6">Marques</a-menu-item>
             <a-menu-item key="7">Catégories</a-menu-item>
