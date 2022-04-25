@@ -52,6 +52,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Returns"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/interventions",
+            name: "interventionsSettings",
+            component: () => import("../pages/settings/Interventions"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

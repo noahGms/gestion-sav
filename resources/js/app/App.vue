@@ -69,7 +69,11 @@
                 Retours
               </router-link>
             </a-menu-item>
-            <a-menu-item key="10">Interventions</a-menu-item>
+            <a-menu-item key="interventionsSettings">
+              <router-link :to="{name: 'interventionsSettings'}">
+                Interventions
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="11">Dépots</a-menu-item>
           </a-sub-menu>
         </a-menu>
