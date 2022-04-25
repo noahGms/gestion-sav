@@ -4,47 +4,34 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\TypeRequest;
-use App\Models\Category;
+use App\Http\Resources\TypeResource;
 use App\Models\Type;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(): View
+    public function index(): AnonymousResourceCollection
     {
-        $types = Type::orderBy('name')->paginate(12);
-        $categories = Category::all();
-        return view('settings.types.index', compact('types', 'categories'));
+        $types = Type::all();
+        return TypeResource::collection($types);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param TypeRequest $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(TypeRequest $request): RedirectResponse
+    public function store(TypeRequest $request): JsonResponse
     {
         Type::create($request->validated());
-        return redirect()->back()->with('success', 'Le type a bien été créé');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Type $type
-     * @return View
-     */
-    public function edit(Type $type): View
-    {
-        $categories = Category::all();
-        return view('settings.types.edit', compact('type', 'categories'));
+        return response()->json(['message' => 'Le type a bien été créé']);
     }
 
     /**
@@ -52,23 +39,23 @@ class TypeController extends Controller
      *
      * @param TypeRequest $request
      * @param Type $type
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(TypeRequest $request, Type $type): RedirectResponse
+    public function update(TypeRequest $request, Type $type): JsonResponse
     {
         $type->update($request->validated());
-        return redirect()->route('types.index')->with('success', 'Le type a bien été modifié');
+        return response()->json(['message' => 'Le type a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Type $type
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Type $type): RedirectResponse
+    public function destroy(Type $type): JsonResponse
     {
         $type->delete();
-        return redirect()->route('types.index')->with('success', 'Le type a bien été supprimé');
+        return response()->json(['message' => 'Le type a bien été supprimé']);
     }
 }

@@ -29,4 +29,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('states', \App\Http\Controllers\Settings\StateController::class);
     Route::apiResource('brands', \App\Http\Controllers\Settings\BrandController::class);
     Route::apiResource('categories', \App\Http\Controllers\Settings\CategoryController::class);
+    Route::apiResource('types', \App\Http\Controllers\Settings\TypeController::class);
 });
