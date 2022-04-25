@@ -1,6 +1,7 @@
 .logo {
     color: black;
     font-size: 1.5em;
+    font-weight: bold;
     text-transform: uppercase;
     height: 64px;
     display: flex;
