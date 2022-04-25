@@ -22,6 +22,12 @@ const router = createRouter({
             component: () => import("../pages/settings/Users"),
             meta: { requiresAuth: true },
         },
+        {
+            path: "/parametres/etats",
+            name: "statesSettings",
+            component: () => import("../pages/settings/States"),
+            meta: { requiresAuth: true },
+        },
     ],
 });
 

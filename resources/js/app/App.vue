@@ -14,7 +14,7 @@
         <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
           <a-menu-item class="mt-0" key="home">
             <template #icon>
-              <home-outlined />
+              <home-outlined/>
             </template>
             <router-link :to="{ name: 'home' }">
               <span>Acceuil</span>
@@ -22,19 +22,19 @@
           </a-menu-item>
           <a-menu-item class="mt-0" key="2">
             <template #icon>
-              <tool-outlined />
+              <tool-outlined/>
             </template>
             <span>Items</span>
           </a-menu-item>
           <a-menu-item class="mt-0" key="3">
             <template #icon>
-              <team-outlined />
+              <team-outlined/>
             </template>
             <span>Clients</span>
           </a-menu-item>
           <a-sub-menu class="mt-0" key="sub1">
             <template #icon>
-              <setting-outlined />
+              <setting-outlined/>
             </template>
             <template #title>
               <span>Paramètres</span>
@@ -44,7 +44,11 @@
                 Utilisateurs
               </router-link>
             </a-menu-item>
-            <a-menu-item key="5">Etats</a-menu-item>
+            <a-menu-item key="statesSettings">
+              <router-link :to="{name: 'statesSettings'}">
+                Etats
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="6">Marques</a-menu-item>
             <a-menu-item key="7">Catégories</a-menu-item>
             <a-menu-item key="8">Types</a-menu-item>
@@ -82,12 +86,12 @@
                 class="me-1"
                 src="https://eu.ui-avatars.com/api/?name=jean"
               />
-              <DownOutlined />
+              <DownOutlined/>
             </a>
             <template #overlay>
               <a-menu>
-                <a-menu-item key="0"> Mon compte </a-menu-item>
-                <a-menu-divider />
+                <a-menu-item key="0"> Mon compte</a-menu-item>
+                <a-menu-divider/>
                 <a-menu-item key="1" @click="() => logout()">
                   Se déconnecter
                 </a-menu-item>
@@ -97,7 +101,7 @@
         </a-layout-header>
         <a-layout-content class="m-3">
           <div class="p-4 bg-white" :style="{ minHeight: '360px' }">
-            <router-view />
+            <router-view/>
           </div>
         </a-layout-content>
         <a-layout-footer class="text-center">
@@ -107,7 +111,7 @@
             <a
               href="http://www.procie-amberieu-en-bugey.com/mon-magasin.html"
               target="_blank"
-              >Pro&Cie - MDH services</a
+            >Pro&Cie - MDH services</a
             >. Tous droits réservés
           </p>
         </a-layout-footer>
@@ -115,7 +119,7 @@
     </a-layout>
     <a-layout v-else style="min-height: 100vh; min-width: 100vh">
       <a-layout-content>
-        <router-view />
+        <router-view/>
       </a-layout-content>
     </a-layout>
   </div>
@@ -130,9 +134,9 @@ import {
   DownOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
-import { defineComponent, ref, computed, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, ref, computed, onMounted} from "vue";
+import {useStore} from "vuex";
+import {useRoute, useRouter} from "vue-router";
 
 export default defineComponent({
   components: {
