@@ -52,6 +52,14 @@
           </a-list-item>
         </template>
       </a-list>
+
+      <a-pagination
+        class="mt-4"
+        @change="handlePaginationChange"
+        v-model:current="currentPage"
+        :total="total"
+        v-model:pageSize="currentPageSize"
+      />
     </div>
 
     <customer-form-modal
@@ -97,8 +105,28 @@ export default defineComponent({
     const customerFormModalIsUpdate = ref(false);
     const customerFormModalCustomer = ref({});
 
-    const getAllCustomers = () => {
-      store.dispatch("customers/getAllCustomers");
+    const currentPage = ref(1);
+    const currentPageSize = ref(10);
+    const total = ref(0);
+
+    const handlePaginationChange = (page, pageSize) => {
+      getAllCustomers(page, pageSize);
+      window.scrollTo(0,0);
+    };
+
+    const getAllCustomers = (page = currentPage.value, pageSize = currentPageSize.value) => {
+      router.replace({
+        query: {
+          page: page,
+          pageSize: pageSize
+        }
+      });
+
+      store.dispatch("customers/getAllCustomers", {page, pageSize}).then((response) => {
+        total.value = response.data.meta.total;
+        currentPage.value = response.data.meta.current_page;
+        currentPageSize.value = response.data.meta.per_page;
+      });
     };
 
     const showCustomerDetails = (customer) => {
@@ -134,6 +162,14 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (router.currentRoute.value.query?.page) {
+        currentPage.value = parseInt(router.currentRoute.value.query?.page);
+      }
+
+      if (router.currentRoute.value.query?.pageSize) {
+        currentPageSize.value = parseInt(router.currentRoute.value.query?.pageSize);
+      }
+
       getAllCustomers();
     });
 
@@ -142,10 +178,14 @@ export default defineComponent({
       customerFormModalVisible,
       customerFormModalIsUpdate,
       customerFormModalCustomer,
+      currentPage,
+      total,
+      currentPageSize,
       confirmDelete,
       showCustomerDetails,
       openCustomerFormModal,
       closeCustomerFormModal,
+      handlePaginationChange,
     };
   }
 });

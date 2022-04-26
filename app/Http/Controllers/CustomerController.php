@@ -38,7 +38,7 @@ class CustomerController extends Controller
             $query = Customer::search($search)->constrain($query);
         }
 
-        $customers = $query->paginate(12);
+        $customers = $query->paginate($request->get('pageSize', 10));
 
         return CustomerResource::collection($customers);
     }
