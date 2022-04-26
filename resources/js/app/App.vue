@@ -110,7 +110,7 @@
             <a class="ant-dropdown-link" @click.prevent>
               <a-avatar
                 class="me-1"
-                src="https://eu.ui-avatars.com/api/?name=jean"
+                :src="`https://eu.ui-avatars.com/api/?name=${authenticatedUser.fullname}`"
               />
               <DownOutlined/>
             </a>
@@ -179,6 +179,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const isLoggedIn = computed(() => store.getters["auth/isLoggedIn"]);
+    const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
     const collapsed = ref(false);
     const selectedKeys = ref([]);
@@ -199,6 +200,7 @@ export default defineComponent({
       selectedKeys,
       logout,
       isLoggedIn,
+      authenticatedUser,
     };
   },
 });
