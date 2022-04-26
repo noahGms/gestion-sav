@@ -1,6 +1,15 @@
 <template>
   <div>
-    <a-page-header title="Clients">
+    <a-page-header>
+      <template #title>
+        <span class="me-3">Clients</span>
+        <a-input-search
+          v-model:value="search"
+          placeholder="Rechercher un client"
+          style="width: 200px"
+          @search="onSearch"
+        />
+      </template>
       <template #extra>
         <a-button type="primary" @click="openCustomerFormModal(null)">Ajouter</a-button>
       </template>
@@ -72,7 +81,7 @@
 </template>
 
 <script>
-import {computed, defineComponent, onMounted, ref} from "vue";
+import {computed, defineComponent, onMounted, reactive, ref} from "vue";
 import {useStore} from "vuex";
 import {
   DeleteOutlined,
@@ -109,20 +118,27 @@ export default defineComponent({
     const currentPageSize = ref(10);
     const total = ref(0);
 
+    const search = ref("");
+
+    const onSearch = (value) => {
+      getAllCustomers(currentPage.value, currentPageSize.value, value);
+    };
+
     const handlePaginationChange = (page, pageSize) => {
       getAllCustomers(page, pageSize);
       window.scrollTo(0,0);
     };
 
-    const getAllCustomers = (page = currentPage.value, pageSize = currentPageSize.value) => {
+    const getAllCustomers = (page = currentPage.value, pageSize = currentPageSize.value, searchText = search.value) => {
       router.replace({
         query: {
           page: page,
-          pageSize: pageSize
+          pageSize: pageSize,
+          search: searchText,
         }
       });
 
-      store.dispatch("customers/getAllCustomers", {page, pageSize}).then((response) => {
+      store.dispatch("customers/getAllCustomers", {page, pageSize, search: searchText}).then((response) => {
         total.value = response.data.meta.total;
         currentPage.value = response.data.meta.current_page;
         currentPageSize.value = response.data.meta.per_page;
@@ -170,6 +186,10 @@ export default defineComponent({
         currentPageSize.value = parseInt(router.currentRoute.value.query?.pageSize);
       }
 
+      if (router.currentRoute.value.query?.search) {
+        search.value = router.currentRoute.value.query?.search;
+      }
+
       getAllCustomers();
     });
 
@@ -181,11 +201,13 @@ export default defineComponent({
       currentPage,
       total,
       currentPageSize,
+      search,
       confirmDelete,
       showCustomerDetails,
       openCustomerFormModal,
       closeCustomerFormModal,
       handlePaginationChange,
+      onSearch,
     };
   }
 });

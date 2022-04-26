@@ -11,10 +11,10 @@ export const customers = {
         },
     },
     actions: {
-        getAllCustomers({commit}, {page, pageSize}) {
+        getAllCustomers({commit}, {page, pageSize, search}) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get(`/api/customers?page=${page}&pageSize=${pageSize}`)
+                    .get(`/api/customers?page=${page}&pageSize=${pageSize}&search=${search}`)
                     .then((response) => {
                         commit("setCustomers", response.data.data);
                         resolve(response);
