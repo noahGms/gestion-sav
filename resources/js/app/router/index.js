@@ -32,49 +32,49 @@ const router = createRouter({
             path: "/parametres/utilisateurs",
             name: "usersSettings",
             component: () => import("../pages/settings/Users"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/etats",
             name: "statesSettings",
             component: () => import("../pages/settings/States"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/marques",
             name: "brandsSettings",
             component: () => import("../pages/settings/Brands"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/categories",
             name: "categoriesSettings",
             component: () => import("../pages/settings/Categories"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/types",
             name: "typesSettings",
             component: () => import("../pages/settings/Types"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/retours",
             name: "returnsSettings",
             component: () => import("../pages/settings/Returns"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/interventions",
             name: "interventionsSettings",
             component: () => import("../pages/settings/Interventions"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
             path: "/parametres/depots",
             name: "depotsSettings",
             component: () => import("../pages/settings/Depots"),
-            meta: { requiresAuth: true },
+            meta: { requiresAuth: true, requiresAdmin: true },
         },
     ],
 });
@@ -83,7 +83,15 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
         store.default.dispatch("auth/whoami").finally(() => {
             if (store.default.getters["auth/isLoggedIn"]) {
-                next();
+                if (to.meta.requiresAdmin) {
+                    if (store.default.getters["auth/isAdmin"]) {
+                        next();
+                    } else {
+                        next({ name: "home" });
+                    }
+                } else {
+                    next();
+                }
             } else {
                 next({ name: "login" });
             }

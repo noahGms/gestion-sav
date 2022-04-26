@@ -65,5 +65,11 @@ export const auth = {
     getters: {
         getAuthenticatedUser: (state) => state.user,
         isLoggedIn: (state) => state.loggedIn,
+        isAdmin: (state) => {
+            if (state.user) {
+                return state.user.is_admin;
+            }
+            return false;
+        },
     },
 };

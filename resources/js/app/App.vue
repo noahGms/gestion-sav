@@ -34,7 +34,7 @@
               <span>Clients</span>
             </router-link>
           </a-menu-item>
-          <a-sub-menu class="mt-0" key="sub1">
+          <a-sub-menu v-if="authenticatedUser.is_admin" class="mt-0" key="sub1">
             <template #icon>
               <setting-outlined/>
             </template>
