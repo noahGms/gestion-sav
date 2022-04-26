@@ -34,7 +34,7 @@ export const auth = {
                 axios
                     .get("/api/auth/whoami")
                     .then((response) => {
-                        commit("setUser", response.data.user);
+                        commit("setUser", response.data.data);
                         commit("setLoggedIn", true);
                         resolve(response);
                     })

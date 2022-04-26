@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,11 +25,11 @@ class AuthController extends Controller
     }
 
     /**
-     * @return JsonResponse
+     * @return UserResource
      */
-    public function whoami(): JsonResponse
+    public function whoami(): UserResource
     {
-        return response()->json(['user' => Auth::user()]);
+        return UserResource::make(Auth::user());
     }
 
     /**
