@@ -121,7 +121,7 @@ export default defineComponent({
     const search = ref("");
 
     const onSearch = (value) => {
-      getAllCustomers(currentPage.value, currentPageSize.value, value);
+      getAllCustomers(1, currentPageSize.value, value);
     };
 
     const handlePaginationChange = (page, pageSize) => {
