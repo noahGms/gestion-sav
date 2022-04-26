@@ -26,11 +26,13 @@
             </template>
             <span>Items</span>
           </a-menu-item>
-          <a-menu-item class="mt-0" key="3">
+          <a-menu-item class="mt-0" key="customers">
             <template #icon>
               <team-outlined/>
             </template>
-            <span>Clients</span>
+            <router-link :to="{ name: 'customers' }">
+              <span>Clients</span>
+            </router-link>
           </a-menu-item>
           <a-sub-menu class="mt-0" key="sub1">
             <template #icon>
