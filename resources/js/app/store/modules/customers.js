@@ -4,10 +4,14 @@ export const customers = {
     namespaced: true,
     state: () => ({
         customers: [],
+        liteCustomers: [],
     }),
     mutations: {
         setCustomers(state, customers) {
             state.customers = customers;
+        },
+        setLiteCustomers(state, customers) {
+            state.liteCustomers = customers;
         },
     },
     actions: {
@@ -17,6 +21,19 @@ export const customers = {
                     .get(`/api/customers?page=${page}&pageSize=${pageSize}&search=${search}`)
                     .then((response) => {
                         commit("setCustomers", response.data.data);
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            })
+        },
+        getAllLiteCustomers({commit}) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/api/customers/lite")
+                    .then((response) => {
+                        commit("setLiteCustomers", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -75,5 +92,6 @@ export const customers = {
     },
     getters: {
         getAllCustomers: (state) => state.customers,
+        getAllLiteCustomers: (state) => state.liteCustomers,
     },
 };
