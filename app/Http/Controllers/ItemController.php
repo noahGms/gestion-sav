@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Customer;
-use App\Models\Depot;
-use App\Models\Intervention;
+use App\Http\Resources\ItemResource;
 use App\Models\Item;
-use App\Models\ReturnMdl;
-use App\Models\State;
-use App\Models\Type;
-use App\Models\User;
 use App\Services\ItemService;
 use Carbon\Carbon;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ItemController extends Controller
 {
@@ -33,16 +26,11 @@ class ItemController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return View
+     * @return AnonymousResourceCollection
      */
-    public function index(Request $request): View
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Item::query();
-        $itemsCount = Item::count();
-
-        $states = State::all();
-        $brands = Brand::all();
-        $types = Type::all();
 
         if ($request->filled('state_id')) {
             $query->where('state_id', $request->get('state_id'));
@@ -73,66 +61,31 @@ class ItemController extends Controller
         $query->orderBy('intervention_date', $request->get('intervention_date'));
 
         $items = $query->paginate(12);
-        return view('items.index', compact('items', 'itemsCount', 'states', 'brands', 'types'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create(): View
-    {
-        $states = State::all();
-        $interventions = Intervention::all();
-        $depots = Depot::all();
-        $returns = ReturnMdl::all();
-        $types = Type::all();
-        $brands = Brand::all();
-        $customers = Customer::all();
-        $users = User::where('is_god', '=', false)->get();
-        return view('items.create', compact('states', 'interventions', 'depots', 'returns', 'types', 'brands', 'customers', 'users'));
+        return ItemResource::collection($items);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
         $this->itemService->store($request);
-        return redirect()->route('items.index')->with('success', 'L\'item a bien été créé');
+        return response()->json(['message' => 'L\'item a bien été créé']);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Item $item
-     * @return View
+     * @return JsonResponse
      */
-    public function show(Item $item): View
+    public function show(Item $item): JsonResponse
     {
-        $users = User::where('is_god', '=', false)->get();
-        return view('items.show', compact('item', 'users'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Item $item
-     * @return View
-     */
-    public function edit(Item $item): View
-    {
-        $states = State::all();
-        $interventions = Intervention::all();
-        $depots = Depot::all();
-        $returns = ReturnMdl::all();
-        $types = Type::all();
-        $brands = Brand::all();
-        return view('items.edit', compact('item', 'states', 'interventions', 'depots', 'returns', 'types', 'brands'));
+        return ItemResource::make($item);
     }
 
     /**
@@ -140,49 +93,49 @@ class ItemController extends Controller
      *
      * @param Request $request
      * @param Item $item
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(Request $request, Item $item): RedirectResponse
+    public function update(Request $request, Item $item): JsonResponse
     {
         $this->itemService->update($request, $item);
-        return redirect()->route('items.index')->with('success', 'L\item a bien été modifié');
+        return response()->json(['message' => 'L\'item a bien été modifié']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Item $item
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Item $item): RedirectResponse
+    public function destroy(Item $item): JsonResponse
     {
         $this->itemService->delete($item);
-        return redirect()->route('items.index')->with('success', 'L\item a bien été supprimé');
+        return response()->json(['message' => 'L\'item a bien été supprimé']);
     }
 
     /**
      * Archive the specified resource from storage.
      *
      * @param Item $item
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function archive(Item $item): RedirectResponse
+    public function archive(Item $item): JsonResponse
     {
         $item->archived_at = Carbon::now();
         $item->save();
-        return redirect()->route('items.index')->with('success', 'L\item a bien été archivé');
+        return response()->json(['message' => 'L\'item a bien été archivé']);
     }
 
     /**
      * Unarchive the specified resource from storage.
      *
      * @param Item $item
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function unarchive(Item $item): RedirectResponse
+    public function unarchive(Item $item): JsonResponse
     {
         $item->archived_at = null;
         $item->save();
-        return redirect()->route('items.index')->with('success', 'L\item a bien été unarchivé');
+        return response()->json(['message' => 'L\'item a bien été déarchivé']);
     }
 }

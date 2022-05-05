@@ -41,6 +41,17 @@ class Item extends Model
     ];
 
     /**
+     * @return string|null
+     */
+    public function getMachineAttribute(): ?string
+    {
+        if (!$this->brand || !$this->model) {
+            return null;
+        }
+        return "{$this->brand->name} {$this->model}";
+    }
+
+    /**
      * @return BelongsTo
      */
     public function customer(): BelongsTo

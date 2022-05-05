@@ -36,4 +36,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('customers/lite', [\App\Http\Controllers\CustomerController::class, 'lite']);
     Route::apiResource('customers', \App\Http\Controllers\CustomerController::class);
+    Route::apiResource('items', \App\Http\Controllers\ItemController::class);
 });
