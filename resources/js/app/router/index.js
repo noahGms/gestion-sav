@@ -29,6 +29,18 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
+            path: "/items",
+            name: "items",
+            component: () => import("../pages/items/Items"),
+            meta: { requiresAuth: true },
+        },
+        {
+            path: "/items/ajouter",
+            name: "createItem",
+            component: () => import("../pages/items/CreateItem"),
+            meta: { requiresAuth: true },
+        },
+        {
             path: "/parametres/utilisateurs",
             name: "usersSettings",
             component: () => import("../pages/settings/Users"),

@@ -20,11 +20,13 @@
               <span>Acceuil</span>
             </router-link>
           </a-menu-item>
-          <a-menu-item class="mt-0" key="2">
+          <a-menu-item class="mt-0" key="items">
             <template #icon>
               <tool-outlined/>
             </template>
-            <span>Items</span>
+            <router-link :to="{ name: 'items' }">
+              <span>Items</span>
+            </router-link>
           </a-menu-item>
           <a-menu-item class="mt-0" key="customers">
             <template #icon>

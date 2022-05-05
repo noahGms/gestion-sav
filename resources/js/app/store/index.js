@@ -9,6 +9,7 @@ import { returns } from "./modules/returns";
 import { interventions } from "./modules/interventions";
 import { depots } from "./modules/depots";
 import { customers } from "./modules/customers";
+import { items } from "./modules/items";
 
 const store = createStore({
     modules: {
@@ -22,6 +23,7 @@ const store = createStore({
         interventions,
         depots,
         customers,
+        items
     },
 });
 
