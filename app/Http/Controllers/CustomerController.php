@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerLiteResource;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Services\CustomerService;
@@ -44,6 +45,16 @@ class CustomerController extends Controller
     }
 
     /**
+     * Display a lite listing of the resource.
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function lite(): AnonymousResourceCollection
+    {
+        return CustomerLiteResource::collection(Customer::all());
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -51,8 +62,11 @@ class CustomerController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $this->customerService->store($request);
-        return response()->json(['message' => 'Le client a bien été créé']);
+        $customer = $this->customerService->store($request);
+        return response()->json([
+            'message' => 'Le client a bien été créé',
+            'data' => CustomerResource::make($customer),
+        ]);
     }
 
     /**
