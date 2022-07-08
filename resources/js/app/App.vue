@@ -1,101 +1,94 @@
 <template>
-  <div>
-    <a-layout v-if="isLoggedIn" style="min-height: 100vh; min-width: 100vh">
-      <a-layout-sider
-        breakpoint="lg"
-        style="background: #fff"
-        v-model:collapsed="collapsed"
-        :trigger="null"
-        collapsible
-      >
-        <div class="logo p-0">
-          {{ collapsed ? "G-SAV" : "Gestion-SAV" }}
-        </div>
-        <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
-          <a-menu-item class="mt-0" key="home">
-            <template #icon>
-              <home-outlined/>
-            </template>
-            <router-link :to="{ name: 'home' }">
-              <span>Acceuil</span>
+  <a-layout v-if="isLoggedIn" has-sider style="min-height: 100vh; min-width: 100vw;">
+    <a-layout-sider
+      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, background: '#fff' }"
+      breakpoint="lg"
+      v-model:collapsed="collapsed"
+      :trigger="null"
+      collapsible
+      collapsedWidth="0"
+    >
+      <div class="logo p-0">
+        {{ collapsed ? "G-SAV" : "Gestion-SAV" }}
+      </div>
+      <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
+        <a-menu-item class="mt-0" key="home">
+          <template #icon>
+            <home-outlined/>
+          </template>
+          <router-link :to="{ name: 'home' }">
+            <span>Acceuil</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item class="mt-0" key="items">
+          <template #icon>
+            <tool-outlined/>
+          </template>
+          <router-link :to="{ name: 'items' }">
+            <span>Items</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item class="mt-0" key="customers">
+          <template #icon>
+            <team-outlined/>
+          </template>
+          <router-link :to="{ name: 'customers' }">
+            <span>Clients</span>
+          </router-link>
+        </a-menu-item>
+        <a-sub-menu v-if="authenticatedUser.is_admin" class="mt-0" key="sub1">
+          <template #icon>
+            <setting-outlined/>
+          </template>
+          <template #title>
+            <span>Paramètres</span>
+          </template>
+          <a-menu-item key="usersSettings">
+            <router-link :to="{ name: 'usersSettings' }">
+              Utilisateurs
             </router-link>
           </a-menu-item>
-          <a-menu-item class="mt-0" key="items">
-            <template #icon>
-              <tool-outlined/>
-            </template>
-            <router-link :to="{ name: 'items' }">
-              <span>Items</span>
+          <a-menu-item key="statesSettings">
+            <router-link :to="{name: 'statesSettings'}">
+              Etats
             </router-link>
           </a-menu-item>
-          <a-menu-item class="mt-0" key="customers">
-            <template #icon>
-              <team-outlined/>
-            </template>
-            <router-link :to="{ name: 'customers' }">
-              <span>Clients</span>
+          <a-menu-item key="brandsSettings">
+            <router-link :to="{name: 'brandsSettings'}">
+              Marques
             </router-link>
           </a-menu-item>
-          <a-sub-menu v-if="authenticatedUser.is_admin" class="mt-0" key="sub1">
-            <template #icon>
-              <setting-outlined/>
-            </template>
-            <template #title>
-              <span>Paramètres</span>
-            </template>
-            <a-menu-item key="usersSettings">
-              <router-link :to="{ name: 'usersSettings' }">
-                Utilisateurs
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="statesSettings">
-              <router-link :to="{name: 'statesSettings'}">
-                Etats
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="brandsSettings">
-              <router-link :to="{name: 'brandsSettings'}">
-                Marques
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="categoriesSettings">
-              <router-link :to="{name: 'categoriesSettings'}">
-                Catégories
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="typesSettings">
-              <router-link :to="{name: 'typesSettings'}">
-                Types
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="returnsSettings">
-              <router-link :to="{name: 'returnsSettings'}">
-                Retours
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="interventionsSettings">
-              <router-link :to="{name: 'interventionsSettings'}">
-                Interventions
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="depotsSettings">
-              <router-link :to="{name: 'depotsSettings'}">
-                Dépôts
-              </router-link>
-            </a-menu-item>
-          </a-sub-menu>
-        </a-menu>
-      </a-layout-sider>
-      <a-layout>
-        <a-layout-header
-          class="
-            d-flex
-            justify-content-between
-            align-items-center
-            ps-3
-            bg-white
-          "
-        >
+          <a-menu-item key="categoriesSettings">
+            <router-link :to="{name: 'categoriesSettings'}">
+              Catégories
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="typesSettings">
+            <router-link :to="{name: 'typesSettings'}">
+              Types
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="returnsSettings">
+            <router-link :to="{name: 'returnsSettings'}">
+              Retours
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="interventionsSettings">
+            <router-link :to="{name: 'interventionsSettings'}">
+              Interventions
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="depotsSettings">
+            <router-link :to="{name: 'depotsSettings'}">
+              Dépôts
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
+      </a-menu>
+    </a-layout-sider>
+    <a-layout :class="layoutHeaderClass">
+      <a-layout-header :style="{ position: 'fixed', zIndex: 1, background: '#fff', padding: '0' }">
+        <div :class="`d-flex justify-content-between align-items-center ${headerContentClass}`">
           <menu-unfold-outlined
             :style="{ fontSize: '16px' }"
             v-if="collapsed"
@@ -126,32 +119,33 @@
               </a-menu>
             </template>
           </a-dropdown>
-        </a-layout-header>
-        <a-layout-content class="m-3">
-          <div class="p-4 bg-white" :style="{ minHeight: '360px' }">
-            <router-view/>
-          </div>
-        </a-layout-content>
-        <a-layout-footer class="text-center">
-          <p>
-            <strong>&copy Gestion S.A.V</strong> par
-            <a href="https://github.com/noahGms" target="_blank">Noah</a> pour
-            <a
-              href="http://www.procie-amberieu-en-bugey.com/mon-magasin.html"
-              target="_blank"
-            >Pro&Cie - MDH services</a
-            >. Tous droits réservés
-          </p>
-        </a-layout-footer>
-      </a-layout>
-    </a-layout>
-    <a-layout v-else style="min-height: 100vh; min-width: 100vh">
-      <a-layout-content>
-        <router-view/>
+        </div>
+      </a-layout-header>
+      <a-layout-content class="layout-content">
+        <div :style="{ padding: '24px', background: '#fff', textAlign: 'center', background: '#fff' }">
+          <router-view/>
+        </div>
       </a-layout-content>
+      <a-layout-footer class="text-center">
+        <p>
+          <strong>&copy Gestion S.A.V</strong> par
+          <a href="https://github.com/noahGms" target="_blank">Noah</a> pour
+          <a
+            href="http://www.procie-amberieu-en-bugey.com/mon-magasin.html"
+            target="_blank"
+          >Pro&Cie - MDH services</a
+          >. Tous droits réservés
+        </p>
+      </a-layout-footer>
     </a-layout>
-  </div>
+  </a-layout>
+  <a-layout v-else style="min-height: 100vh; min-width: 100vw">
+    <a-layout-content>
+      <router-view/>
+    </a-layout-content>
+  </a-layout>
 </template>
+
 <script>
 import {
   MenuUnfoldOutlined,
@@ -186,6 +180,22 @@ export default defineComponent({
     const collapsed = ref(false);
     const selectedKeys = ref([]);
 
+    const layoutHeaderClass = computed(() => {
+      if (collapsed.value) {
+        return 'layout-header-mobile';
+      } else {
+        return 'layout-header'
+      }
+    });
+
+    const headerContentClass = computed(() => {
+      if (collapsed.value) {
+        return 'header-content-mobile';
+      } else {
+        return 'header-content'
+      }
+    });
+
     const logout = () => {
       store.dispatch("auth/logout").finally(() => {
         router.push("/se-connecter");
@@ -203,7 +213,41 @@ export default defineComponent({
       logout,
       isLoggedIn,
       authenticatedUser,
+      layoutHeaderClass,
+      headerContentClass
     };
   },
 });
 </script>
+
+<style>
+.layout-header {
+  margin-left: 200px;
+}
+
+.layout-header-mobile {
+  margin-left: 0;
+}
+
+.header-content {
+  width: calc(100vw - 200px);
+  padding: 0 50px;
+}
+
+.header-content-mobile {
+  width: 100vw;
+  padding: 0 50px;
+}
+
+.layout-content {
+  margin: 64px 0;
+  padding: 16px;
+  overflow: initial;
+}
+
+/* .layout-content {
+  margin: 64px 16px 0;
+  padding: 24px;
+  overflow: initial;
+} */
+</style>
