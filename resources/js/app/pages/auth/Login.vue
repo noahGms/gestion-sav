@@ -1,6 +1,6 @@
 <template>
   <div
-    style="min-height: 100vh; min-width: 100vh"
+    style="min-height: 100vh; min-width: 100vw"
     class="
       bg-white
       d-flex
