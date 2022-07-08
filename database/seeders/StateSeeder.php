@@ -28,16 +28,16 @@ class StateSeeder extends Seeder
             $colorHex = '';
             switch ($color['name']) {
                 case 'Rouge':
-                    $colorHex = '#EE4B2B';
+                    $colorHex = '#f5222d';
                     break;
                 case 'Bleu':
-                    $colorHex = '#0000FF';
+                    $colorHex = '#1890ff';
                     break;
                 case 'Vert':
-                    $colorHex = '#008000';
+                    $colorHex = '#52c41a';
                     break;
                 case 'Orange':
-                    $colorHex = '#FFA500';
+                    $colorHex = '#faad14';
                     break;
                 case 'Gris':
                     $colorHex = '#808080';
