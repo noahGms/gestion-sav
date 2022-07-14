@@ -1,34 +1,37 @@
 <template>
   <div>
-    <a-page-header title="Dépôts">
-      <template #extra>
-        <a-button type="primary" @click="openDepotFormModal(null)">Ajouter</a-button>
-      </template>
-    </a-page-header>
-    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="depots" :columns="columns">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <a class="ant-dropdown-link" @click="openDepotFormModal(record)">Modifier</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            title="Voulez vous vraiment supprimer ce dépôt ?"
-            ok-text="Confirmer"
-            cancel-text="Annuler"
-            @confirm="confirmDelete(record)"
-            @cancel="() => {}"
-          >
-            <a class="text-danger" href="#">Supprimer</a>
-          </a-popconfirm>
+    <loader-component v-if="loading" />
+    <div v-else>
+      <a-page-header title="Dépôts">
+        <template #extra>
+          <a-button type="primary" @click="openDepotFormModal(null)">Ajouter</a-button>
         </template>
-      </template>
-    </a-table>
+      </a-page-header>
+      <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="depots" :columns="columns">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'action'">
+            <a class="ant-dropdown-link" @click="openDepotFormModal(record)">Modifier</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="Voulez vous vraiment supprimer ce dépôt ?"
+              ok-text="Confirmer"
+              cancel-text="Annuler"
+              @confirm="confirmDelete(record)"
+              @cancel="() => {}"
+            >
+              <a class="text-danger" href="#">Supprimer</a>
+            </a-popconfirm>
+          </template>
+        </template>
+      </a-table>
 
-    <depot-form-modal
-      v-if="depotFormModalVisible"
-      :is-update="depotFormModalIsUpdate"
-      :depot="depotFormModalDepot"
-      :close="closeDepotFormModal"
-    />
+      <depot-form-modal
+        v-if="depotFormModalVisible"
+        :is-update="depotFormModalIsUpdate"
+        :depot="depotFormModalDepot"
+        :close="closeDepotFormModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,10 +39,12 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import DepotFormModal from "../../components/depots/DepotFormModal";
+import LoaderComponent from "../../components/LoaderComponent";
 
 export default defineComponent({
   components: {
     DepotFormModal,
+    LoaderComponent
   },
   setup() {
     const store = useStore();
@@ -47,6 +52,8 @@ export default defineComponent({
     const depotFormModalVisible = ref(false);
     const depotFormModalIsUpdate = ref(false);
     const depotFormModalDepot = ref({});
+
+    const loading = ref(false);
 
     const columns = [
       {
@@ -61,7 +68,10 @@ export default defineComponent({
     ];
 
     const getAllDepots = () => {
-      store.dispatch('depots/getAllDepots');
+      loading.value = true;
+      store.dispatch('depots/getAllDepots').then(() => {
+        loading.value = false;
+      });
     };
 
     const confirmDelete = (record) => {
@@ -100,6 +110,7 @@ export default defineComponent({
       confirmDelete,
       openDepotFormModal,
       closeDepotFormModal,
+      loading
     };
   }
 });

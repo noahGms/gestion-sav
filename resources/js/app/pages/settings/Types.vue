@@ -1,38 +1,41 @@
 <template>
   <div>
-    <a-page-header title="Types">
-      <template #extra>
-        <a-button type="primary" @click="openTypeFormModal(null)">Ajouter</a-button>
-      </template>
-    </a-page-header>
-    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="types" :columns="columns">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'category'">
-          <span>{{record.category?.name}}</span>
+    <loader-component v-if="loading" />
+    <div v-else>
+      <a-page-header title="Types">
+        <template #extra>
+          <a-button type="primary" @click="openTypeFormModal(null)">Ajouter</a-button>
         </template>
-        <template v-else-if="column.key === 'action'">
-          <a class="ant-dropdown-link" @click="openTypeFormModal(record)">Modifier</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            title="Voulez vous vraiment supprimer ce type ?"
-            ok-text="Confirmer"
-            cancel-text="Annuler"
-            @confirm="confirmDelete(record)"
-            @cancel="() => {}"
-          >
-            <a class="text-danger" href="#">Supprimer</a>
-          </a-popconfirm>
+      </a-page-header>
+      <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="types" :columns="columns">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'category'">
+            <span>{{record.category?.name}}</span>
+          </template>
+          <template v-else-if="column.key === 'action'">
+            <a class="ant-dropdown-link" @click="openTypeFormModal(record)">Modifier</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="Voulez vous vraiment supprimer ce type ?"
+              ok-text="Confirmer"
+              cancel-text="Annuler"
+              @confirm="confirmDelete(record)"
+              @cancel="() => {}"
+            >
+              <a class="text-danger" href="#">Supprimer</a>
+            </a-popconfirm>
+          </template>
         </template>
-      </template>
-    </a-table>
+      </a-table>
 
-    <type-form-modal
-      v-if="typeFormModalVisible"
-      :is-update="typeFormModalIsUpdate"
-      :type="typeFormModalType"
-      :close="closeTypeFormModal"
-      :categories="categories"
-    />
+      <type-form-modal
+        v-if="typeFormModalVisible"
+        :is-update="typeFormModalIsUpdate"
+        :type="typeFormModalType"
+        :close="closeTypeFormModal"
+        :categories="categories"
+      />
+    </div>
   </div>
 </template>
 
@@ -40,10 +43,12 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import TypeFormModal from "../../components/types/TypeFormModal";
+import LoaderComponent from "../../components/LoaderComponent";
 
 export default defineComponent({
   components: {
     TypeFormModal,
+    LoaderComponent
   },
   setup() {
     const store = useStore();
@@ -52,6 +57,8 @@ export default defineComponent({
     const typeFormModalVisible = ref(false);
     const typeFormModalIsUpdate = ref(false);
     const typeFormModalType = ref({});
+
+    const loading = ref(false);
 
     const columns = [
       {
@@ -71,7 +78,10 @@ export default defineComponent({
     ];
 
     const getAllTypes = () => {
-      store.dispatch('types/getAllTypes');
+      loading.value = true;
+      store.dispatch('types/getAllTypes').then(() => {
+        loading.value = false;
+      });
     };
 
     const confirmDelete = (record) => {
@@ -115,6 +125,7 @@ export default defineComponent({
       confirmDelete,
       openTypeFormModal,
       closeTypeFormModal,
+      loading
     };
   },
 })

@@ -1,34 +1,37 @@
 <template>
   <div>
-    <a-page-header title="Retours">
-      <template #extra>
-        <a-button type="primary" @click="openReturnFormModal(null)">Ajouter</a-button>
-      </template>
-    </a-page-header>
-    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="returns" :columns="columns">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <a class="ant-dropdown-link" @click="openReturnFormModal(record)">Modifier</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            title="Voulez vous vraiment supprimer ce retour ?"
-            ok-text="Confirmer"
-            cancel-text="Annuler"
-            @confirm="confirmDelete(record)"
-            @cancel="() => {}"
-          >
-            <a class="text-danger" href="#">Supprimer</a>
-          </a-popconfirm>
+    <loader-component v-if="loading" />
+    <div v-else>
+       <a-page-header title="Retours">
+        <template #extra>
+          <a-button type="primary" @click="openReturnFormModal(null)">Ajouter</a-button>
         </template>
-      </template>
-    </a-table>
+      </a-page-header>
+      <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="returns" :columns="columns">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'action'">
+            <a class="ant-dropdown-link" @click="openReturnFormModal(record)">Modifier</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="Voulez vous vraiment supprimer ce retour ?"
+              ok-text="Confirmer"
+              cancel-text="Annuler"
+              @confirm="confirmDelete(record)"
+              @cancel="() => {}"
+            >
+              <a class="text-danger" href="#">Supprimer</a>
+            </a-popconfirm>
+          </template>
+        </template>
+      </a-table>
 
-    <return-form-modal
-      v-if="returnFormModalVisible"
-      :is-update="returnFormModalIsUpdate"
-      :return-entity="returnFormModalReturn"
-      :close="closeReturnFormModal"
-    />
+      <return-form-modal
+        v-if="returnFormModalVisible"
+        :is-update="returnFormModalIsUpdate"
+        :return-entity="returnFormModalReturn"
+        :close="closeReturnFormModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,10 +39,12 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import ReturnFormModal from "../../components/returns/ReturnFormModal";
+import LoaderComponent from "../../components/LoaderComponent";
 
 export default defineComponent({
   components: {
     ReturnFormModal,
+    LoaderComponent
   },
   setup() {
     const store = useStore();
@@ -47,6 +52,8 @@ export default defineComponent({
     const returnFormModalVisible = ref(false);
     const returnFormModalIsUpdate = ref(false);
     const returnFormModalReturn = ref({});
+
+    const loading = ref(false);
 
     const columns = [
       {
@@ -61,7 +68,10 @@ export default defineComponent({
     ];
 
     const getAllReturns = () => {
-      store.dispatch("returns/getAllReturns");
+      loading.value = true;
+      store.dispatch("returns/getAllReturns").then(() => {
+        loading.value = false;
+      });
     };
 
     const confirmDelete = (record) => {
@@ -100,6 +110,7 @@ export default defineComponent({
       confirmDelete,
       openReturnFormModal,
       closeReturnFormModal,
+      loading
     };
   }
 });

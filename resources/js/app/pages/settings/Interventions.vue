@@ -1,34 +1,37 @@
 <template>
   <div>
-    <a-page-header title="Interventions">
-      <template #extra>
-        <a-button type="primary" @click="openInterventionFormModal(null)">Ajouter</a-button>
-      </template>
-    </a-page-header>
-    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="interventions" :columns="columns">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <a class="ant-dropdown-link" @click="openInterventionFormModal(record)">Modifier</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            title="Voulez vous vraiment supprimer cette intervention ?"
-            ok-text="Confirmer"
-            cancel-text="Annuler"
-            @confirm="confirmDelete(record)"
-            @cancel="() => {}"
-          >
-            <a class="text-danger" href="#">Supprimer</a>
-          </a-popconfirm>
+    <loader-component v-if="loading" />
+    <div v-else>
+      <a-page-header title="Interventions">
+        <template #extra>
+          <a-button type="primary" @click="openInterventionFormModal(null)">Ajouter</a-button>
         </template>
-      </template>
-    </a-table>
+      </a-page-header>
+      <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="interventions" :columns="columns">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'action'">
+            <a class="ant-dropdown-link" @click="openInterventionFormModal(record)">Modifier</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="Voulez vous vraiment supprimer cette intervention ?"
+              ok-text="Confirmer"
+              cancel-text="Annuler"
+              @confirm="confirmDelete(record)"
+              @cancel="() => {}"
+            >
+              <a class="text-danger" href="#">Supprimer</a>
+            </a-popconfirm>
+          </template>
+        </template>
+      </a-table>
 
-    <intervention-form-modal
-      v-if="interventionFormModalVisible"
-      :is-update="interventionFormModalIsUpdate"
-      :intervention="interventionFormModalIntervention"
-      :close="closeInterventionFormModal"
-    />
+      <intervention-form-modal
+        v-if="interventionFormModalVisible"
+        :is-update="interventionFormModalIsUpdate"
+        :intervention="interventionFormModalIntervention"
+        :close="closeInterventionFormModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,10 +39,12 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import InterventionFormModal from "../../components/interventions/InterventionFormModal";
+import LoaderComponent from "../../components/LoaderComponent";
 
 export default defineComponent({
   components: {
     InterventionFormModal,
+    LoaderComponent
   },
   setup() {
     const store = useStore();
@@ -47,6 +52,8 @@ export default defineComponent({
     const interventionFormModalVisible = ref(false);
     const interventionFormModalIsUpdate = ref(false);
     const interventionFormModalIntervention = ref({});
+
+    const loading = ref(false);
 
     const columns = [
       {
@@ -61,7 +68,10 @@ export default defineComponent({
     ];
 
     const getAllInterventions = () => {
-      store.dispatch('interventions/getAllInterventions');
+      loading.value = true;
+      store.dispatch('interventions/getAllInterventions').then(() => {
+        loading.value = false;
+      });
     };
 
     const confirmDelete = (record) => {
@@ -100,6 +110,7 @@ export default defineComponent({
       confirmDelete,
       openInterventionFormModal,
       closeInterventionFormModal,
+      loading
     };
   }
 });
