@@ -6,6 +6,7 @@
     cancel-text="Annuler"
     @ok="onOk"
     @cancel="onCancel"
+    centered
   >
     <a-form
       ref="formRef"
