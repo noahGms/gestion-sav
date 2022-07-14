@@ -5,7 +5,7 @@
         <a-button type="primary" @click="openStateFormModal(null)">Ajouter</a-button>
       </template>
     </a-page-header>
-    <a-table class="mx-4" :dataSource="states" :columns="columns">
+    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="states" :columns="columns">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'color'">
           <a-tag :color="record.color" size="small">{{ record.color }}</a-tag>

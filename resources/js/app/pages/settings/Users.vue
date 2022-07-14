@@ -5,7 +5,7 @@
         <a-button @click="openUserFormModal(null)" type="primary">Ajouter</a-button>
       </template>
     </a-page-header>
-    <a-table class="mx-4" :dataSource="users" :columns="columns">
+    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="users" :columns="columns">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'is_admin'">
           <span v-if="!record.is_god">

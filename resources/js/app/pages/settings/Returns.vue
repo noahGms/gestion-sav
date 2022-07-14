@@ -5,7 +5,7 @@
         <a-button type="primary" @click="openReturnFormModal(null)">Ajouter</a-button>
       </template>
     </a-page-header>
-    <a-table class="mx-4" :dataSource="returns" :columns="columns">
+    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="returns" :columns="columns">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <a class="ant-dropdown-link" @click="openReturnFormModal(record)">Modifier</a>

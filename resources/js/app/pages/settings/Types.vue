@@ -5,7 +5,7 @@
         <a-button type="primary" @click="openTypeFormModal(null)">Ajouter</a-button>
       </template>
     </a-page-header>
-    <a-table class="mx-4" :dataSource="types" :columns="columns">
+    <a-table :scroll="{ x: 'max-content' }" class="mx-4" :dataSource="types" :columns="columns">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'category'">
           <span>{{record.category?.name}}</span>
