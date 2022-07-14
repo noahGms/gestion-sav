@@ -122,7 +122,7 @@
         </div>
       </a-layout-header>
       <a-layout-content class="layout-content">
-        <div :style="{ padding: '24px', background: '#fff', textAlign: 'center', background: '#fff' }">
+        <div :style="{ padding: '24px', background: '#fff' }">
           <router-view/>
         </div>
       </a-layout-content>
