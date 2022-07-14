@@ -1,86 +1,89 @@
 <template>
-  <div v-if="customer">
-    <a-page-header :title="`Client n°${customer.id} - ${customer.fullname}`" @back="goBack">
-      <template #extra>
-        <div>
-          <a class="ant-dropdown-link" @click="openCustomerFormModal">Modifier</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            title="Voulez vous vraiment supprimer ce client ?"
-            ok-text="Confirmer"
-            cancel-text="Annuler"
-            @confirm="confirmDelete"
-            @cancel="() => {}"
-          >
-            <a class="text-danger" href="#">Supprimer</a>
-          </a-popconfirm>
-        </div>
-      </template>
-    </a-page-header>
+ <div>
+   <loader-component v-if="loading" />
+   <div v-else>
+     <a-page-header :title="`Client n°${customer.id} - ${customer.fullname}`" @back="goBack">
+       <template #extra>
+         <div>
+           <a class="ant-dropdown-link" @click="openCustomerFormModal">Modifier</a>
+           <a-divider type="vertical"/>
+           <a-popconfirm
+             title="Voulez vous vraiment supprimer ce client ?"
+             ok-text="Confirmer"
+             cancel-text="Annuler"
+             @confirm="confirmDelete"
+             @cancel="() => {}"
+           >
+             <a class="text-danger" href="#">Supprimer</a>
+           </a-popconfirm>
+         </div>
+       </template>
+     </a-page-header>
 
-    <div class="mx-4">
-      <a-card title="Informations">
-        <p v-if="customer.fullname">
-          <font-size-outlined/>
-          <span class="ms-2">
+     <div class="mx-4">
+       <a-card title="Informations">
+         <p v-if="customer.fullname">
+           <font-size-outlined/>
+           <span class="ms-2">
             Nom complet: <span class="fw-bold">{{ customer.fullname }}</span>
           </span>
-        </p>
-        <p v-if="customer.email">
-          <mail-outlined/>
-          <span class="ms-2">
+         </p>
+         <p v-if="customer.email">
+           <mail-outlined/>
+           <span class="ms-2">
           Adresse email:
           <a :href="`mailto:${customer.email}`">
             {{ customer.email }}
           </a>
           </span>
-        </p>
-        <p v-if="customer.phone">
-          <phone-outlined/>
-          <span class="ms-2">
+         </p>
+         <p v-if="customer.phone">
+           <phone-outlined/>
+           <span class="ms-2">
           Téléphone fixe:
           <a :href="`tel:${customer.phone}`">
             {{ customer.phone }}
           </a>
           </span>
-        </p>
-        <p v-if="customer.mobile1">
-          <mobile-outlined/>
-          <span class="ms-2">
+         </p>
+         <p v-if="customer.mobile1">
+           <mobile-outlined/>
+           <span class="ms-2">
           Téléphone portable 1:
           <a :href="`tel:${customer.mobile1}`">
             {{ customer.mobile1 }}
           </a>
           </span>
-        </p>
-        <p v-if="customer.mobile2">
-          <mobile-outlined/>
-          <span class="ms-2">
+         </p>
+         <p v-if="customer.mobile2">
+           <mobile-outlined/>
+           <span class="ms-2">
           Téléphone portable 2:
           <a :href="`tel:${customer.mobile2}`">
             {{ customer.mobile2 }}
           </a>
           </span>
-        </p>
-        <p v-if="customer.address?.full_address">
-          <environment-outlined/>
-          <span class="ms-2">
+         </p>
+         <p v-if="customer.address?.full_address">
+           <environment-outlined/>
+           <span class="ms-2">
           Adresse:
           <a :href="`https://www.google.com/maps/search/?api=1&query=${customer.address.full_address}`" target="_blank">
             {{ customer.address.full_address }}
           </a>
           </span>
-        </p>
-      </a-card>
-    </div>
+         </p>
+       </a-card>
+     </div>
 
-    <customer-form-modal
-      v-if="customerFormModalVisible"
-      :is-update="true"
-      :customer="customer"
-      :close="closeCustomerFormModal"
-    />
-  </div>
+     <customer-form-modal
+       v-if="customerFormModalVisible"
+       :is-update="true"
+       :customer="customer"
+       :close="closeCustomerFormModal"
+     />
+   </div>
+ </div>
 </template>
 
 <script>
@@ -95,6 +98,7 @@ import {
   PhoneOutlined,
   FontSizeOutlined
 } from "@ant-design/icons-vue";
+import LoaderComponent from "../../components/LoaderComponent";
 
 export default defineComponent({
   components: {
@@ -104,6 +108,7 @@ export default defineComponent({
     MobileOutlined,
     PhoneOutlined,
     FontSizeOutlined,
+    LoaderComponent
   },
   setup() {
     const store = useStore();
@@ -113,11 +118,15 @@ export default defineComponent({
     const customer = ref(null);
     const customerFormModalVisible = ref(false);
 
+    const loading = ref(true);
+
     const getCustomer = () => {
+      loading.value = true;
       store.dispatch("customers/getOneCustomer", {
         id
       }).then((response) => {
         customer.value = response.data.data;
+        loading.value = false;
       }).catch(() => {
         goBack();
       });
@@ -153,6 +162,7 @@ export default defineComponent({
       confirmDelete,
       openCustomerFormModal,
       closeCustomerFormModal,
+      loading
     };
   }
 });
