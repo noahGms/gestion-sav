@@ -17,6 +17,12 @@ const router = createRouter({
             meta: { requiresAuth: false },
         },
         {
+            path: "/profile",
+            name: "profile",
+            component: () => import("../pages/Profile/Profile"),
+            meta: { requiresAuth: true },
+        },
+        {
             path: "/clients",
             name: "customers",
             component: () => import("../pages/customers/Customers"),
