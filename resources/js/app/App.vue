@@ -105,13 +105,17 @@
             <a class="ant-dropdown-link" @click.prevent>
               <a-avatar
                 class="me-1"
-                :src="`https://eu.ui-avatars.com/api/?name=${authenticatedUser.fullname}`"
+                :src="avatarUrl"
               />
               <DownOutlined/>
             </a>
             <template #overlay>
               <a-menu>
-                <a-menu-item key="0"> Mon compte</a-menu-item>
+                <a-menu-item key="0">
+                  <router-link :to="{name: 'profile'}">
+                    Mon compte
+                  </router-link>
+                </a-menu-item>
                 <a-menu-divider/>
                 <a-menu-item key="1" @click="() => logout()">
                   Se déconnecter
@@ -180,6 +184,15 @@ export default defineComponent({
     const collapsed = ref(false);
     const selectedKeys = ref([]);
 
+    const avatarUrl = computed(() => {
+      if (authenticatedUser.value.avatar) {
+        return 'http://localhost:8000/api/profile/avatar';
+      } else {
+        return `https://eu.ui-avatars.com/api/?name=${authenticatedUser.fullname}`;
+      }
+    });
+
+
     const layoutHeaderClass = computed(() => {
       if (collapsed.value) {
         return 'layout-header-mobile';
@@ -214,7 +227,8 @@ export default defineComponent({
       isLoggedIn,
       authenticatedUser,
       layoutHeaderClass,
-      headerContentClass
+      headerContentClass,
+      avatarUrl
     };
   },
 });
