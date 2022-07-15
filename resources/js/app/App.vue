@@ -1,7 +1,7 @@
 <template>
   <a-layout v-if="isLoggedIn" has-sider style="min-height: 100vh; min-width: 100vw;">
     <a-layout-sider
-      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, background: '#fff' }"
+      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
       breakpoint="lg"
       v-model:collapsed="collapsed"
       :trigger="null"
@@ -11,7 +11,7 @@
       <div class="logo p-0">
         {{ collapsed ? "G-SAV" : "Gestion-SAV" }}
       </div>
-      <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
+      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item class="mt-0" key="home">
           <template #icon>
             <home-outlined/>
