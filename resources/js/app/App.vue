@@ -188,7 +188,7 @@ export default defineComponent({
       if (authenticatedUser.value.avatar) {
         return 'http://localhost:8000/api/profile/avatar';
       } else {
-        return `https://eu.ui-avatars.com/api/?name=${authenticatedUser.fullname}`;
+        return `https://eu.ui-avatars.com/api/?name=${authenticatedUser.value.fullname}`;
       }
     });
 
