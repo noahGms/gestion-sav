@@ -37,4 +37,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('customers/lite', [\App\Http\Controllers\CustomerController::class, 'lite']);
     Route::apiResource('customers', \App\Http\Controllers\CustomerController::class);
     Route::apiResource('items', \App\Http\Controllers\ItemController::class);
+
+    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update']);
+    Route::put('profile/password-update', [\App\Http\Controllers\ProfileController::class, 'passwordUpdate']);
+    Route::get('profile/avatar', [\App\Http\Controllers\ProfileController::class, 'getAvatar']);
+    Route::post('profile/avatar', [\App\Http\Controllers\ProfileController::class, 'uploadAvatar']);
+    Route::delete('profile/avatar', [\App\Http\Controllers\ProfileController::class, 'removeAvatar']);
 });
