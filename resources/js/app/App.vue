@@ -160,7 +160,7 @@ import {
   DownOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
-import {defineComponent, ref, computed, onMounted} from "vue";
+import {defineComponent, ref, computed, onMounted, watch} from "vue";
 import {useStore} from "vuex";
 import {useRoute, useRouter} from "vue-router";
 
@@ -214,6 +214,10 @@ export default defineComponent({
         router.push("/se-connecter");
       });
     };
+
+    watch(route, () => {
+      selectedKeys.value = [route.name];
+    });
 
     onMounted(async () => {
       await router.isReady();
