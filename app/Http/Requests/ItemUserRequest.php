@@ -24,8 +24,8 @@ class ItemUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'users' => 'sometimes|required|array',
-            'users.*' => 'nullable|string|exists:users,id'
+            'users' => 'nullable|array',
+            'users.*' => 'nullable|int|exists:users,id'
         ];
     }
 }

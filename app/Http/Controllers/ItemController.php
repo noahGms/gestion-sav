@@ -81,9 +81,9 @@ class ItemController extends Controller
      * Display the specified resource.
      *
      * @param Item $item
-     * @return JsonResponse
+     * @return ItemResource
      */
-    public function show(Item $item): JsonResponse
+    public function show(Item $item): ItemResource
     {
         return ItemResource::make($item);
     }

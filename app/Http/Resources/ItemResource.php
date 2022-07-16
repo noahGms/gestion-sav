@@ -38,7 +38,7 @@ class ItemResource extends JsonResource
             'created_by' => UserResource::make(optional($this->createdBy)),
             'archived_at' => $this->archived_at,
             'parts' => PartResource::collection($this->parts),
-            'technicians' => UserResource::collection($this->users),
+            'users' => UserResource::collection($this->users),
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
         ];

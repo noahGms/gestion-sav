@@ -58,9 +58,7 @@ class ItemService
 
         $usersPayload = $request->validate((new ItemUserRequest())->rules());
         if (!empty($usersPayload['users'])) {
-            $item->users()->attach(array_filter($usersPayload['users'], function($value) {
-                return  $value != null;
-            }));
+            $item->users()->sync($usersPayload['users']);
         }
 
         $this->fileService->store($request, $item);
@@ -80,7 +78,11 @@ class ItemService
         $itemPayload = $request->validate((new ItemRequest())->rules());
 
         $item->update($itemPayload);
-        $this->customerService->update($request, $item->customer);
+
+        $usersPayload = $request->validate((new ItemUserRequest())->rules());
+        if (!empty($usersPayload['users'])) {
+            $item->users()->sync($usersPayload['users']);
+        }
 
         return $item;
     }
