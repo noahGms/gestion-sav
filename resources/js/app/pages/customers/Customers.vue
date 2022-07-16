@@ -57,7 +57,7 @@
                   </span>
                 </template>
                 <template #avatar>
-                  <a-avatar :src="`https://eu.ui-avatars.com/api/?name=${item.fullname}`" />
+                  <a-avatar :src="avatarUrl(item)" />
                 </template>
               </a-list-item-meta>
             </a-list-item>
@@ -98,6 +98,7 @@ import {
 import CustomerFormModal from "../../components/customers/CustomerFormModal";
 import {useRouter} from "vue-router";
 import LoaderComponent from "../../components/LoaderComponent";
+import { getAvatarUrl } from "../../utils/avatar";
 
 export default defineComponent({
   components: {
@@ -170,6 +171,10 @@ export default defineComponent({
       });
     };
 
+    const avatarUrl = (item) => {
+      return getAvatarUrl(item);
+    };
+
     const openCustomerFormModal = (customer = null) => {
       if (customer) {
         customerFormModalIsUpdate.value = true;
@@ -218,7 +223,8 @@ export default defineComponent({
       closeCustomerFormModal,
       handlePaginationChange,
       onSearch,
-      loading
+      loading,
+      avatarUrl
     };
   }
 });

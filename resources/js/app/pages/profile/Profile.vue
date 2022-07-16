@@ -47,6 +47,7 @@
 import { computed, defineComponent, ref, reactive, onMounted } from "vue";
 import { useStore } from "vuex";
 import { UploadOutlined } from "@ant-design/icons-vue";
+import { getAvatarUrl } from "../../utils/avatar";
 
 export default defineComponent({
   components: {
@@ -80,7 +81,7 @@ export default defineComponent({
       if (authenticatedUser.value.avatar) {
         return 'http://localhost:8000/api/profile/avatar';
       } else {
-        return `https://eu.ui-avatars.com/api/?name=${authenticatedUser.value.fullname}`;
+        return getAvatarUrl(authenticatedUser.value);
       }
     });
 

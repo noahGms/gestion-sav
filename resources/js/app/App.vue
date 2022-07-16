@@ -163,6 +163,7 @@ import {
 import {defineComponent, ref, computed, onMounted, watch} from "vue";
 import {useStore} from "vuex";
 import {useRoute, useRouter} from "vue-router";
+import { getAvatarUrl } from "./utils/avatar";
 
 export default defineComponent({
   components: {
@@ -188,7 +189,7 @@ export default defineComponent({
       if (authenticatedUser.value.avatar) {
         return 'http://localhost:8000/api/profile/avatar';
       } else {
-        return `https://eu.ui-avatars.com/api/?name=${authenticatedUser.value.fullname}`;
+        return getAvatarUrl(authenticatedUser.value);
       }
     });
 
