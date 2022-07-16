@@ -24,7 +24,9 @@
             </a-popover>
           </template>
           <template v-else-if="column.key === 'action'">
-            <a class="ant-dropdown-link">Modifier</a>
+            <router-link :to="{name: 'item', params: {id: record.id}}" class="ant-dropdown-link">Details</router-link>
+            <a-divider type="vertical"/>
+            <router-link :to="{name: 'editItem', params: {id: record.id}}" class="ant-dropdown-link">Modifier</router-link>
             <a-divider type="vertical"/>
             <a-popconfirm
               title="Voulez vous vraiment supprimer cet item ?"

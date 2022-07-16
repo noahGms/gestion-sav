@@ -41,9 +41,21 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
+            path: "/items/:id",
+            name: "item",
+            component: () => import("../pages/items/Item"),
+            meta: { requiresAuth: true },
+        },
+        {
             path: "/items/ajouter",
             name: "createItem",
             component: () => import("../pages/items/CreateItem"),
+            meta: { requiresAuth: true },
+        },
+        {
+            path: "/items/:id/modifier",
+            name: "editItem",
+            component: () => import("../pages/items/EditItem.vue"),
             meta: { requiresAuth: true },
         },
         {

@@ -23,9 +23,9 @@ export const items = {
                     });
             });
         },
-        getOneItem(_, items) {
+        getOneItem(_, id) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/items/${item.id}`)
+                axios.get(`/api/items/${id}`)
                     .then(response => {
                         resolve(response);
                     })
@@ -56,9 +56,9 @@ export const items = {
                     });
             });
         },
-        deleteItem(_, item) {
+        deleteItem(_, id) {
             return new Promise((resolve, reject) => {
-                axios.delete(`/api/items/${item.id}`)
+                axios.delete(`/api/items/${id}`)
                     .then(response => {
                         resolve(response);
                     })
