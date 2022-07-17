@@ -2,9 +2,20 @@
   <div>
     <loader-component v-if="loading" />
     <div v-else>
+      <a-alert class="mb-2" v-if="item.archived_at" message="Cet item est archivé" type="warning" />
+
       <a-page-header :title="`Item n°${item.id} - Détails`" @back="goBack">
         <template #extra>
           <div>
+            <a-popconfirm v-if="!item.archived_at" title="Voulez vous vraiment archiver cet item ?" ok-text="Confirmer" cancel-text="Annuler"
+              @confirm="archive" @cancel="() => { }">
+              <a href="#">Archiver</a>
+            </a-popconfirm>
+            <a-popconfirm v-else title="Voulez vous vraiment désarchiver cet item ?" ok-text="Confirmer" cancel-text="Annuler"
+              @confirm="unarchive" @cancel="() => { }">
+              <a href="#">Désarchiver</a>
+            </a-popconfirm>
+            <a-divider type="vertical" />
             <router-link :to="{ name: 'editItem', params: { id: item.id } }" class="ant-dropdown-link">Modifier
             </router-link>
             <a-divider type="vertical" />
@@ -59,6 +70,18 @@ export default defineComponent({
       router.go(-1);
     }
 
+    const archive = () => {
+      store.dispatch('items/archive', id).then(() => {
+        getItem();
+      });
+    }
+
+    const unarchive = () => {
+      store.dispatch('items/unarchive', id).then(() => {
+        getItem();
+      });
+    }
+
     onMounted(() => {
       getItem();
     });
@@ -67,7 +90,9 @@ export default defineComponent({
       goBack,
       item,
       loading,
-      confirmDelete
+      confirmDelete,
+      unarchive,
+      archive
     };
   }
 });

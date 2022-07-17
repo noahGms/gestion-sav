@@ -67,6 +67,28 @@ export const items = {
                     });
             });
         },
+        archive(_, id) {
+            return new Promise((resolve, reject) => {
+                axios.post(`/api/items/${id}/archive`)
+                    .then(response => {
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        },
+        unarchive(_, id) {
+            return new Promise((resolve, reject) => {
+                axios.post(`/api/items/${id}/unarchive`)
+                    .then(response => {
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        }
     },
     getters: {
         getAllItems: (state) => state.items,

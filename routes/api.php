@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('customers/lite', [\App\Http\Controllers\CustomerController::class, 'lite']);
     Route::apiResource('customers', \App\Http\Controllers\CustomerController::class);
+
+    Route::post('items/{item}/archive', [\App\Http\Controllers\ItemController::class, 'archive'])->name('items.archive');
+    Route::post('items/{item}/unarchive', [\App\Http\Controllers\ItemController::class, 'unarchive'])->name('items.unarchive');
     Route::apiResource('items', \App\Http\Controllers\ItemController::class);
 
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update']);
