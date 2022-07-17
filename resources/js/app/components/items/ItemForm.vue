@@ -6,7 +6,10 @@
           <a-form-item name="customer_id">
             <template #label>
               <div class="d-flex align-items-center">
-                <div>Client</div>
+                <div>
+                  <span>Client</span>
+                  <a-button v-if="isCreate" @click.prevent="openCustomerFormModal" class="ms-2" size="small">Ajouter</a-button>
+                </div>
                 <div v-if="!isCreate" class="ms-2">
                   <router-link class="d-flex" :to="{ name: 'customer', params: { id: item?.customer?.id } }">
                     <eye-outlined />
@@ -159,6 +162,13 @@
         {{ isCreate ? "Ajouter" : "Modifier" }}
       </a-button>
     </a-form>
+
+    <customer-form-modal
+        v-if="customerFormModalVisible"
+        :is-update="false"
+        :customer="{}"
+        :close="closeCustomerFormModal"
+      />
   </div>
 </template>
 
@@ -168,10 +178,12 @@ import { useStore } from "vuex";
 import dayjs from "dayjs";
 import { useRouter } from "vue-router";
 import { EyeOutlined } from "@ant-design/icons-vue";
+import CustomerFormModal from "../customers/CustomerFormModal";
 
 export default defineComponent({
   components: {
-    EyeOutlined
+    EyeOutlined,
+    CustomerFormModal
   },
   props: {
     isCreate: {
@@ -218,6 +230,8 @@ export default defineComponent({
     const brands = computed(() => store.getters['brands/getAllBrands']);
     const customers = computed(() => store.getters['customers/getAllLiteCustomers']);
     const states = computed(() => store.getters['states/getAllStates']);
+
+    const customerFormModalVisible = ref(false);
 
     onMounted(() => {
       store.dispatch('interventions/getAllInterventions');
@@ -282,6 +296,21 @@ export default defineComponent({
         })
     }
 
+    const openCustomerFormModal = () => {
+      customerFormModalVisible.value = true;
+    };
+
+    const closeCustomerFormModal = () => {
+      customerFormModalVisible.value = false;
+      store.dispatch('customers/getAllLiteCustomers').then(() => {
+        const customerCreated = store.getters['customers/getCustomerCreated'];
+
+        if (customerCreated) {
+          formState.customer_id = customerCreated.id;
+        }
+      });
+    };
+
     return {
       formState,
       interventions,
@@ -295,7 +324,10 @@ export default defineComponent({
       filterCustomersOption,
       isCreate,
       saveChanges,
-      formRef
+      formRef,
+      customerFormModalVisible,
+      openCustomerFormModal,
+      closeCustomerFormModal,
     };
   },
 });

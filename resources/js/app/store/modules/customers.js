@@ -5,6 +5,7 @@ export const customers = {
     state: () => ({
         customers: [],
         liteCustomers: [],
+        customerCreated: null
     }),
     mutations: {
         setCustomers(state, customers) {
@@ -13,6 +14,9 @@ export const customers = {
         setLiteCustomers(state, customers) {
             state.liteCustomers = customers;
         },
+        setCustomerCreated(state, customer) {
+            state.customerCreated = customer;
+        }
     },
     actions: {
         getAllCustomers({commit}, {page, pageSize, search}) {
@@ -53,11 +57,12 @@ export const customers = {
                     });
             })
         },
-        newCustomer(_, customer) {
+        newCustomer({commit}, customer) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/customers", customer)
                     .then((response) => {
+                        commit('setCustomerCreated', response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -93,5 +98,6 @@ export const customers = {
     getters: {
         getAllCustomers: (state) => state.customers,
         getAllLiteCustomers: (state) => state.liteCustomers,
+        getCustomerCreated: (state) => state.customerCreated,
     },
 };
