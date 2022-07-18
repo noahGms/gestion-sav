@@ -158,6 +158,10 @@
         </a-col>
       </a-row>
 
+      <a-divider></a-divider>
+  
+      <item-parts-form v-if="isCreate" :item="formState" />
+
       <a-button @click="saveChanges" class="mt-4" type="primary" block>
         {{ isCreate ? "Ajouter" : "Modifier" }}
       </a-button>
@@ -179,11 +183,13 @@ import dayjs from "dayjs";
 import { useRouter } from "vue-router";
 import { EyeOutlined } from "@ant-design/icons-vue";
 import CustomerFormModal from "../customers/CustomerFormModal";
+import ItemPartsForm from "./ItemPartsForm";
 
 export default defineComponent({
   components: {
     EyeOutlined,
-    CustomerFormModal
+    CustomerFormModal,
+    ItemPartsForm
   },
   props: {
     isCreate: {
@@ -220,6 +226,7 @@ export default defineComponent({
       communications: null,
       state_id: null,
       comment_state: null,
+      parts: [],
     });
 
     const interventions = computed(() => store.getters['interventions/getAllInterventions']);
