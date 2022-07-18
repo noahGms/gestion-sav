@@ -17,7 +17,7 @@ class CreatePartsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->decimal('price', 14, 2)->nullable();
-            $table->string('link')->nullable();
+            $table->string('ref')->nullable();
             $table->foreignId('item_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
