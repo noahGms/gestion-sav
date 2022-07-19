@@ -4,11 +4,15 @@ export const brands = {
     namespaced: true,
     state: () => ({
         brands: [],
+        brandCreated: null
     }),
     mutations: {
         setBrands(state, brands) {
             state.brands = brands;
         },
+        setBrandCreated(state, brand) {
+            state.brandCreated = brand;
+        }
     },
     actions: {
         getAllBrands({ commit }) {
@@ -24,11 +28,12 @@ export const brands = {
                     });
             });
         },
-        newBrand(_, brand) {
+        newBrand({commit}, brand) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/brands", brand)
                     .then((response) => {
+                        commit("setBrandCreated", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const brands = {
     },
     getters: {
         getAllBrands: (state) => state.brands,
+        getBrandCreated: (state) => state.brandCreated,
     },
 };

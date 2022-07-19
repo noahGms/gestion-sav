@@ -30,8 +30,11 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request): JsonResponse
     {
-        Brand::create($request->validated());
-        return response()->json(['message' => 'La marque a bien été créé']);
+        $brand = Brand::create($request->validated());
+        return response()->json([
+            'message' => 'La marque a bien été créé',
+            'data' => new BrandResource($brand)
+        ]);
     }
 
     /**

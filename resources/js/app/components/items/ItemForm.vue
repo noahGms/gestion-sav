@@ -131,7 +131,13 @@
         </a-col>
 
         <a-col :span="6">
-          <a-form-item name="brand_id" label="Marque">
+          <a-form-item name="brand_id">
+            <template #label>
+              <div>
+                <span>Marque</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openBrandFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.brand_id" :options="brands"
               :field-names="{ label: 'name', value: 'id' }"></a-select>
           </a-form-item>
@@ -233,6 +239,12 @@
       :is-update="false"
       :categories="categories"
     />
+
+    <brand-form-modal
+      v-if="brandFormModalVisible"
+      :close="closeBrandFormModal"
+      :is-update="false"
+    />
   </div>
 </template>
 
@@ -249,6 +261,7 @@ import InterventionFormModal from "../interventions/InterventionFormModal";
 import DepotFormModal from "../depots/DepotFormModal";
 import ReturnFormModal from "../returns/ReturnFormModal";
 import TypeFormModal from "../types/TypeFormModal";
+import BrandFormModal from "../brands/BrandFormModal";
 
 export default defineComponent({
   components: {
@@ -259,7 +272,8 @@ export default defineComponent({
     InterventionFormModal,
     DepotFormModal,
     ReturnFormModal,
-    TypeFormModal
+    TypeFormModal,
+    BrandFormModal,
   },
   props: {
     isCreate: {
@@ -315,6 +329,7 @@ export default defineComponent({
     const depotFormModalVisible = ref(false);
     const returnFormModalVisible = ref(false);
     const typeFormModalVisible = ref(false);
+    const brandFormModalVisible = ref(false);
 
     const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
@@ -477,6 +492,22 @@ export default defineComponent({
       });
     }
 
+    const openBrandFormModal = () => {
+      brandFormModalVisible.value = true;
+    }
+
+    const closeBrandFormModal = () => {
+      brandFormModalVisible.value = false;
+
+      store.dispatch('brands/getAllBrands').then(() => {
+        const brandCreated = store.getters['brands/getBrandCreated'];
+
+        if (brandCreated) {
+          formState.brand_id = brandCreated.id;
+        }
+      });
+    }
+
     return {
       formState,
       interventions,
@@ -510,6 +541,9 @@ export default defineComponent({
       typeFormModalVisible,
       openTypeFormModal,
       closeTypeFormModal,
+      brandFormModalVisible,
+      openBrandFormModal,
+      closeBrandFormModal,
       authenticatedUser,
     };
   },
