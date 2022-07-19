@@ -19,7 +19,7 @@ const router = createRouter({
         {
             path: "/profile",
             name: "profile",
-            component: () => import("../pages/Profile/Profile"),
+            component: () => import("../pages/profile/Profile"),
             meta: { requiresAuth: true },
         },
         {
