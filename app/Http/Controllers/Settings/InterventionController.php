@@ -30,8 +30,11 @@ class InterventionController extends Controller
      */
     public function store(InterventionRequest $request): JsonResponse
     {
-        Intervention::create($request->validated());
-        return response()->json(['message' => 'Le moyen d\'intervention a bien été créé']);
+        $intervention = Intervention::create($request->validated());
+        return response()->json([
+            'message' => 'Le moyen d\'intervention a bien été créé',
+            'data' => InterventionResource::make($intervention)
+        ]);
     }
 
     /**

@@ -55,7 +55,13 @@
         </a-col>
 
         <a-col :span="8">
-          <a-form-item name="intervention_id" label="Intervention">
+          <a-form-item name="intervention_id">
+            <template #label>
+              <div>
+                <span>Intervention</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openInterventionFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.intervention_id" :options="interventions"
               :field-names="{ label: 'name', value: 'id' }"></a-select>
           </a-form-item>
@@ -184,6 +190,12 @@
       :close="closeStateFormModal"
       :is-update="false"
     />
+
+    <intervention-form-modal
+      v-if="interventionFormModalVisible"
+      :close="closeInterventionFormModal"
+      :is-update="false"
+    />
   </div>
 </template>
 
@@ -196,13 +208,15 @@ import { EyeOutlined } from "@ant-design/icons-vue";
 import CustomerFormModal from "../customers/CustomerFormModal";
 import ItemPartsForm from "./ItemPartsForm";
 import StateFormModal from "../states/StateFormModal";
+import InterventionFormModal from "../interventions/InterventionFormModal";
 
 export default defineComponent({
   components: {
     EyeOutlined,
     CustomerFormModal,
     ItemPartsForm,
-    StateFormModal
+    StateFormModal,
+    InterventionFormModal
   },
   props: {
     isCreate: {
@@ -253,6 +267,7 @@ export default defineComponent({
 
     const customerFormModalVisible = ref(false);
     const stateFormModalVisible = ref(false);
+    const interventionFormModalVisible = ref(false);
 
     const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
@@ -350,6 +365,22 @@ export default defineComponent({
       });
     };
 
+    const openInterventionFormModal = () => {
+      interventionFormModalVisible.value = true;
+    }
+
+    const closeInterventionFormModal = () => {
+      interventionFormModalVisible.value = false;
+
+      store.dispatch('interventions/getAllInterventions').then(() => {
+        const interventionCreated = store.getters['interventions/getInterventionCreated'];
+
+        if (interventionCreated) {
+          formState.intervention_id = interventionCreated.id;
+        }
+      });
+    }
+
     return {
       formState,
       interventions,
@@ -370,6 +401,9 @@ export default defineComponent({
       stateFormModalVisible,
       openStateFormModal,
       closeStateFormModal,
+      interventionFormModalVisible,
+      openInterventionFormModal,
+      closeInterventionFormModal,
       authenticatedUser,
     };
   },

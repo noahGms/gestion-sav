@@ -4,11 +4,15 @@ export const interventions = {
     namespaced: true,
     state: () => ({
         interventions: [],
+        interventionCreated: null
     }),
     mutations: {
         setInterventions(state, interventions) {
             state.interventions = interventions;
         },
+        setInterventionCreated(state, intervention) {
+            state.interventionCreated = intervention;
+        }
     },
     actions: {
         getAllInterventions({ commit }) {
@@ -24,11 +28,12 @@ export const interventions = {
                     });
             });
         },
-        newIntervention(_, intervention) {
+        newIntervention({commit}, intervention) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/interventions", intervention)
                     .then((response) => {
+                        commit("setInterventionCreated", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const interventions = {
     },
     getters: {
         getAllInterventions: (state) => state.interventions,
+        getInterventionCreated: (state) => state.interventionCreated,
     },
 };
