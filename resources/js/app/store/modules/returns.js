@@ -4,11 +4,15 @@ export const returns = {
     namespaced: true,
     state: () => ({
         returns: [],
+        returnCreated: null
     }),
     mutations: {
         setReturns(state, returns) {
             state.returns = returns;
         },
+        setReturnCreated(state, returnCreated) {
+            state.returnCreated = returnCreated;
+        }
     },
     actions: {
         getAllReturns({commit}) {
@@ -24,11 +28,12 @@ export const returns = {
                     });
             })
         },
-        newReturn(_, returnData) {
+        newReturn({commit}, returnData) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/returns", returnData)
                     .then((response) => {
+                        commit("setReturnCreated", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const returns = {
     },
     getters: {
         getAllReturns: (state) => state.returns,
+        getReturnCreated: (state) => state.returnCreated,
     },
 };

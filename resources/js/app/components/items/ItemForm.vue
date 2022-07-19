@@ -89,7 +89,13 @@
         </a-col>
 
         <a-col :span="12">
-          <a-form-item name="return_id" label="Retour">
+          <a-form-item name="return_id">
+            <template #label>
+              <div>
+                <span>Retour</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openReturnFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.return_id" :options="returns"
               :field-names="{ label: 'name', value: 'id' }"></a-select>
           </a-form-item>
@@ -208,6 +214,12 @@
       :close="closeDepotFormModal"
       :is-update="false"
     />
+
+    <return-form-modal
+      v-if="returnFormModalVisible"
+      :close="closeReturnFormModal"
+      :is-update="false"
+    />
   </div>
 </template>
 
@@ -222,6 +234,7 @@ import ItemPartsForm from "./ItemPartsForm";
 import StateFormModal from "../states/StateFormModal";
 import InterventionFormModal from "../interventions/InterventionFormModal";
 import DepotFormModal from "../depots/DepotFormModal";
+import ReturnFormModal from "../returns/ReturnFormModal";
 
 export default defineComponent({
   components: {
@@ -231,6 +244,7 @@ export default defineComponent({
     StateFormModal,
     InterventionFormModal,
     DepotFormModal,
+    ReturnFormModal
   },
   props: {
     isCreate: {
@@ -283,6 +297,7 @@ export default defineComponent({
     const stateFormModalVisible = ref(false);
     const interventionFormModalVisible = ref(false);
     const depotFormModalVisible = ref(false);
+    const returnFormModalVisible = ref(false);
 
     const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
@@ -412,6 +427,22 @@ export default defineComponent({
       });
     }
 
+    const openReturnFormModal = () => {
+      returnFormModalVisible.value = true;
+    }
+
+    const closeReturnFormModal = () => {
+      returnFormModalVisible.value = false;
+
+      store.dispatch('returns/getAllReturns').then(() => {
+        const returnCreated = store.getters['returns/getReturnCreated'];
+
+        if (returnCreated) {
+          formState.return_id = returnCreated.id;
+        }
+      });
+    }
+
     return {
       formState,
       interventions,
@@ -438,6 +469,9 @@ export default defineComponent({
       depotFormModalVisible,
       openDepotFormModal,
       closeDepotFormModal,
+      returnFormModalVisible,
+      openReturnFormModal,
+      closeReturnFormModal,
       authenticatedUser,
     };
   },

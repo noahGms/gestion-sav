@@ -30,8 +30,11 @@ class ReturnController extends Controller
      */
     public function store(ReturnRequest $request): JsonResponse
     {
-        ReturnMdl::create($request->validated());
-        return response()->json(['message' => 'Le moyen de retour a bien été créé']);
+        $return = ReturnMdl::create($request->validated());
+        return response()->json([
+            'message' => 'Le moyen de retour a bien été créé',
+            'data' => ReturnResource::make($return)
+        ]);
     }
 
     /**
