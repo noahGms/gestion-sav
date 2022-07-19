@@ -30,8 +30,11 @@ class TypeController extends Controller
      */
     public function store(TypeRequest $request): JsonResponse
     {
-        Type::create($request->validated());
-        return response()->json(['message' => 'Le type a bien été créé']);
+        $type = Type::create($request->validated());
+        return response()->json([
+            'message' => 'Le type a bien été créé',
+            'data' => TypeResource::make($type)
+        ]);
     }
 
     /**

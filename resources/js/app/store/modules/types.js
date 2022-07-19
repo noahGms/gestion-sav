@@ -4,11 +4,15 @@ export const types = {
     namespaced: true,
     state: () => ({
         types: [],
+        typeCreated: null
     }),
     mutations: {
         setTypes(state, types) {
             state.types = types;
         },
+        setTypeCreated(state, type) {
+            state.typeCreated = type;
+        }
     },
     actions: {
         getAllTypes({commit}) {
@@ -24,11 +28,12 @@ export const types = {
                     });
             })
         },
-        newType(_, type) {
+        newType({commit}, type) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/types", type)
                     .then((response) => {
+                        commit("setTypeCreated", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const types = {
     },
     getters: {
         getAllTypes: (state) => state.types,
+        getTypeCreated: (state) => state.typeCreated,
     },
 };

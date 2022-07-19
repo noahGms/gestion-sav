@@ -118,7 +118,13 @@
 
       <a-row :gutter="24">
         <a-col :span="6">
-          <a-form-item name="type_id" label="Type">
+          <a-form-item name="type_id">
+            <template #label>
+              <div>
+                <span>Type</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openTypeFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.type_id" :options="types" :field-names="{ label: 'name', value: 'id' }">
             </a-select>
           </a-form-item>
@@ -220,6 +226,13 @@
       :close="closeReturnFormModal"
       :is-update="false"
     />
+
+    <type-form-modal
+      v-if="typeFormModalVisible"
+      :close="closeTypeFormModal"
+      :is-update="false"
+      :categories="categories"
+    />
   </div>
 </template>
 
@@ -235,6 +248,7 @@ import StateFormModal from "../states/StateFormModal";
 import InterventionFormModal from "../interventions/InterventionFormModal";
 import DepotFormModal from "../depots/DepotFormModal";
 import ReturnFormModal from "../returns/ReturnFormModal";
+import TypeFormModal from "../types/TypeFormModal";
 
 export default defineComponent({
   components: {
@@ -244,7 +258,8 @@ export default defineComponent({
     StateFormModal,
     InterventionFormModal,
     DepotFormModal,
-    ReturnFormModal
+    ReturnFormModal,
+    TypeFormModal
   },
   props: {
     isCreate: {
@@ -292,12 +307,14 @@ export default defineComponent({
     const brands = computed(() => store.getters['brands/getAllBrands']);
     const customers = computed(() => store.getters['customers/getAllLiteCustomers']);
     const states = computed(() => store.getters['states/getAllStates']);
+    const categories = computed(() => store.getters['categories/getAllCategories']);
 
     const customerFormModalVisible = ref(false);
     const stateFormModalVisible = ref(false);
     const interventionFormModalVisible = ref(false);
     const depotFormModalVisible = ref(false);
     const returnFormModalVisible = ref(false);
+    const typeFormModalVisible = ref(false);
 
     const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
@@ -310,6 +327,7 @@ export default defineComponent({
       store.dispatch('brands/getAllBrands');
       store.dispatch('customers/getAllLiteCustomers');
       store.dispatch('states/getAllStates');
+      store.dispatch('categories/getAllCategories');
 
       if (!isCreate) {
         formState.customer_id = item.customer?.id;
@@ -443,6 +461,22 @@ export default defineComponent({
       });
     }
 
+    const openTypeFormModal = () => {
+      typeFormModalVisible.value = true;
+    }
+
+    const closeTypeFormModal = () => {
+      typeFormModalVisible.value = false;
+
+      store.dispatch('types/getAllTypes').then(() => {
+        const typeCreated = store.getters['types/getTypeCreated'];
+
+        if (typeCreated) {
+          formState.type_id = typeCreated.id;
+        }
+      });
+    }
+
     return {
       formState,
       interventions,
@@ -453,6 +487,7 @@ export default defineComponent({
       brands,
       customers,
       states,
+      categories,
       filterCustomersOption,
       isCreate,
       saveChanges,
@@ -472,6 +507,9 @@ export default defineComponent({
       returnFormModalVisible,
       openReturnFormModal,
       closeReturnFormModal,
+      typeFormModalVisible,
+      openTypeFormModal,
+      closeTypeFormModal,
       authenticatedUser,
     };
   },
