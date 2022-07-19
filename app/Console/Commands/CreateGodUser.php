@@ -17,7 +17,7 @@ class CreateGodUser extends Command
      *
      * @var string
      */
-    protected $signature = 'create:god';
+    protected $signature = 'make:god';
 
     /**
      * The console command description.
@@ -45,7 +45,7 @@ class CreateGodUser extends Command
     public function handle()
     {
         $username = $this->ask('username');
-        $password = $this->ask('password');
+        $password = $this->secret('password');
 
         if ($this->confirm('Are you sur to create god ?')) {
             try {
