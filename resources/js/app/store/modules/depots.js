@@ -4,11 +4,15 @@ export const depots = {
     namespaced: true,
     state: () => ({
         depots: [],
+        depotCreated: null
     }),
     mutations: {
         setDepots(state, depots) {
             state.depots = depots;
         },
+        setDepotCreated(state, depot) {
+            state.depotCreated = depot;
+        }
     },
     actions: {
         getAllDepots({ commit }) {
@@ -24,11 +28,12 @@ export const depots = {
                     });
             });
         },
-        newDepot(_, depot) {
+        newDepot({commit}, depot) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/depots", depot)
                     .then((response) => {
+                        commit("setDepotCreated", response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const depots = {
     },
     getters: {
         getAllDepots: (state) => state.depots,
+        getDepotCreated: (state) => state.depotCreated,
     },
 };

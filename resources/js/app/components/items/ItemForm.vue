@@ -68,7 +68,13 @@
         </a-col>
 
         <a-col :span="8">
-          <a-form-item name="depot_id" label="Dépot">
+          <a-form-item name="depot_id">
+            <template #label>
+              <div>
+                <span>Depot</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openDepotFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.depot_id" :options="depots"
               :field-names="{ label: 'name', value: 'id' }"></a-select>
           </a-form-item>
@@ -196,6 +202,12 @@
       :close="closeInterventionFormModal"
       :is-update="false"
     />
+
+    <depot-form-modal
+      v-if="depotFormModalVisible"
+      :close="closeDepotFormModal"
+      :is-update="false"
+    />
   </div>
 </template>
 
@@ -209,6 +221,7 @@ import CustomerFormModal from "../customers/CustomerFormModal";
 import ItemPartsForm from "./ItemPartsForm";
 import StateFormModal from "../states/StateFormModal";
 import InterventionFormModal from "../interventions/InterventionFormModal";
+import DepotFormModal from "../depots/DepotFormModal";
 
 export default defineComponent({
   components: {
@@ -216,7 +229,8 @@ export default defineComponent({
     CustomerFormModal,
     ItemPartsForm,
     StateFormModal,
-    InterventionFormModal
+    InterventionFormModal,
+    DepotFormModal,
   },
   props: {
     isCreate: {
@@ -268,6 +282,7 @@ export default defineComponent({
     const customerFormModalVisible = ref(false);
     const stateFormModalVisible = ref(false);
     const interventionFormModalVisible = ref(false);
+    const depotFormModalVisible = ref(false);
 
     const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
@@ -381,6 +396,22 @@ export default defineComponent({
       });
     }
 
+    const openDepotFormModal = () => {
+      depotFormModalVisible.value = true;
+    }
+
+    const closeDepotFormModal = () => {
+      depotFormModalVisible.value = false;
+
+      store.dispatch('depots/getAllDepots').then(() => {
+        const depotCreated = store.getters['depots/getDepotCreated'];
+
+        if (depotCreated) {
+          formState.depot_id = depotCreated.id;
+        }
+      });
+    }
+
     return {
       formState,
       interventions,
@@ -404,6 +435,9 @@ export default defineComponent({
       interventionFormModalVisible,
       openInterventionFormModal,
       closeInterventionFormModal,
+      depotFormModalVisible,
+      openDepotFormModal,
+      closeDepotFormModal,
       authenticatedUser,
     };
   },

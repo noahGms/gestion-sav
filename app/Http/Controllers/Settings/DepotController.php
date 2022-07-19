@@ -30,8 +30,11 @@ class DepotController extends Controller
      */
     public function store(DepotRequest $request): JsonResponse
     {
-        Depot::create($request->validated());
-        return response()->json(['message' => 'Le moyen de dépot a bien été créé']);
+        $depot = Depot::create($request->validated());
+        return response()->json([
+            'message' => 'Le moyen de dépot a bien été créé',
+            'data' => DepotResource::make($depot)
+        ]);
     }
 
     /**
