@@ -8,7 +8,7 @@
               <div class="d-flex align-items-center">
                 <div>
                   <span>Client</span>
-                  <a-button v-if="isCreate" @click.prevent="openCustomerFormModal" class="ms-2" size="small">Ajouter</a-button>
+                  <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openCustomerFormModal" class="ms-2" size="small">Ajouter</a-button>
                 </div>
                 <div v-if="!isCreate" class="ms-2">
                   <router-link class="d-flex" :to="{ name: 'customer', params: { id: item?.customer?.id } }">
@@ -27,7 +27,13 @@
 
       <a-row :gutter="24">
         <a-col span="24">
-          <a-form-item name="state_id" label="Etat">
+          <a-form-item name="state_id">
+            <template #label>
+              <div>
+                <span>Etat</span>
+                <a-button v-if="isCreate && authenticatedUser.is_admin" @click.prevent="openStateFormModal" class="ms-2" size="small">Ajouter</a-button>
+              </div>
+            </template>
             <a-select v-model:value="formState.state_id" :options="states"
               :field-names="{ label: 'name', value: 'id' }" />
           </a-form-item>
@@ -159,7 +165,7 @@
       </a-row>
 
       <a-divider></a-divider>
-  
+
       <item-parts-form v-if="isCreate" :item="formState" />
 
       <a-button @click="saveChanges" class="mt-4" type="primary" block>
@@ -170,9 +176,14 @@
     <customer-form-modal
         v-if="customerFormModalVisible"
         :is-update="false"
-        :customer="{}"
         :close="closeCustomerFormModal"
-      />
+    />
+
+    <state-form-modal
+      v-if="stateFormModalVisible"
+      :close="closeStateFormModal"
+      :is-update="false"
+    />
   </div>
 </template>
 
@@ -184,12 +195,14 @@ import { useRouter } from "vue-router";
 import { EyeOutlined } from "@ant-design/icons-vue";
 import CustomerFormModal from "../customers/CustomerFormModal";
 import ItemPartsForm from "./ItemPartsForm";
+import StateFormModal from "../states/StateFormModal";
 
 export default defineComponent({
   components: {
     EyeOutlined,
     CustomerFormModal,
-    ItemPartsForm
+    ItemPartsForm,
+    StateFormModal
   },
   props: {
     isCreate: {
@@ -239,6 +252,9 @@ export default defineComponent({
     const states = computed(() => store.getters['states/getAllStates']);
 
     const customerFormModalVisible = ref(false);
+    const stateFormModalVisible = ref(false);
+
+    const authenticatedUser = computed(() => store.getters["auth/getAuthenticatedUser"]);
 
     onMounted(() => {
       store.dispatch('interventions/getAllInterventions');
@@ -318,6 +334,22 @@ export default defineComponent({
       });
     };
 
+    const openStateFormModal = () => {
+      stateFormModalVisible.value = true;
+    };
+
+    const closeStateFormModal = () => {
+      stateFormModalVisible.value = false;
+
+      store.dispatch('states/getAllStates').then(() => {
+        const stateCreated = store.getters['states/getStateCreated'];
+
+        if (stateCreated) {
+          formState.state_id = stateCreated.id;
+        }
+      });
+    };
+
     return {
       formState,
       interventions,
@@ -335,6 +367,10 @@ export default defineComponent({
       customerFormModalVisible,
       openCustomerFormModal,
       closeCustomerFormModal,
+      stateFormModalVisible,
+      openStateFormModal,
+      closeStateFormModal,
+      authenticatedUser,
     };
   },
 });

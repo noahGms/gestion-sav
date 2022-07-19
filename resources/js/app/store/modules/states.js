@@ -4,11 +4,15 @@ export const states = {
     namespaced: true,
     state: () => ({
         states: [],
+        stateCreated: null
     }),
     mutations: {
         setStates(state, states) {
             state.states = states;
         },
+        setStateCreated(state, stateCreated) {
+            state.stateCreated = stateCreated;
+        }
     },
     actions: {
         getAllStates({commit}) {
@@ -24,11 +28,12 @@ export const states = {
                     });
             })
         },
-        newState(_, state) {
+        newState({commit}, state) {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/states", state)
                     .then((response) => {
+                        commit('setStateCreated', response.data.data);
                         resolve(response);
                     })
                     .catch((error) => {
@@ -63,5 +68,6 @@ export const states = {
     },
     getters: {
         getAllStates: (state) => state.states,
+        getStateCreated: (state) => state.stateCreated,
     },
 };
